@@ -1,8 +1,8 @@
-// install express with `npm install express` 
-const express = require('express')
-const app = express()
+// The following template was used for this project on init:
+// https://github.com/BogDAAAMN/deta-typescript-express-starter
 
-app.get('/', (req, res) => res.send('Hello World!'))
+// Import the compiled dist js
+const app = require("./dist/index.js");
 
-// export 'app'
-module.exports = app
+// Export it to Deta
+module.exports = app;
