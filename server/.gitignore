@@ -1,0 +1,12 @@
+# The following template was used for this project on init:
+# https://github.com/BogDAAAMN/deta-typescript-express-starter
+
+# Deta files
+#.deta/
+
+# Compiled javascript files
+dist/
+
+# Node
+node_modules/
+yarn.lock
