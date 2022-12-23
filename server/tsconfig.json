@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "esModuleInterop":true,
+    "esModuleInterop": true,
     "noImplicitAny": true,
     "removeComments": true,
     "strict": false,
-    "outDir": "dist",
+    "outDir": "dist"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*"]
 }

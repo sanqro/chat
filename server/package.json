@@ -20,6 +20,9 @@
     "@typescript-eslint/parser": "^5.47.0",
     "deta": "^1.1.0",
     "eslint": "^8.30.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.3"
   }
