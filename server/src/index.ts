@@ -10,7 +10,8 @@ app.get("/", (req, res) => res.send("Hello Typescript from Deta!"));
 
 // Listen on port 3000 if running locally
 if (!process.env.DETA_RUNTIME) {
-    app.listen(3001, () => console.log("Started on http://localhost:3001"));
+  // eslint-disable-next-line no-console
+  app.listen(3001, () => console.log("Started on http://localhost:3001"));
 }
 
 module.exports = app;
