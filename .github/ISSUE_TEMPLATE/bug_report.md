@@ -24,7 +24,7 @@ Eine klare Beschreibung von dem, was du in dieser Situation erwartest.
 Falls möglich, bitte Screenshots einfügen.
 
 **Desktop:**
- - OS: [z.B. iOS]
+ - OS: [z.B. MacOS, Windows]
  - Browser [z.B. chrome, safari]
  - Version [z.B. 22]
 
