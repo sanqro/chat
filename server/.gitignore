@@ -5,7 +5,7 @@
 #.deta/
 
 # Compiled javascript files
-dist/
+# dist/
 
 # Node
 node_modules/

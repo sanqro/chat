@@ -6,7 +6,9 @@ import express from "express";
 const app = express();
 
 // Get / endpoint
-app.get("/", (req, res) => res.send("Hello Typescript from Deta!"));
+app.get("/", (req, res) =>
+  res.send("This is the API for following application on GitHub: https://github.com/sanqro/chat")
+);
 
 // Listen on port 3000 if running locally
 if (!process.env.DETA_RUNTIME) {
