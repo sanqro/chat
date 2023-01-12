@@ -2,8 +2,12 @@
 // https://github.com/BogDAAAMN/deta-typescript-express-starter
 
 import express from "express";
+import cors from "cors";
 
 const app = express();
+app.use(express.json()); // parses requests to json
+app.use(cors()); // Cross Origin Resource Sharing
+app.disable("etag"); // disables automatic caching
 
 // Get / endpoint
 app.get("/", (req, res) =>
