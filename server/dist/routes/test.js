@@ -98,7 +98,7 @@ router.get("/readall", function (req, res) { return __awaiter(void 0, void 0, vo
             case 0: return [4, testDB.fetch()];
             case 1:
                 all = _a.sent();
-                res.status(200).json({ all: all });
+                res.status(200).json(all);
                 return [2];
         }
     });

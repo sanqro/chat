@@ -27,7 +27,7 @@ router.post("/store", async (req, res) => {
 
 router.get("/readall", async (req, res) => {
   const all = await testDB.fetch();
-  res.status(200).json({ all });
+  res.status(200).json(all);
 });
 
 export default router;
