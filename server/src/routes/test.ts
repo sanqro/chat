@@ -5,6 +5,7 @@ const router = express.Router();
 // dotenv variable setup
 import * as dotenv from "dotenv";
 import path from "path";
+import { FetchResponse } from "deta/dist/types/types/base/response";
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 // deta setup
@@ -26,7 +27,7 @@ router.post("/store", async (req, res) => {
 });
 
 router.get("/readall", async (req, res) => {
-  const all = await testDB.fetch();
+  const all: FetchResponse = await testDB.fetch();
   res.status(200).json(all);
 });
 
