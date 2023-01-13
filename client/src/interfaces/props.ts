@@ -3,8 +3,13 @@ export interface IBigButton {
   destination: string;
 }
 
-export interface ITextInputField {
+export interface IInputField {
+  type: string;
   placeholder?: string;
+}
+
+export interface ISubmitButton {
+  children: string;
 }
 
 export interface ISearchResult {
