@@ -1,0 +1,17 @@
+### Root call
+GET http://localhost:3001/ HTTP/1.1
+
+### test route info
+GET http://localhost:3001/test/info HTTP/1.1
+
+### test store
+POST http://localhost:3001/test/store HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Jeff",
+  "age": "68"
+}
+
+### test get all
+GET http://localhost:3001/test/readall HTTP/1.1
