@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 @layer components {
-    main {
-        @apply h-full flex flex-col flex-grow justify-center items-center py-8;
-        height: 100vh;
-    }
+  main {
+    @apply h-full flex flex-col flex-grow justify-center items-center py-8;
+    height: 100vh;
+  }
 
-    h1 {
-        @apply text-3xl font-bold mb-6;
-    }
+  h1 {
+    @apply text-3xl font-bold mb-6;
+  }
 }
 
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 
 #root {
-    min-height: 100vh;
+  min-height: 100vh;
 }
