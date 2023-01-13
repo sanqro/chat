@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { IBigButton } from "../interfaces/interfaces";
+import { IBigButton } from "../interfaces/props";
 
 function BigButton(props: IBigButton) {
   return (
