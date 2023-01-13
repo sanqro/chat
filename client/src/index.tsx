@@ -1,4 +1,4 @@
-// This code was generated with the following command: npx create-react-app chat --template typescript
+// Part of this code was generated with the following command: npx create-react-app chat --template typescript
 
 import React from "react";
 import ReactDOM from "react-dom/client";
