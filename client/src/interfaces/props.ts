@@ -5,7 +5,12 @@ export interface IBigButton {
 
 export interface IInputField {
   type: string;
-  placeholder?: string;
+  placeholder: string;
+}
+
+export interface ICopyBox {
+  placeholder: string;
+  children: string;
 }
 
 export interface ISubmitButton {
