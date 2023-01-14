@@ -1,7 +1,12 @@
 import React from "react";
+import RegistrationField from "../components/RegistrationField";
 
 function Register() {
-  return <div>Register</div>;
+  return (
+    <main>
+      <RegistrationField />
+    </main>
+  );
 }
 
 export default Register;
