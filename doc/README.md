@@ -93,9 +93,32 @@ Auflistung der Tools und Plugins (inkl. Konfiguration)
 
 ## Anforderungen
 
-| Anf.-Nr. | Muss/<br />Kann | funk./<br />qual. | Beschreibung                                                            |
-| :------- | --------------- | ----------------- | ----------------------------------------------------------------------- |
-| 1        | M               | funk.             | Alle Buttons sind funktionsfähig und sind an den richtigen Ort verlinkt |
+
+| Anf.-Nr. | Muss/<br />Kann | funk./<br />qual. | Beschreibung                                                                                                                                                                                                       |
+| :------- | :-------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1        | M               | funk.             | Eine Landingpage mit einem Login- und Registrationsknopf ist vorhanden.                                                                                                                                            |
+| 2        | M               | funk.             | Eine Registrationspage ist vorhanden.                                                                                                                                                                              |
+| 3        | M               | funk.             | Eine Loginpage ist vorhanden.                                                                                                                                                                                      |
+| 4        | M               | funk.             | Die Registrationspage hat ein Inputfeld für den Usernamen und ein Ausgabefeld (keine Eingabe möglich) mit den privaten Schlüssel, den man kopieren kann.                                                           |
+| 5        | M               | funk.             | Die Loginpage hat zwei Inputfelder. Eines ist für den Username und das andere für den privaten Schlüssel.                                                                                                          |
+| 6        | M               | funk.             | Die Registrationspage hat einen Knopf, der ein Schlüsselpaar generiert. Der private Schlüssel soll vom User als eine Art "Passwort" genutzt werden und der öffentliche soll in einer Datenbank gespeichert werden. |
+| 7        | M               | funk.             | Die Loginpage hat einen Knopf, mit welchem man sich authentifizieren kann, um einen Bearer-Token zu erhalten.                                                                                                      |
+| 8        | M               | qual.             | Nur wenn man einen Bearer-Token hat, soll man Chaträume öffnen können. (qual. da Clientsided und vom User im Browser umgehbar)                                                                                     |
+| 9        | M               | funk.             | Die API-Endpoints sollen vor unautorisiertem Zugriff geschützt sein. (ausser Login- und Registrationsendpoints)                                                                                                    |
+| 10       | K               | funk.             | Die API-Endpoints solle mit JWT geschützt sein.                                                                                                                                                                    |
+| 11       | M               | funk.             | Die Chaträume sollen je Nachrichten von genau zwei Usern beinhalten können.                                                                                                                                        |
+| 12       | M               | funk.             | User können Nachrichten in einen Chatraum senden.                                                                                                                                                                  |
+| 13       | M               | funk.             | Alle Nachrichten in einem Chatraum werden nur in verschlüsselter Form auf der Datenbank gespeichert.                                                                                                               |
+| 14       | M               | funk.             | User sollen Chaträume (er)öffnen können.                                                                                                                                                                           |
+| 15       | M               | funk.             | User sollen Chaträume suchen können.                                                                                                                                                                               |
+| 16       | M               | funk.             | Um die Verschlüsselung zu ermöglichen, werden die öffentlichen Schlüssel der User ausgetauscht. (von der Datenbank gefetcht)                                                                                       |
+| 17       | M               | funk.             | Updates sollen über konstante HTTP-Requests geschehen. (da keine Websockets möglich)                                                                                                                               |
+| 18       | K               | funk.             | Konstante updates über HTTP sollen optional sein, um Bandbreite zu sparen.                                                                                                                                         |
+| 19       | M               | qual.             | Da eine hohe Privatsphäre gewährleistet werden soll, muss jederzeit die Option bestehen, Chaträume zu löschen.                                                                                                     |
+| 20       | M               | funk.             | Beide Nutzer können zu jeder Zeit alle Nachrichten in ihrem gemeinsamen Chatraum lesen.                                                                                                                            |
+|          |                 |                   |                                                                                                                                                                                                                    |
+|          |                 |                   |                                                                                                                                                                                                                    |
+|          |                 |                   |                                                                                                                                                                                                                    |
 
 ## Arbeitspakete
 
@@ -119,10 +142,10 @@ Wir haben uns bewusst dagegen entschieden einen [Websocket](https://de.wikipedia
 
 Deshalb werden wir eine optionale und konstante Abfrage bei der API verwenden, um zu prüfen ob es neue Nachrichten gibt.
 
-
 ## Testen
 
 ### Testfälle
+
 
 | Testf.-Nr. | Anf-Nr. | Vorbereitung | Testumgebung                 | Eingabe                 | Erw. Ausgabe                                              |
 | :--------: | ------- | :----------- | ---------------------------- | ----------------------- | --------------------------------------------------------- |
