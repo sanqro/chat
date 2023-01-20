@@ -5,6 +5,8 @@ export interface ILoginFormData {
 
 export interface IRegistrationFormData {
   username: string;
+  publicKey: string;
+  privateKey: string;
 }
 
 export interface IEncryptedMessage {
