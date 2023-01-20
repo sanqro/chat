@@ -1,8 +1,11 @@
 import React, { FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import FormInputField from "./FormInputField";
 import SubmitButton from "./SubmitButton";
 
 function LoginField() {
+  const navigate = useNavigate();
+
   let username: string;
   let privateKey: string;
 
@@ -16,6 +19,7 @@ function LoginField() {
 
     // save token in sessionstorage
     sessionStorage.setItem("chatapp_token", "sampleToken1234");
+    navigate("/chat");
   };
 
   const verifyInput = () => {
