@@ -20,10 +20,12 @@ router.post("/register", async (req, res) => {
     const registrationData: IRegistrationFormData = req.body as IRegistrationFormData;
 
     const existing = await register.get(registrationData.username);
+
     if (existing !== null) {
       res.status(409).json({
         error: "Username already taken!"
       });
+      return false;
     }
 
     const privateKeyHash = await argon2.hash(registrationData.privateKey);
