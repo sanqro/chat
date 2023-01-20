@@ -85,6 +85,7 @@ Um unsere Chattingapplikation zu realisieren haben wir uns dazu entschieden die 
 
 - [Deta Dokumenation](https://docs.deta.sh/docs/home/)
 - [Express mit Typescript auf Deta](https://github.com/deta/docs/discussions/226)
+- [Type Guards in TS](https://blog.logrocket.com/how-to-use-type-guards-typescript/)
 
 ## Lokale Entwicklungsumgebung
 
