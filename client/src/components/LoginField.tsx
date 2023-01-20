@@ -13,6 +13,9 @@ function LoginField() {
     if (!verifyInput()) return;
     alert("submit function gets called!");
     // submit
+
+    // save token in sessionstorage
+    sessionStorage.setItem("chatapp_token", "sampleToken1234");
   };
 
   const verifyInput = () => {
