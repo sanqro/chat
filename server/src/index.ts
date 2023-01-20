@@ -5,6 +5,7 @@
 import express from "express";
 import cors from "cors";
 import generateKeypair from "./routes/generateKeypair";
+import register from "./routes/register";
 
 // express setup
 const app = express();
@@ -14,6 +15,7 @@ app.disable("etag"); // disables automatic caching
 
 // routes
 app.get("/generateKeypair", generateKeypair);
+app.post("/register", register);
 
 // root endpoint
 app.get("/", (req, res) =>
