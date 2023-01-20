@@ -13,3 +13,7 @@ export interface IRegistrationResponse {
 export interface INewEncryptedMessages {
   msgList: IEncryptedMessage[];
 }
+
+export interface IUsersListResponse {
+  usersList: string[];
+}

@@ -19,5 +19,5 @@ export interface ISubmitButton {
 
 export interface ISearchResult {
   username: string;
-  publicKey: string;
+  publicKey?: string;
 }
