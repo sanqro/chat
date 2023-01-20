@@ -71,7 +71,7 @@ var path_1 = __importDefault(require("path"));
 dotenv.config({ path: path_1["default"].resolve(__dirname, "../../.env") });
 var projectKey = process.env.PROJECT_KEY;
 var deta = (0, deta_1.Deta)(projectKey);
-var register = deta.Base("users");
+var auth = deta.Base("users");
 router.post("/register", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var registrationData, existing, privateKeyHash, registerJsonData, toInsert, err_1;
     return __generator(this, function (_a) {
@@ -79,7 +79,7 @@ router.post("/register", function (req, res) { return __awaiter(void 0, void 0, 
             case 0:
                 _a.trys.push([0, 4, , 5]);
                 registrationData = req.body;
-                return [4, register.get(registrationData.username)];
+                return [4, auth.get(registrationData.username)];
             case 1:
                 existing = _a.sent();
                 if (existing !== null) {
@@ -96,7 +96,7 @@ router.post("/register", function (req, res) { return __awaiter(void 0, void 0, 
                     privateKey: privateKeyHash,
                     publicKey: registrationData.publicKey
                 };
-                return [4, register.insert(registerJsonData)];
+                return [4, auth.insert(registerJsonData)];
             case 3:
                 toInsert = _a.sent();
                 res.status(201).json({
@@ -110,6 +110,42 @@ router.post("/register", function (req, res) { return __awaiter(void 0, void 0, 
                 res.status(503).json({ error: "Error with the database!" });
                 return [3, 5];
             case 5: return [2];
+        }
+    });
+}); });
+router.post("/login", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var loginData, existing, privateKeyHash, err_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                loginData = req.body;
+                return [4, auth.get(loginData.username)];
+            case 1:
+                existing = _a.sent();
+                if (existing === null) {
+                    res.status(409).json({
+                        error: "There is no such user!"
+                    });
+                    return [2, false];
+                }
+                return [4, argon2_1["default"].hash(loginData.privateKey)];
+            case 2:
+                privateKeyHash = _a.sent();
+                if (privateKeyHash === existing.privateKey) {
+                }
+                else {
+                    res.status(401).json({
+                        error: "Wrong Credentials!",
+                        success: false
+                    });
+                }
+                return [3, 4];
+            case 3:
+                err_2 = _a.sent();
+                res.status(503).json({ error: "Error with the database!" });
+                return [3, 4];
+            case 4: return [2];
         }
     });
 }); });
