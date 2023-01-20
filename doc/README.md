@@ -7,9 +7,9 @@
   - [Einführung](#einführung)
   - [IPERKA](#iperka)
     - [Informieren](#informieren)
-    - [Einleitung](#einleitung)
-    - [Technologien](#technologien)
-    - [Quellen](#quellen)
+      - [Einleitung](#einleitung)
+      - [Technologien](#technologien)
+      - [Quellen](#quellen)
     - [Planen](#planen)
     - [Entscheiden](#entscheiden)
     - [Verschlüsselung der Benutzerdaten](#verschlüsselung-der-benutzerdaten)
@@ -37,11 +37,11 @@
 
 ### Informieren
 
-### Einleitung
+#### Einleitung
 
 Für dieses Projekt haben wir uns dafür entschieden, dass wir eine Chattingapplikation realisieren, bei der die Privatsphäre der Nutzer im Zentrum steht. Die Nachrichten dessen sollen deshalb mit einer "Ende zu Ende (E2E) Verschlüsselungsmethode verschlüsselt werden.
 
-### Technologien
+#### Technologien
 
 Um unsere Chattingapplikation zu realisieren haben wir uns dazu entschieden die folgenden drei Technologien zu verwenden:
 
@@ -50,7 +50,7 @@ Um unsere Chattingapplikation zu realisieren haben wir uns dazu entschieden die 
 - [React](https://reactjs.org)
 - [TypeScript(tsx)](https://www.typescriptlang.org)
 
-### Quellen
+#### Quellen
 
 Bitte hier die Quellen auflisten, welche wir für das Projekt benötigt haben.
 
