@@ -8,3 +8,8 @@ export interface ILoginFormData {
   username: string;
   privateKey: string;
 }
+
+export interface IUsername {
+  username: string;
+  publicKey?: string;
+}
