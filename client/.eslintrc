@@ -24,7 +24,7 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
-    "no-console": ["error"],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
     "prettier/prettier": ["error"]
   },
   "settings": {
