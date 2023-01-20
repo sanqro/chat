@@ -4,9 +4,8 @@
 
 import express from "express";
 import cors from "cors";
-import generateKeypair from "./routes/generateKeypair";
-import register from "./routes/register";
-import getPublicKey from "./routes/getPublicKey";
+import keys from "./routes/keys";
+import auth from "./routes/auth";
 import users from "./routes/users";
 
 // express setup
@@ -16,10 +15,9 @@ app.use(cors()); // Cross Origin Resource Sharing
 app.disable("etag"); // disables automatic caching
 
 // routes
-app.get("/generateKeypair", generateKeypair);
-app.post("/register", register);
-app.get("/getPublicKey", getPublicKey);
-app.get("/users", users);
+app.use("/keys", keys);
+app.use("/auth", auth);
+app.use("/users", users);
 
 // root endpoint
 app.get("/", (req, res) =>

@@ -9,7 +9,6 @@ import * as dotenv from "dotenv";
 import path from "path";
 import { FetchResponse } from "deta/dist/types/types/base/response";
 
-//import { IUsername } from "../interfaces/interfaces";
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 // deta setup
@@ -17,7 +16,7 @@ const projectKey: string = process.env.PROJECT_KEY;
 const deta = Deta(projectKey);
 const users = deta.Base("users");
 
-router.get("/users", async (req, res) => {
+router.get("/getall", async (req, res) => {
   try {
     // eslint-disable-next-line prefer-const
     let usersArray: string[] = new Array(0);

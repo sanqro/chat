@@ -67,31 +67,59 @@ var deta_1 = require("deta");
 var router = express_1["default"].Router();
 var dotenv = __importStar(require("dotenv"));
 var path_1 = __importDefault(require("path"));
+var crypto_1 = require("crypto");
 dotenv.config({ path: path_1["default"].resolve(__dirname, "../../.env") });
 var projectKey = process.env.PROJECT_KEY;
 var deta = (0, deta_1.Deta)(projectKey);
 var users = deta.Base("users");
-router.get("/getall", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var usersArray, user, index, err_1;
+router.get("/getPublic", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, existing, fetchUser, publicKey, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                usersArray = new Array(0);
-                return [4, users.fetch()];
+                _a.trys.push([0, 5, , 6]);
+                user = req.body;
+                return [4, users.get(user.username)];
             case 1:
-                user = _a.sent();
-                for (index = 0; index < user.count; index++) {
-                    usersArray[index] = user.items[index].key;
-                }
-                res.json(usersArray);
-                return [3, 3];
-            case 2:
+                existing = _a.sent();
+                if (!(existing === null)) return [3, 2];
+                res.status(409).json({
+                    error: "There is no such user!"
+                });
+                return [2, false];
+            case 2: return [4, users.get(user.username)];
+            case 3:
+                fetchUser = _a.sent();
+                publicKey = fetchUser.publicKey;
+                res.status(201).json(publicKey);
+                _a.label = 4;
+            case 4: return [3, 6];
+            case 5:
                 err_1 = _a.sent();
-                res.status(503).json(err_1);
-                return [3, 3];
-            case 3: return [2];
+                res.status(503).json({ error: "Error with the database!" });
+                return [3, 6];
+            case 6: return [2];
         }
     });
 }); });
+router.get("/generateKeypair", function (req, res) {
+    (0, crypto_1.generateKeyPair)("rsa", {
+        modulusLength: 4096,
+        publicKeyEncoding: {
+            type: "pkcs1",
+            format: "pem"
+        },
+        privateKeyEncoding: {
+            type: "pkcs1",
+            format: "pem"
+        }
+    }, function (err, publicKey, privateKey) {
+        if (err !== null) {
+            res.status(500).send(err.message);
+        }
+        else {
+            res.send({ publicKey: publicKey, privateKey: privateKey });
+        }
+    });
+});
 exports["default"] = router;
