@@ -63,7 +63,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
-var argon2_1 = __importDefault(require("argon2"));
 var deta_1 = require("deta");
 var router = express_1["default"].Router();
 var dotenv = __importStar(require("dotenv"));
@@ -71,45 +70,34 @@ var path_1 = __importDefault(require("path"));
 dotenv.config({ path: path_1["default"].resolve(__dirname, "../../.env") });
 var projectKey = process.env.PROJECT_KEY;
 var deta = (0, deta_1.Deta)(projectKey);
-var register = deta.Base("users");
-router.post("/register", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var registrationData, existing, privateKeyHash, registerJsonData, toInsert, err_1;
+var users = deta.Base("users");
+router.get("/getPublicKey", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, existing, fetchUser, publicKey, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 4, , 5]);
-                registrationData = req.body;
-                return [4, register.get(registrationData.username)];
+                _a.trys.push([0, 5, , 6]);
+                user = req.body;
+                return [4, users.get(user.username)];
             case 1:
                 existing = _a.sent();
-                if (existing !== null) {
-                    res.status(409).json({
-                        error: "Username already taken!"
-                    });
-                    return [2, false];
-                }
-                return [4, argon2_1["default"].hash(registrationData.privateKey)];
-            case 2:
-                privateKeyHash = _a.sent();
-                registerJsonData = {
-                    key: registrationData.username,
-                    privateKey: privateKeyHash,
-                    publicKey: registrationData.publicKey
-                };
-                return [4, register.insert(registerJsonData)];
-            case 3:
-                toInsert = _a.sent();
-                res.status(201).json({
-                    username: toInsert.key,
-                    publicKey: toInsert.publicKey,
-                    success: true
+                if (!(existing === null)) return [3, 2];
+                res.status(409).json({
+                    error: "There is no such user!"
                 });
-                return [3, 5];
-            case 4:
+                return [2, false];
+            case 2: return [4, users.get(user.username)];
+            case 3:
+                fetchUser = _a.sent();
+                publicKey = fetchUser.publicKey;
+                res.status(201).json(publicKey);
+                _a.label = 4;
+            case 4: return [3, 6];
+            case 5:
                 err_1 = _a.sent();
                 res.status(503).json({ error: "Error with the database!" });
-                return [3, 5];
-            case 5: return [2];
+                return [3, 6];
+            case 6: return [2];
         }
     });
 }); });
