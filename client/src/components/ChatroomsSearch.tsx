@@ -1,37 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { IUsersListResponse } from "../interfaces/api-res";
 import UserListItem from "./UserListItem";
 
 function ChatroomsSearch() {
   const authToken = sessionStorage.getItem("chatapp_token");
-  const [usernames, setUsernames] = useState<IUsersListResponse>({
-    usersList: [
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . .",
-      ". . ."
-    ]
-  });
+  const [usernames, setUsernames] = useState<string[]>([". . ."]);
 
   const getUsers = async () => {
     const response: Response = await fetch("https://chatapp.deta.dev/users/getall", {
@@ -45,7 +17,7 @@ function ChatroomsSearch() {
     });
 
     try {
-      const responseJson: IUsersListResponse = await response.json();
+      const responseJson: string[] = await response.json();
       setUsernames(responseJson);
     } catch (error) {
       error instanceof Error
@@ -58,7 +30,7 @@ function ChatroomsSearch() {
     getUsers();
   }, []);
 
-  const usersList: JSX.Element[] = usernames.usersList.map((uname) => {
+  const usersList: JSX.Element[] = usernames.map((uname) => {
     return (
       <li key={uname} className="w-full">
         <UserListItem username={uname} />
