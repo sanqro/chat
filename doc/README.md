@@ -45,8 +45,9 @@ Für dieses Projekt haben wir uns dafür entschieden, dass wir eine Chattingappl
 
 Um unsere Chattingapplikation zu realisieren haben wir uns dazu entschieden die folgenden drei Technologien zu verwenden:
 
-- [Node](https://nodejjs.org/en/about/),
-- [React](https://reactjs.org),
+- [Node](https://nodejjs.org/en/about/)
+- [Express](https://expressjs.com/de/)
+- [React](https://reactjs.org)
 - [TypeScript(tsx)](https://www.typescriptlang.org)
 
 ### Quellen
