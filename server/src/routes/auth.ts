@@ -8,6 +8,7 @@ const router = express.Router();
 import * as dotenv from "dotenv";
 import path from "path";
 import { ILoginFormData, IRegistrationFormData } from "../interfaces/interfaces";
+import { send } from "process";
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 // deta setup
@@ -50,6 +51,7 @@ router.post("/login", async (req, res) => {
     const loginData: ILoginFormData = req.body as ILoginFormData;
 
     const existing = await auth.get(loginData.username);
+    const privateKey = existing.privateKey as string;
 
     if (existing === null) {
       res.status(409).json({
@@ -58,9 +60,7 @@ router.post("/login", async (req, res) => {
       return false;
     }
 
-    const privateKeyHash = await argon2.hash(loginData.privateKey);
-
-    if (privateKeyHash === existing.privateKey) {
+    if (await argon2.verify(privateKey, loginData.privateKey)) {
       // get JWT
     } else {
       res.status(401).json({

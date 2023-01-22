@@ -114,7 +114,7 @@ router.post("/register", function (req, res) { return __awaiter(void 0, void 0, 
     });
 }); });
 router.post("/login", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var loginData, existing, privateKeyHash, err_2;
+    var loginData, existing, privateKey, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -123,16 +123,16 @@ router.post("/login", function (req, res) { return __awaiter(void 0, void 0, voi
                 return [4, auth.get(loginData.username)];
             case 1:
                 existing = _a.sent();
+                privateKey = existing.privateKey;
                 if (existing === null) {
                     res.status(409).json({
                         error: "There is no such user!"
                     });
                     return [2, false];
                 }
-                return [4, argon2_1["default"].hash(loginData.privateKey)];
+                return [4, argon2_1["default"].verify(privateKey, loginData.privateKey)];
             case 2:
-                privateKeyHash = _a.sent();
-                if (privateKeyHash === existing.privateKey) {
+                if (_a.sent()) {
                 }
                 else {
                     res.status(401).json({
