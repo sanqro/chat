@@ -1,5 +1,4 @@
 /* eslint-disable prefer-const */
-/* eslint-disable no-console */
 import React, { FormEvent, useState } from "react";
 import CopyBox from "./CopyBox";
 import FormInputField from "./FormInputField";
@@ -15,7 +14,6 @@ function RegistrationField() {
     username = (document.getElementById("username") as HTMLInputElement).value;
     if (!verifyInput()) return;
     await getKeys();
-    console.log("ho");
     register();
   };
 
@@ -29,7 +27,6 @@ function RegistrationField() {
   };
 
   const register = async () => {
-    console.log(publicKey);
     const registerResponse = await fetch("https://chatapp.deta.dev/auth/register", {
       method: "POST",
       headers: {
@@ -42,8 +39,6 @@ function RegistrationField() {
       })
     });
     const registerJson = await registerResponse.json();
-    console.log(username, privateKey, publicKey);
-    console.log(privateKey, publicKey);
     if (registerJson.success) {
       alert("Registration Successful!");
     } else {
