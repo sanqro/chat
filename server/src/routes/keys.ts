@@ -37,6 +37,7 @@ router.get("/getPublic", checkAuth, async (req, res) => {
 });
 
 router.get("/generateKeypair", (req, res) => {
+  const convertToOneLine = (text: string) => text.replace(/(\r\n|\n|\r)/gm, "");
   generateKeyPair(
     "rsa",
     {
@@ -54,6 +55,8 @@ router.get("/generateKeypair", (req, res) => {
       if (err !== null) {
         res.status(500).send(err.message);
       } else {
+        publicKey = convertToOneLine(publicKey);
+        privateKey = convertToOneLine(privateKey);
         res.send({ publicKey, privateKey });
       }
     }
