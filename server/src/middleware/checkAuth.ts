@@ -7,7 +7,7 @@ import path from "path";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function checkAuth(req: any, res: any, next: any) {
   try {
-    const token: string = req.headers.authorization.split(" ")[1];
+    const token: string = req.headers.authorization;
     const jwtData = jwt.verify(token, process.env.JWT_SECRET);
 
     // dotenv variable setup

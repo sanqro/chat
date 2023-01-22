@@ -18,5 +18,4 @@ export interface IUsername {
 
 export interface IJWTPayload extends JwtPayload {
   username: string;
-  expiresIn: string;
 }
