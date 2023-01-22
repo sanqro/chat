@@ -22,7 +22,6 @@ const jwtSecret: string = process.env.JWT_SECRET;
 router.post("/register", async (req, res) => {
   try {
     const registrationData: IRegistrationFormData = req.body as IRegistrationFormData;
-    const convertToOneLine = (text: string) => text.replace(/(\r\n|\n|\r)/gm, "");
     const existing = await auth.get(registrationData.username);
 
     if (existing !== null) {
@@ -32,7 +31,7 @@ router.post("/register", async (req, res) => {
       return false;
     }
 
-    const privateKeyHash = await argon2.hash(convertToOneLine(registrationData.privateKey));
+    const privateKeyHash = await argon2.hash(registrationData.privateKey);
     const registerJsonData = {
       key: registrationData.username,
       privateKey: privateKeyHash,
