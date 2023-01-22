@@ -18,11 +18,12 @@ function RegistrationField() {
   };
 
   const getKeys = async () => {
+    const convertToOneLine = (text: string) => text.replace(/(\r\n|\n|\r)/gm, "");
     const response = await fetch("https://chatapp.deta.dev/keys/generateKeypair", {
       method: "GET"
     });
     const responseJson = await response.json();
-    setPrivateKey((privateKey = responseJson.privateKey));
+    setPrivateKey((privateKey = convertToOneLine(responseJson.privateKey)));
     setPublicKey((publicKey = responseJson.publicKey));
   };
 
@@ -39,6 +40,7 @@ function RegistrationField() {
       })
     });
     const registerJson = await registerResponse.json();
+
     if (registerJson.success) {
       alert("Registration Successful!");
     } else {

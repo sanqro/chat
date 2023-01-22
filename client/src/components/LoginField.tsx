@@ -9,17 +9,33 @@ function LoginField() {
   let username: string;
   let privateKey: string;
 
-  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     username = (document.getElementById("username") as HTMLInputElement).value;
     privateKey = (document.getElementById("privatekey") as HTMLInputElement).value;
     if (!verifyInput()) return;
-    alert("submit function gets called!");
-    // submit
+    await login();
+  };
 
-    // save token in sessionstorage
-    sessionStorage.setItem("chatapp_token", "sampleToken1234");
-    navigate("/chat");
+  const login = async () => {
+    const loginResponse = await fetch("https:///chatapp.deta.dev/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username,
+        privateKey
+      })
+    });
+    const loginJson = await loginResponse.json();
+    if (loginJson.success) {
+      alert("Login Successful!");
+      sessionStorage.setItem("chatapp_token", loginJson.token);
+      navigate("/chat");
+    } else {
+      alert("Login Failed: " + loginJson.error);
+    }
   };
 
   const verifyInput = () => {

@@ -75,12 +75,13 @@ var deta = (0, deta_1.Deta)(projectKey);
 var auth = deta.Base("users");
 var jwtSecret = process.env.JWT_SECRET;
 router.post("/register", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var registrationData, existing, privateKeyHash, registerJsonData, toInsert, err_1;
+    var registrationData, convertToOneLine, existing, privateKeyHash, registerJsonData, toInsert, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 4, , 5]);
                 registrationData = req.body;
+                convertToOneLine = function (text) { return text.replace(/(\r\n|\n|\r)/gm, ""); };
                 return [4, auth.get(registrationData.username)];
             case 1:
                 existing = _a.sent();
@@ -90,7 +91,7 @@ router.post("/register", function (req, res) { return __awaiter(void 0, void 0, 
                     });
                     return [2, false];
                 }
-                return [4, argon2_1["default"].hash(registrationData.privateKey)];
+                return [4, argon2_1["default"].hash(convertToOneLine(registrationData.privateKey))];
             case 2:
                 privateKeyHash = _a.sent();
                 registerJsonData = {
