@@ -65,6 +65,7 @@ exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var argon2_1 = __importDefault(require("argon2"));
 var deta_1 = require("deta");
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var router = express_1["default"].Router();
 var dotenv = __importStar(require("dotenv"));
 var path_1 = __importDefault(require("path"));
@@ -72,6 +73,7 @@ dotenv.config({ path: path_1["default"].resolve(__dirname, "../../.env") });
 var projectKey = process.env.PROJECT_KEY;
 var deta = (0, deta_1.Deta)(projectKey);
 var auth = deta.Base("users");
+var jwtSecret = process.env.JWT_SECRET;
 router.post("/register", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var registrationData, existing, privateKeyHash, registerJsonData, toInsert, err_1;
     return __generator(this, function (_a) {
@@ -114,7 +116,7 @@ router.post("/register", function (req, res) { return __awaiter(void 0, void 0, 
     });
 }); });
 router.post("/login", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var loginData, existing, privateKey, err_2;
+    var loginData, existing, privateKey, token, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -133,6 +135,8 @@ router.post("/login", function (req, res) { return __awaiter(void 0, void 0, voi
                 return [4, argon2_1["default"].verify(privateKey, loginData.privateKey)];
             case 2:
                 if (_a.sent()) {
+                    token = jsonwebtoken_1["default"].sign({ username: existing }, jwtSecret, { expiresIn: "3600s" });
+                    res.status(200).json({ token: token, success: true });
                 }
                 else {
                     res.status(401).json({
