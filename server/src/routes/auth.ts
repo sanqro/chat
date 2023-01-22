@@ -65,7 +65,7 @@ router.post("/login", async (req, res) => {
 
     if (await argon2.verify(privateKey, loginData.privateKey)) {
       const token = jwt.sign(
-        { username: existing },
+        { username: existing.key },
         jwtSecret,
         { expiresIn: "3600s" } // expiration after 60min
       );
