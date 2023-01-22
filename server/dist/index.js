@@ -5,12 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var cors_1 = __importDefault(require("cors"));
-var test_1 = __importDefault(require("./routes/test"));
+var keys_1 = __importDefault(require("./routes/keys"));
+var auth_1 = __importDefault(require("./routes/auth"));
+var users_1 = __importDefault(require("./routes/users"));
 var app = (0, express_1["default"])();
 app.use(express_1["default"].json());
 app.use((0, cors_1["default"])());
 app.disable("etag");
-app.use("/test", test_1["default"]);
+app.use("/keys", keys_1["default"]);
+app.use("/auth", auth_1["default"]);
+app.use("/users", users_1["default"]);
 app.get("/", function (req, res) {
     return res.status(200).json({
         msg: "This is the API for following application on GitHub: https://github.com/sanqro/chat"
