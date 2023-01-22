@@ -104,6 +104,7 @@ router.get("/getPublic", checkAuth_1["default"], function (req, res) { return __
     });
 }); });
 router.get("/generateKeypair", function (req, res) {
+    var convertToOneLine = function (text) { return text.replace(/(\r\n|\n|\r)/gm, ""); };
     (0, crypto_1.generateKeyPair)("rsa", {
         modulusLength: 4096,
         publicKeyEncoding: {
@@ -119,6 +120,8 @@ router.get("/generateKeypair", function (req, res) {
             res.status(500).send(err.message);
         }
         else {
+            publicKey = convertToOneLine(publicKey);
+            privateKey = convertToOneLine(privateKey);
             res.send({ publicKey: publicKey, privateKey: privateKey });
         }
     });
