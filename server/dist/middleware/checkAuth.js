@@ -62,65 +62,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-var express_1 = __importDefault(require("express"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var deta_1 = require("deta");
-var router = express_1["default"].Router();
 var dotenv = __importStar(require("dotenv"));
 var path_1 = __importDefault(require("path"));
-var crypto_1 = require("crypto");
-var checkAuth_1 = __importDefault(require("../middleware/checkAuth"));
-dotenv.config({ path: path_1["default"].resolve(__dirname, "../../.env") });
-var projectKey = process.env.PROJECT_KEY;
-var deta = (0, deta_1.Deta)(projectKey);
-var users = deta.Base("users");
-router.get("/getPublic", checkAuth_1["default"], function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, existing, fetchUser, publicKey, err_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 5, , 6]);
-                user = req.body;
-                return [4, users.get(user.username)];
-            case 1:
-                existing = _a.sent();
-                if (!(existing === null)) return [3, 2];
-                res.status(409).json({
-                    error: "There is no such user!"
-                });
-                return [2, false];
-            case 2: return [4, users.get(user.username)];
-            case 3:
-                fetchUser = _a.sent();
-                publicKey = fetchUser.publicKey;
-                res.status(201).json(publicKey);
-                _a.label = 4;
-            case 4: return [3, 6];
-            case 5:
-                err_1 = _a.sent();
-                res.status(503).json({ error: "Error with the database!" });
-                return [3, 6];
-            case 6: return [2];
-        }
+function checkAuth(req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var token, jwtData, projectKey, deta, users, username, existing, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    token = req.headers.authorization.split(" ")[1];
+                    jwtData = jsonwebtoken_1["default"].verify(token, process.env.JWT_SECRET);
+                    dotenv.config({ path: path_1["default"].resolve(__dirname, "../../.env") });
+                    projectKey = process.env.PROJECT_KEY;
+                    deta = (0, deta_1.Deta)(projectKey);
+                    users = deta.Base("users");
+                    username = jwtData.username;
+                    return [4, users.get(username)];
+                case 1:
+                    existing = _a.sent();
+                    if (existing === null)
+                        throw new Error("No such user found");
+                    next();
+                    return [3, 3];
+                case 2:
+                    error_1 = _a.sent();
+                    if (error_1 instanceof Error) {
+                        res.status(401).json({ msg: error_1.message, success: false });
+                    }
+                    else {
+                        res.status(401).json({ msg: "Unknown error occured!", success: false });
+                    }
+                    return [3, 3];
+                case 3: return [2];
+            }
+        });
     });
-}); });
-router.get("/generateKeypair", function (req, res) {
-    (0, crypto_1.generateKeyPair)("rsa", {
-        modulusLength: 4096,
-        publicKeyEncoding: {
-            type: "pkcs1",
-            format: "pem"
-        },
-        privateKeyEncoding: {
-            type: "pkcs1",
-            format: "pem"
-        }
-    }, function (err, publicKey, privateKey) {
-        if (err !== null) {
-            res.status(500).send(err.message);
-        }
-        else {
-            res.send({ publicKey: publicKey, privateKey: privateKey });
-        }
-    });
-});
-exports["default"] = router;
+}
+exports["default"] = checkAuth;

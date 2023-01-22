@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import { Deta } from "deta";
 import { IJWTPayload } from "../interfaces/interfaces";
+import * as dotenv from "dotenv";
+import path from "path";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function checkAuth(req: any, res: any, next: any) {
@@ -8,8 +10,12 @@ export default async function checkAuth(req: any, res: any, next: any) {
     const token: string = req.headers.authorization.split(" ")[1];
     const jwtData = jwt.verify(token, process.env.JWT_SECRET);
 
+    // dotenv variable setup
+    dotenv.config({ path: path.resolve(__dirname, "../../.env") });
+
     // deta
-    const deta = Deta();
+    const projectKey: string = process.env.PROJECT_KEY;
+    const deta = Deta(projectKey);
     const users = deta.Base("users");
 
     // check if user exists
