@@ -7,6 +7,7 @@ import cors from "cors";
 import keys from "./routes/keys";
 import auth from "./routes/auth";
 import users from "./routes/users";
+import checkAuth from "./middleware/checkAuth";
 
 // express setup
 const app = express();
@@ -17,7 +18,7 @@ app.disable("etag"); // disables automatic caching
 // routes
 app.use("/keys", keys);
 app.use("/auth", auth);
-app.use("/users", users);
+app.use("/users", checkAuth, users);
 
 // root endpoint
 app.get("/", (req, res) =>

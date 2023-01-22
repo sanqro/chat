@@ -8,6 +8,7 @@ import * as dotenv from "dotenv";
 import path from "path";
 import { IUsername } from "../interfaces/interfaces";
 import { generateKeyPair } from "crypto";
+import checkAuth from "../middleware/checkAuth";
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 // deta setup
@@ -15,7 +16,7 @@ const projectKey: string = process.env.PROJECT_KEY;
 const deta = Deta(projectKey);
 const users = deta.Base("users");
 
-router.get("/getPublic", async (req, res) => {
+router.get("/getPublic", checkAuth, async (req, res) => {
   try {
     const user: IUsername = req.body as IUsername;
 
