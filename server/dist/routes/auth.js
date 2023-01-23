@@ -147,7 +147,12 @@ router.post("/login", function (req, res) { return __awaiter(void 0, void 0, voi
                 return [3, 4];
             case 3:
                 err_2 = _a.sent();
-                res.status(503).json({ error: "Error with the database!" });
+                if (err_2 instanceof Error) {
+                    res.status(503).json({ error: err_2.message });
+                }
+                else {
+                    res.status(503).json({ error: "Unknown Error!" });
+                }
                 return [3, 4];
             case 4: return [2];
         }

@@ -76,7 +76,11 @@ router.post("/login", async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(503).json({ error: "Error with the database!" });
+    if (err instanceof Error) {
+      res.status(503).json({ error: err.message });
+    } else {
+      res.status(503).json({ error: "Unknown Error!" });
+    }
   }
 });
 
