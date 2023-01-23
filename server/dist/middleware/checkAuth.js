@@ -62,45 +62,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-var express_1 = __importDefault(require("express"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var deta_1 = require("deta");
-var router = express_1["default"].Router();
 var dotenv = __importStar(require("dotenv"));
 var path_1 = __importDefault(require("path"));
-dotenv.config({ path: path_1["default"].resolve(__dirname, "../.env") });
-var projectKey = process.env.PROJECT_KEY;
-var deta = (0, deta_1.Deta)(projectKey);
-var testDB = deta.Base("testDB");
-router.get("/info", function (req, res) {
-    res.status(200).send({
-        info: "This is a simple route for doing tests. There is no use for it in the main application."
+function checkAuth(req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var token, jwtData, projectKey, deta, users, username, existing, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    token = req.headers.authorization;
+                    jwtData = jsonwebtoken_1["default"].verify(token, process.env.JWT_SECRET);
+                    dotenv.config({ path: path_1["default"].resolve(__dirname, "../../.env") });
+                    projectKey = process.env.PROJECT_KEY;
+                    deta = (0, deta_1.Deta)(projectKey);
+                    users = deta.Base("users");
+                    username = jwtData.username;
+                    return [4, users.get(username)];
+                case 1:
+                    existing = _a.sent();
+                    if (existing === null)
+                        throw new Error("No such user found");
+                    next();
+                    return [3, 3];
+                case 2:
+                    error_1 = _a.sent();
+                    if (error_1 instanceof Error) {
+                        res.status(401).json({ msg: error_1.message, success: false });
+                    }
+                    else {
+                        res.status(401).json({ msg: "Unknown error occured!", success: false });
+                    }
+                    return [3, 3];
+                case 3: return [2];
+            }
+        });
     });
-});
-router.post("/store", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name, age, toCreate, toInsert;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _a = req.body, name = _a.name, age = _a.age;
-                toCreate = { name: name, age: age };
-                return [4, testDB.put(toCreate)];
-            case 1:
-                toInsert = _b.sent();
-                res.status(200).json({ toInsert: toInsert });
-                return [2];
-        }
-    });
-}); });
-router.get("/readall", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var all;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4, testDB.fetch()];
-            case 1:
-                all = _a.sent();
-                res.status(200).json(all);
-                return [2];
-        }
-    });
-}); });
-exports["default"] = router;
+}
+exports["default"] = checkAuth;

@@ -4,6 +4,7 @@
 
 - [Dokumentation - Private Chatting App](#dokumentation---private-chatting-app)
     - [Inhaltsverzeichnis](#inhaltsverzeichnis)
+  - [Einführung](#einführung)
   - [IPERKA](#iperka)
     - [Informieren](#informieren)
     - [Planen](#planen)
@@ -196,6 +197,8 @@ Deshalb werden wir eine optionale und konstante Abfrage bei der API verwenden, u
 ### Wireframe
 
 ![Wireframe-Anzeige](./wireframe.png "Wireframe")
+
+Damit wir keine Konflikte in Sachen Struktur im Frontend haben, erstellten wir ein Wireframe. Dieses zeigt grob auf, wie die wichtigsten Seiten der Applikation im Frontend aussehen. Es dient als Orientierungshilfe beim Implementieren der Komponenten. Das Design halten wir grunsätzlich über die ganze Applikation hinweg eher simpel und minimalistisch.
 
 ### Features
 
