@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
 import UserListItem from "./UserListItem";
 
 function ChatroomsSearch() {
-  const authToken = sessionStorage.getItem("chatapp_token");
+  const authToken = sessionStorage.getItem("chatapp_token") as string;
   const [usernames, setUsernames] = useState<string[]>([". . ."]);
 
   const getUsers = async () => {
@@ -12,7 +13,7 @@ function ChatroomsSearch() {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: "Bearer " + authToken
+        Authorization: authToken
       }
     });
 
