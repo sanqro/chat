@@ -135,7 +135,7 @@ router.post("/login", function (req, res) { return __awaiter(void 0, void 0, voi
                 return [4, argon2_1["default"].verify(privateKey, loginData.privateKey)];
             case 2:
                 if (_a.sent()) {
-                    token = jsonwebtoken_1["default"].sign({ username: existing }, jwtSecret, { expiresIn: "3600s" });
+                    token = jsonwebtoken_1["default"].sign({ username: existing.key }, jwtSecret, { expiresIn: "3600s" });
                     res.status(200).json({ token: token, success: true });
                 }
                 else {

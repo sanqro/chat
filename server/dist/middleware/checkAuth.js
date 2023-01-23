@@ -73,7 +73,7 @@ function checkAuth(req, res, next) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    token = req.headers.authorization.split(" ")[1];
+                    token = req.headers.authorization;
                     jwtData = jsonwebtoken_1["default"].verify(token, process.env.JWT_SECRET);
                     dotenv.config({ path: path_1["default"].resolve(__dirname, "../../.env") });
                     projectKey = process.env.PROJECT_KEY;
