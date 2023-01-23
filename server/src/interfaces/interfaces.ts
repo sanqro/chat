@@ -27,6 +27,7 @@ export interface IParticipant {
 }
 
 export interface IChatroomData {
+  key: string;
   participantArray?: IParticipant[];
   msgArray?: IEncryptedMessage[];
 }

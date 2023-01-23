@@ -72,23 +72,24 @@ var projectKey = process.env.PROJECT_KEY;
 var deta = (0, deta_1.Deta)(projectKey);
 var chatroom = deta.Base("chatroom");
 router.post("/create", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var participantArray, msgArray, chatroomJsonData, key, index, jsonString, err_1;
+    var participantArray, msgArray, key, index, chatroomJsonData, jsonString, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
                 participantArray = req.body.participants;
                 msgArray = req.body.messages;
-                chatroomJsonData = {
-                    participantArray: participantArray,
-                    msgArray: msgArray
-                };
                 key = "";
                 for (index = 0; index < participantArray.length; index++) {
                     key += participantArray[index].username;
                 }
+                chatroomJsonData = {
+                    key: key,
+                    participantArray: participantArray,
+                    msgArray: msgArray
+                };
                 jsonString = JSON.stringify(chatroomJsonData);
-                return [4, chatroom.insert(key, JSON.parse(jsonString))];
+                return [4, chatroom.insert(JSON.parse(jsonString))];
             case 1:
                 _a.sent();
                 res.status(201).json({
