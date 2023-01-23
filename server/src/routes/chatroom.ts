@@ -24,8 +24,14 @@ router.post("/create", async (req, res) => {
       msgArray: msgArray
     };
 
+    let key = "";
+
+    for (let index = 0; index < participantArray.length; index++) {
+      key += participantArray[index].username as string;
+    }
+
     const jsonString = JSON.stringify(chatroomJsonData);
-    await chatroom.insert(JSON.parse(jsonString));
+    await chatroom.insert(key, JSON.parse(jsonString));
 
     res.status(201).json({
       participants: participantArray,
