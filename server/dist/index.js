@@ -8,6 +8,7 @@ var cors_1 = __importDefault(require("cors"));
 var keys_1 = __importDefault(require("./routes/keys"));
 var auth_1 = __importDefault(require("./routes/auth"));
 var users_1 = __importDefault(require("./routes/users"));
+var chatroom_1 = __importDefault(require("./routes/chatroom"));
 var checkAuth_1 = __importDefault(require("./middleware/checkAuth"));
 var app = (0, express_1["default"])();
 app.use(express_1["default"].json());
@@ -16,6 +17,7 @@ app.disable("etag");
 app.use("/keys", keys_1["default"]);
 app.use("/auth", auth_1["default"]);
 app.use("/users", checkAuth_1["default"], users_1["default"]);
+app.use("/chatroom", chatroom_1["default"]);
 app.get("/", function (req, res) {
     return res.status(200).json({
         msg: "This is the API for following application on GitHub: https://github.com/sanqro/chat"
