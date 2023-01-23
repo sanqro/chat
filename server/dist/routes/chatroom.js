@@ -67,6 +67,7 @@ var deta_1 = require("deta");
 var router = express_1["default"].Router();
 var dotenv = __importStar(require("dotenv"));
 var path_1 = __importDefault(require("path"));
+var checkUser_1 = __importDefault(require("../middleware/checkUser"));
 dotenv.config({ path: path_1["default"].resolve(__dirname, "../../.env") });
 var projectKey = process.env.PROJECT_KEY;
 var deta = (0, deta_1.Deta)(projectKey);
@@ -121,9 +122,40 @@ router.post("/create", function (req, res) { return __awaiter(void 0, void 0, vo
                 return [3, 7];
             case 6:
                 err_1 = _a.sent();
-                res.status(201).json({ error: err_1.message });
+                res.status(409).json({ error: err_1.message });
                 return [3, 7];
             case 7: return [2];
+        }
+    });
+}); });
+router.post("/delete", checkUser_1["default"], function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var key, existing, err_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 4, , 5]);
+                key = req.body.key;
+                existing = chatroom.get(key);
+                if (!(existing === null)) return [3, 1];
+                res.status(409).json({
+                    error: "Failed to delete chatroom. This chatroom does not exist!"
+                });
+                return [3, 3];
+            case 1: return [4, chatroom["delete"](key)];
+            case 2:
+                _a.sent();
+                _a.label = 3;
+            case 3:
+                res.status(201).json({
+                    message: "Deleted chatroom",
+                    success: true
+                });
+                return [3, 5];
+            case 4:
+                err_2 = _a.sent();
+                res.status(409).json({ error: err_2.message });
+                return [3, 5];
+            case 5: return [2];
         }
     });
 }); });

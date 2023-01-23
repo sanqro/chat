@@ -6,6 +6,7 @@ const router = express.Router();
 import * as dotenv from "dotenv";
 import path from "path";
 import { IChatroomData, IEncryptedMessage, IParticipant } from "../interfaces/interfaces";
+import checkUser from "../middleware/checkUser";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
@@ -54,7 +55,28 @@ router.post("/create", async (req, res) => {
       success: true
     });
   } catch (err) {
-    res.status(201).json({ error: err.message });
+    res.status(409).json({ error: err.message });
+  }
+});
+
+router.post("/delete", checkUser, async (req, res) => {
+  try {
+    const key = req.body.key;
+    const existing = chatroom.get(key);
+
+    if (existing === null) {
+      res.status(409).json({
+        error: "Failed to delete chatroom. This chatroom does not exist!"
+      });
+    } else {
+      await chatroom.delete(key);
+    }
+    res.status(201).json({
+      message: "Deleted chatroom",
+      success: true
+    });
+  } catch (err) {
+    res.status(409).json({ error: err.message });
   }
 });
 
