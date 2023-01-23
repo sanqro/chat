@@ -20,14 +20,11 @@ router.post("/create", async (req, res) => {
   try {
     const participantArray: IParticipant[] = req.body.participants;
     const msgArray: IEncryptedMessage[] = req.body.messages;
-    let participantArraySorted: IParticipant[] = new Array(0);
 
-    if (participantArray[0].username.localeCompare(participantArray[1].username) < 0) {
-      participantArraySorted = participantArray;
-    } else if (participantArray[0].username.localeCompare(participantArray[1].username) > 0) {
-      participantArraySorted[0] = participantArray[1];
-      participantArraySorted[1] = participantArray[0];
-    }
+    // Bascially copied this function from here: dev.to/slimpython/sort-array-of-json-object-by-key-value-easily-with-javascript-3hke
+    const participantArraySorted: IParticipant[] = participantArray.sort((a, b) => {
+      if (a.username < b.username) return -1;
+    });
 
     let key = "";
 

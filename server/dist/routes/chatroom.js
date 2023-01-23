@@ -80,14 +80,10 @@ router.post("/create", function (req, res) { return __awaiter(void 0, void 0, vo
                 _a.trys.push([0, 6, , 7]);
                 participantArray = req.body.participants;
                 msgArray = req.body.messages;
-                participantArraySorted = new Array(0);
-                if (participantArray[0].username.localeCompare(participantArray[1].username) < 0) {
-                    participantArraySorted = participantArray;
-                }
-                else if (participantArray[0].username.localeCompare(participantArray[1].username) > 0) {
-                    participantArraySorted[0] = participantArray[1];
-                    participantArraySorted[1] = participantArray[0];
-                }
+                participantArraySorted = participantArray.sort(function (a, b) {
+                    if (a.username < b.username)
+                        return -1;
+                });
                 key = "";
                 index = 0;
                 _a.label = 1;
