@@ -71,18 +71,35 @@ dotenv.config({ path: path_1["default"].resolve(__dirname, "../../.env") });
 var projectKey = process.env.PROJECT_KEY;
 var deta = (0, deta_1.Deta)(projectKey);
 var chatroom = deta.Base("chatroom");
+var users = deta.Base("users");
 router.post("/create", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var participantArray, msgArray, key, index, chatroomJsonData, jsonString, err_1;
+    var participantArray, msgArray, key, index, existing, chatroomJsonData, jsonString, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
+                _a.trys.push([0, 6, , 7]);
                 participantArray = req.body.participants;
                 msgArray = req.body.messages;
                 key = "";
-                for (index = 0; index < participantArray.length; index++) {
-                    key += participantArray[index].username;
+                index = 0;
+                _a.label = 1;
+            case 1:
+                if (!(index < participantArray.length)) return [3, 4];
+                key += participantArray[index].username;
+                return [4, users.get(participantArray[index].username)];
+            case 2:
+                existing = _a.sent();
+                if (existing === null) {
+                    res.status(409).json({
+                        error: "Failed to create the chatroom. There is no such user!"
+                    });
+                    return [2, false];
                 }
+                _a.label = 3;
+            case 3:
+                index++;
+                return [3, 1];
+            case 4:
                 chatroomJsonData = {
                     key: key,
                     participantArray: participantArray,
@@ -90,19 +107,19 @@ router.post("/create", function (req, res) { return __awaiter(void 0, void 0, vo
                 };
                 jsonString = JSON.stringify(chatroomJsonData);
                 return [4, chatroom.insert(JSON.parse(jsonString))];
-            case 1:
+            case 5:
                 _a.sent();
                 res.status(201).json({
                     participants: participantArray,
                     msgArray: msgArray,
                     success: true
                 });
-                return [3, 3];
-            case 2:
+                return [3, 7];
+            case 6:
                 err_1 = _a.sent();
                 res.status(201).json({ error: err_1.message });
-                return [3, 3];
-            case 3: return [2];
+                return [3, 7];
+            case 7: return [2];
         }
     });
 }); });

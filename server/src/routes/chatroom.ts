@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import express from "express";
 import { Deta } from "deta";
 const router = express.Router();
@@ -13,6 +14,7 @@ dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 const projectKey: string = process.env.PROJECT_KEY;
 const deta = Deta(projectKey);
 const chatroom = deta.Base("chatroom");
+const users = deta.Base("users");
 
 router.post("/create", async (req, res) => {
   try {
@@ -23,6 +25,14 @@ router.post("/create", async (req, res) => {
 
     for (let index = 0; index < participantArray.length; index++) {
       key += participantArray[index].username as string;
+
+      const existing = await users.get(participantArray[index].username);
+      if (existing === null) {
+        res.status(409).json({
+          error: "Failed to create the chatroom. There is no such user!"
+        });
+        return false;
+      }
     }
 
     const chatroomJsonData: IChatroomData = {
