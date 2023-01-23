@@ -73,20 +73,28 @@ var deta = (0, deta_1.Deta)(projectKey);
 var chatroom = deta.Base("chatroom");
 var users = deta.Base("users");
 router.post("/create", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var participantArray, msgArray, key, index, existing, chatroomJsonData, jsonString, err_1;
+    var participantArray, msgArray, participantArraySorted, key, index, existing, chatroomJsonData, jsonString, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 6, , 7]);
                 participantArray = req.body.participants;
                 msgArray = req.body.messages;
+                participantArraySorted = new Array(0);
+                if (participantArray[0].username.localeCompare(participantArray[1].username) < 0) {
+                    participantArraySorted = participantArray;
+                }
+                else if (participantArray[0].username.localeCompare(participantArray[1].username) > 0) {
+                    participantArraySorted[0] = participantArray[1];
+                    participantArraySorted[1] = participantArray[0];
+                }
                 key = "";
                 index = 0;
                 _a.label = 1;
             case 1:
-                if (!(index < participantArray.length)) return [3, 4];
-                key += participantArray[index].username;
-                return [4, users.get(participantArray[index].username)];
+                if (!(index < participantArraySorted.length)) return [3, 4];
+                key += participantArraySorted[index].username;
+                return [4, users.get(participantArraySorted[index].username)];
             case 2:
                 existing = _a.sent();
                 if (existing === null) {
@@ -102,7 +110,7 @@ router.post("/create", function (req, res) { return __awaiter(void 0, void 0, vo
             case 4:
                 chatroomJsonData = {
                     key: key,
-                    participantArray: participantArray,
+                    participantArray: participantArraySorted,
                     msgArray: msgArray
                 };
                 jsonString = JSON.stringify(chatroomJsonData);
@@ -110,7 +118,7 @@ router.post("/create", function (req, res) { return __awaiter(void 0, void 0, vo
             case 5:
                 _a.sent();
                 res.status(201).json({
-                    participants: participantArray,
+                    participants: participantArraySorted,
                     msgArray: msgArray,
                     success: true
                 });

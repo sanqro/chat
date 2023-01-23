@@ -20,13 +20,21 @@ router.post("/create", async (req, res) => {
   try {
     const participantArray: IParticipant[] = req.body.participants;
     const msgArray: IEncryptedMessage[] = req.body.messages;
+    let participantArraySorted: IParticipant[] = new Array(0);
+
+    if (participantArray[0].username.localeCompare(participantArray[1].username) < 0) {
+      participantArraySorted = participantArray;
+    } else if (participantArray[0].username.localeCompare(participantArray[1].username) > 0) {
+      participantArraySorted[0] = participantArray[1];
+      participantArraySorted[1] = participantArray[0];
+    }
 
     let key = "";
 
-    for (let index = 0; index < participantArray.length; index++) {
-      key += participantArray[index].username as string;
+    for (let index = 0; index < participantArraySorted.length; index++) {
+      key += participantArraySorted[index].username;
 
-      const existing = await users.get(participantArray[index].username);
+      const existing = await users.get(participantArraySorted[index].username);
       if (existing === null) {
         res.status(409).json({
           error: "Failed to create the chatroom. There is no such user!"
@@ -37,7 +45,7 @@ router.post("/create", async (req, res) => {
 
     const chatroomJsonData: IChatroomData = {
       key: key,
-      participantArray: participantArray,
+      participantArray: participantArraySorted,
       msgArray: msgArray
     };
 
@@ -45,7 +53,7 @@ router.post("/create", async (req, res) => {
     await chatroom.insert(JSON.parse(jsonString));
 
     res.status(201).json({
-      participants: participantArray,
+      participants: participantArraySorted,
       msgArray: msgArray,
       success: true
     });
