@@ -122,7 +122,7 @@ router.post("/create", function (req, res) { return __awaiter(void 0, void 0, vo
                 return [3, 7];
             case 6:
                 err_1 = _a.sent();
-                res.status(409).json({ error: err_1.message });
+                res.status(409).json({ error: err_1.message, success: false });
                 return [3, 7];
             case 7: return [2];
         }
@@ -153,9 +153,49 @@ router.post("/delete", checkUser_1["default"], function (req, res) { return __aw
                 return [3, 5];
             case 4:
                 err_2 = _a.sent();
-                res.status(409).json({ error: err_2.message });
+                res.status(409).json({ error: err_2.message, success: false });
                 return [3, 5];
             case 5: return [2];
+        }
+    });
+}); });
+router.post("/send", checkUser_1["default"], function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var newMsg, key, existing, currentMsg, updateRes, err_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                newMsg = req.body.message;
+                key = req.body.key;
+                return [4, chatroom.get(key)];
+            case 1:
+                existing = _a.sent();
+                if (existing === null) {
+                    res.status(409).json({
+                        error: "Failed to send message! This chatroom does not exist!"
+                    });
+                    return [2, false];
+                }
+                currentMsg = existing.msgArray;
+                currentMsg.push(newMsg);
+                existing.msgArray = currentMsg;
+                delete existing.key;
+                return [4, chatroom.update(existing, key)];
+            case 2:
+                updateRes = _a.sent();
+                if (updateRes !== null) {
+                    throw new Error("There was an issue sending your message!");
+                }
+                res.status(201).json({
+                    message: "Sent message!",
+                    success: true
+                });
+                return [3, 4];
+            case 3:
+                err_3 = _a.sent();
+                res.status(409).json({ error: err_3.message, success: false });
+                return [3, 4];
+            case 4: return [2];
         }
     });
 }); });

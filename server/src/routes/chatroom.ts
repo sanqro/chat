@@ -118,4 +118,40 @@ router.post("/send", checkUser, async (req, res) => {
   }
 });
 
+router.post("/send", checkUser, async (req, res) => {
+  try {
+    const newMsg: IEncryptedMessage = req.body.message;
+    const key: string = req.body.key;
+
+    const existing: ObjectType = await chatroom.get(key);
+
+    if (existing === null) {
+      res.status(409).json({
+        error: "Failed to send message! This chatroom does not exist!"
+      });
+      return false;
+    }
+
+    const currentMsg = existing.msgArray;
+    (currentMsg as IEncryptedMessage[]).push(newMsg);
+
+    existing.msgArray = currentMsg;
+
+    delete existing.key;
+
+    const updateRes = await chatroom.update(existing, key);
+
+    if (updateRes !== null) {
+      throw new Error("There was an issue sending your message!");
+    }
+
+    res.status(201).json({
+      message: "Sent message!",
+      success: true
+    });
+  } catch (err) {
+    res.status(409).json({ error: err.message, success: false });
+  }
+});
+
 export default router;

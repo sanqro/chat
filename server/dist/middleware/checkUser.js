@@ -74,7 +74,7 @@ function checkUser(req, res, next) {
                 token = req.headers.authorization;
                 jwtData = jsonwebtoken_1["default"].verify(token, process.env.JWT_SECRET);
                 username = jwtData.username;
-                if (username !== req.body.username)
+                if (username !== req.body.message.author)
                     throw new Error("Username in token and username in request are not the same🤨");
                 next();
             }
