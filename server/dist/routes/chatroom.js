@@ -74,7 +74,7 @@ var deta = (0, deta_1.Deta)(projectKey);
 var chatroom = deta.Base("chatroom");
 var users = deta.Base("users");
 router.post("/create", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var participantArray, msgArray, participantArraySorted, key, index, existing, chatroomJsonData, jsonString, err_1;
+    var participantArray, msgArray, participantArraySorted, key, index, existing, chatroomJsonData, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -110,8 +110,7 @@ router.post("/create", function (req, res) { return __awaiter(void 0, void 0, vo
                     participantArray: participantArraySorted,
                     msgArray: msgArray
                 };
-                jsonString = JSON.stringify(chatroomJsonData);
-                return [4, chatroom.insert(JSON.parse(jsonString))];
+                return [4, chatroom.insert(chatroomJsonData)];
             case 5:
                 _a.sent();
                 res.status(201).json({
@@ -196,6 +195,36 @@ router.post("/send", checkUser_1["default"], function (req, res) { return __awai
                 res.status(409).json({ error: err_3.message, success: false });
                 return [3, 4];
             case 4: return [2];
+        }
+    });
+}); });
+router.post("/getMessages", checkUser_1["default"], function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var key, existing, err_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                key = req.body.key;
+                return [4, chatroom.get(key)];
+            case 1:
+                existing = _a.sent();
+                if (existing === null) {
+                    res.status(409).json({
+                        error: "Failed to get the messages! This chatroom does not exist!"
+                    });
+                    return [2, false];
+                }
+                delete existing.key && existing.participantArray;
+                res.status(201).json({
+                    messages: existing.msgArray,
+                    success: true
+                });
+                return [3, 3];
+            case 2:
+                err_4 = _a.sent();
+                res.status(409).json({ error: err_4.message, success: false });
+                return [3, 3];
+            case 3: return [2];
         }
     });
 }); });
