@@ -7,6 +7,7 @@ import * as dotenv from "dotenv";
 import path from "path";
 import { IChatroomData, IEncryptedMessage, IParticipant } from "../interfaces/interfaces";
 import checkUser from "../middleware/checkUser";
+import { ObjectType } from "deta/dist/types/types/basic";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
@@ -21,7 +22,8 @@ router.post("/create", async (req, res) => {
     const participantArray: IParticipant[] = req.body.participants;
     const msgArray: IEncryptedMessage[] = req.body.messages;
 
-    // Bascially copied this function from here: dev.to/slimpython/sort-array-of-json-object-by-key-value-easily-with-javascript-3hke
+    // Bascially copied this function from here:
+    //dev.to/slimpython/sort-array-of-json-object-by-key-value-easily-with-javascript-3hke
     const participantArraySorted: IParticipant[] = participantArray.sort((a, b) => {
       if (a.username < b.username) return -1;
     });
@@ -55,7 +57,7 @@ router.post("/create", async (req, res) => {
       success: true
     });
   } catch (err) {
-    res.status(409).json({ error: err.message });
+    res.status(409).json({ error: err.message, success: false });
   }
 });
 
@@ -76,7 +78,43 @@ router.post("/delete", checkUser, async (req, res) => {
       success: true
     });
   } catch (err) {
-    res.status(409).json({ error: err.message });
+    res.status(409).json({ error: err.message, success: false });
+  }
+});
+
+router.post("/send", checkUser, async (req, res) => {
+  try {
+    const newMsg: IEncryptedMessage = req.body.message;
+    const key: string = req.body.key;
+
+    const existing: ObjectType = await chatroom.get(key);
+
+    if (existing === null) {
+      res.status(409).json({
+        error: "Failed to send message! This chatroom does not exist!"
+      });
+      return false;
+    }
+
+    const currentMsg = existing.msgArray;
+    (currentMsg as IEncryptedMessage[]).push(newMsg);
+
+    existing.msgArray = currentMsg;
+
+    delete existing.key;
+
+    const updateRes = await chatroom.update(existing, key);
+
+    if (updateRes !== null) {
+      throw new Error("There was an issue sending your message!");
+    }
+
+    res.status(201).json({
+      message: "Sent message!",
+      success: true
+    });
+  } catch (err) {
+    res.status(409).json({ error: err.message, success: false });
   }
 });
 

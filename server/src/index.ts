@@ -7,7 +7,9 @@ import cors from "cors";
 import keys from "./routes/keys";
 import auth from "./routes/auth";
 import users from "./routes/users";
+import chatroom from "./routes/chatroom";
 import checkAuth from "./middleware/checkAuth";
+import checkUser from "./middleware/checkUser";
 
 // express setup
 const app = express();
@@ -19,6 +21,7 @@ app.disable("etag"); // disables automatic caching
 app.use("/keys", keys);
 app.use("/auth", auth);
 app.use("/users", checkAuth, users);
+app.use("/chatroom", checkUser, chatroom);
 
 // root endpoint
 app.get("/", (req, res) =>

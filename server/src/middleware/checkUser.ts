@@ -15,7 +15,7 @@ export default async function checkUser(req: any, res: any, next: any) {
     // check if user exists
     const username: string = (jwtData as IJWTPayload).username;
 
-    if (username !== req.body.username)
+    if (username !== req.body.message.author)
       throw new Error("Username in token and username in request are not the same🤨");
 
     next();
