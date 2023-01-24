@@ -1,3 +1,4 @@
+import { ObjectType } from "deta/dist/types/types/basic";
 import { JwtPayload } from "jsonwebtoken";
 
 export interface IRegistrationFormData {
@@ -15,19 +16,18 @@ export interface IUsername {
   username: string;
   publicKey?: string;
 }
-export interface IEncryptedMessage {
+export interface IEncryptedMessage extends ObjectType {
   msg: string;
   author: string;
-  dateTime: Date;
+  dateTime: string;
 }
 
-export interface IParticipant {
+export interface IParticipant extends ObjectType {
   username: string;
   publicKey: string;
 }
 
 export interface IChatroomData {
-  key: string;
   participantArray?: IParticipant[];
   msgArray?: IEncryptedMessage[];
 }
