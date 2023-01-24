@@ -28,7 +28,6 @@ export interface IParticipant extends ObjectType {
 }
 
 export interface IChatroomData {
-  key: string;
   participantArray?: IParticipant[];
   msgArray?: IEncryptedMessage[];
 }

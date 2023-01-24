@@ -5,7 +5,7 @@ const router = express.Router();
 // dotenv variable setup
 import * as dotenv from "dotenv";
 import path from "path";
-import { IChatroomData, IEncryptedMessage, IParticipant } from "../interfaces/interfaces";
+import { IEncryptedMessage, IParticipant } from "../interfaces/interfaces";
 import checkUser from "../middleware/checkUser";
 import { ObjectType } from "deta/dist/types/types/basic";
 
@@ -42,14 +42,13 @@ router.post("/create", async (req, res) => {
       }
     }
 
-    const chatroomJsonData: IChatroomData = {
+    const chatroomJsonData = {
       key: key,
       participantArray: participantArraySorted,
       msgArray: msgArray
     };
 
-    const jsonString = JSON.stringify(chatroomJsonData);
-    await chatroom.insert(JSON.parse(jsonString));
+    await chatroom.insert(chatroomJsonData);
 
     res.status(201).json({
       participants: participantArraySorted,
@@ -118,35 +117,23 @@ router.post("/send", checkUser, async (req, res) => {
   }
 });
 
-router.post("/send", checkUser, async (req, res) => {
+router.post("/getMessages", checkUser, async (req, res) => {
   try {
-    const newMsg: IEncryptedMessage = req.body.message;
     const key: string = req.body.key;
 
     const existing: ObjectType = await chatroom.get(key);
 
     if (existing === null) {
       res.status(409).json({
-        error: "Failed to send message! This chatroom does not exist!"
+        error: "Failed to get the messages! This chatroom does not exist!"
       });
       return false;
     }
 
-    const currentMsg = existing.msgArray;
-    (currentMsg as IEncryptedMessage[]).push(newMsg);
-
-    existing.msgArray = currentMsg;
-
-    delete existing.key;
-
-    const updateRes = await chatroom.update(existing, key);
-
-    if (updateRes !== null) {
-      throw new Error("There was an issue sending your message!");
-    }
+    delete existing.key && existing.participantArray;
 
     res.status(201).json({
-      message: "Sent message!",
+      messages: existing.msgArray,
       success: true
     });
   } catch (err) {

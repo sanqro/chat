@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
-import { IJWTPayload } from "../interfaces/interfaces";
+import { IChatroomData, IJWTPayload } from "../interfaces/interfaces";
 import * as dotenv from "dotenv";
 import path from "path";
+import { Deta } from "deta";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function checkUser(req: any, res: any, next: any) {
@@ -12,11 +13,22 @@ export default async function checkUser(req: any, res: any, next: any) {
     const token: string = req.headers.authorization;
     const jwtData = jwt.verify(token, process.env.JWT_SECRET);
 
+    // deta setup
+    const projectKey: string = process.env.PROJECT_KEY;
+    const deta = Deta(projectKey);
+    const chatroomTable = deta.Base("chatroom");
+
     // check if user exists
     const username: string = (jwtData as IJWTPayload).username;
 
-    if (username !== req.body.message.author)
-      throw new Error("Username in token and username in request are not the same🤨");
+    const chatroom: IChatroomData = await chatroomTable.get(req.body.key);
+
+    if (
+      chatroom.participantArray[0].username != username &&
+      chatroom.participantArray[1].username != username
+    ) {
+      throw new Error("Username in token and username in requested data are not the same 🤨");
+    }
 
     next();
   } catch (error) {
