@@ -3,6 +3,7 @@ import { IJWTPayload } from "../interfaces/interfaces";
 import * as dotenv from "dotenv";
 import path from "path";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function checkUser(req: any, res: any, next: any) {
   try {
     // dotenv variable setup
