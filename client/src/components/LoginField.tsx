@@ -30,7 +30,6 @@ function LoginField() {
     });
     const loginJson = await loginResponse.json();
     if (loginJson.success) {
-      alert("Login Successful!");
       sessionStorage.setItem("chatapp_token", loginJson.token);
       navigate("/chat");
     } else {
@@ -41,7 +40,7 @@ function LoginField() {
   const verifyInput = () => {
     try {
       if (username.length < 1) throw new Error("Please enter a valid username.");
-      if (privateKey.length < 50) throw new Error("Please enter a valid private key.");
+      if (privateKey.length < 1) throw new Error("Please enter a valid private key.");
       return true;
     } catch (error) {
       error instanceof Error ? alert(error.message) : alert("Unknown error!");
