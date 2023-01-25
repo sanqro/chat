@@ -9,9 +9,28 @@ function OpenChatroomButton(props: ISearchResult) {
   const clickHandler = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    alert(props.username);
-    // do something
+    sessionStorage.setItem("current_chat", chatroomKey());
   };
+
+  const chatroomKey = () => {
+    try {
+      const loggedInAs = sessionStorage.getItem("logged_in_as");
+      const unameArray = [loggedInAs, props.username].sort();
+
+      let key = "";
+      for (const uname in unameArray) {
+        key += uname;
+      }
+
+      return key;
+    } catch (error) {
+      error instanceof Error
+        ? console.error(error.message)
+        : console.error("Unknown error occured!");
+      return "chatroom_key_error";
+    }
+  };
+
   return (
     <button
       onClick={clickHandler}
