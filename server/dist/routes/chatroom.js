@@ -171,7 +171,8 @@ router.post("/send", checkUser_1["default"], function (req, res) { return __awai
                 existing = _a.sent();
                 if (existing === null) {
                     res.status(409).json({
-                        error: "Failed to send message! This chatroom does not exist!"
+                        error: "Failed to send message! This chatroom does not exist!",
+                        success: false
                     });
                     return [2, false];
                 }
@@ -192,7 +193,9 @@ router.post("/send", checkUser_1["default"], function (req, res) { return __awai
                 return [3, 4];
             case 3:
                 err_3 = _a.sent();
-                res.status(409).json({ error: err_3.message, success: false });
+                err_3 instanceof Error
+                    ? res.status(409).json({ message: err_3.message, success: false })
+                    : res.status(409).json({ message: "Unknown Error occured!", success: false });
                 return [3, 4];
             case 4: return [2];
         }
