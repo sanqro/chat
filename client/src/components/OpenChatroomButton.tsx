@@ -2,12 +2,12 @@ import React, { MouseEvent } from "react";
 import { ISearchResult } from "../interfaces/props";
 
 function OpenChatroomButton(props: ISearchResult) {
+  if (props.username === ". . ." || props.username === "No such user found.") {
+    return <></>;
+  }
+
   const clickHandler = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    if (props.username === ". . .") {
-      return;
-    }
 
     alert(props.username);
     // do something
