@@ -6,8 +6,8 @@ import SubmitButton from "./SubmitButton";
 
 function RegistrationField() {
   let username: string;
-  let [privateKey, setPrivateKey] = useState("");
-  let [publicKey, setPublicKey] = useState("");
+  const [privateKey, setPrivateKey] = useState<string>("");
+  const [publicKey, setPublicKey] = useState<string>("");
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,8 +23,8 @@ function RegistrationField() {
       method: "GET"
     });
     const responseJson = await response.json();
-    setPrivateKey((privateKey = convertToOneLine(responseJson.privateKey)));
-    setPublicKey((publicKey = responseJson.publicKey));
+    setPrivateKey(convertToOneLine(responseJson.privateKey));
+    setPublicKey(responseJson.publicKey);
   };
 
   const register = async () => {
