@@ -90,7 +90,8 @@ router.post("/send", checkUser, async (req, res) => {
 
     if (existing === null) {
       res.status(409).json({
-        error: "Failed to send message! This chatroom does not exist!"
+        error: "Failed to send message! This chatroom does not exist!",
+        success: false
       });
       return false;
     }
@@ -113,7 +114,9 @@ router.post("/send", checkUser, async (req, res) => {
       success: true
     });
   } catch (err) {
-    res.status(409).json({ error: err.message, success: false });
+    err instanceof Error
+      ? res.status(409).json({ message: err.message, success: false })
+      : res.status(409).json({ message: "Unknown Error occured!", success: false });
   }
 });
 

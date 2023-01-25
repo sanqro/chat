@@ -31,6 +31,7 @@ function LoginField() {
     const loginJson = await loginResponse.json();
     if (loginJson.success) {
       sessionStorage.setItem("chatapp_token", loginJson.token);
+      sessionStorage.setItem("logged_in_as", username);
       navigate("/chat");
     } else {
       alert("Login Failed: " + loginJson.error);
