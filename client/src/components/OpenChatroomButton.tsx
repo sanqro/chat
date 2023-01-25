@@ -18,7 +18,7 @@ function OpenChatroomButton(props: ISearchResult) {
       const unameArray = [loggedInAs, props.username].sort();
 
       let key = "";
-      for (const uname in unameArray) {
+      for (const uname of unameArray) {
         key += uname;
       }
 
