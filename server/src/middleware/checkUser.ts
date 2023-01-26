@@ -22,6 +22,7 @@ export default async function checkUser(req: any, res: any, next: any) {
     const username: string = (jwtData as IJWTPayload).username;
 
     const chatroom: IChatroomData = await chatroomTable.get(req.body.key);
+    if (chatroom === null) throw new Error("This chatroom does not exist yet!");
 
     if (
       chatroom.participantArray[0].username != username &&

@@ -83,6 +83,8 @@ function checkUser(req, res, next) {
                     return [4, chatroomTable.get(req.body.key)];
                 case 1:
                     chatroom = _a.sent();
+                    if (chatroom === null)
+                        throw new Error("This chatroom does not exist yet!");
                     if (chatroom.participantArray[0].username != username &&
                         chatroom.participantArray[1].username != username) {
                         throw new Error("Username in token and username in requested data are not the same 🤨");
