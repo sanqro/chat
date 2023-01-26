@@ -73,14 +73,14 @@ dotenv.config({ path: path_1["default"].resolve(__dirname, "../../.env") });
 var projectKey = process.env.PROJECT_KEY;
 var deta = (0, deta_1.Deta)(projectKey);
 var users = deta.Base("users");
-router.get("/getPublic", checkAuth_1["default"], function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, existing, publicKey, err_1;
+router.get("/getPublic/:username", checkAuth_1["default"], function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var username, existing, publicKey, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                user = req.body;
-                return [4, users.get(user.username)];
+                username = req.params.username;
+                return [4, users.get(username)];
             case 1:
                 existing = _a.sent();
                 if (existing === null) {
@@ -91,7 +91,7 @@ router.get("/getPublic", checkAuth_1["default"], function (req, res) { return __
                 }
                 else {
                     publicKey = existing.publicKey;
-                    res.status(201).json(publicKey);
+                    res.status(201).json({ publicKey: publicKey });
                 }
                 return [3, 3];
             case 2:
