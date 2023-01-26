@@ -132,7 +132,7 @@ const Messages = () => {
   };
 
   return (
-    <div className="grow bg-black">
+    <div className="grow overflow-y-scroll">
       <ul className="flex flex-col justify-start">{msgBoxList}</ul>
     </div>
   );
