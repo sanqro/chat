@@ -68,7 +68,7 @@ var path_1 = __importDefault(require("path"));
 var deta_1 = require("deta");
 function checkUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var token, jwtData, projectKey, deta, chatroomTable, username, chatroom, error_1;
+        var token, jwtData, projectKey, deta, chatroomTable, username, chatroom, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -90,13 +90,10 @@ function checkUser(req, res, next) {
                     next();
                     return [3, 3];
                 case 2:
-                    error_1 = _a.sent();
-                    if (error_1 instanceof Error) {
-                        res.status(401).json({ msg: error_1.message, success: false });
-                    }
-                    else {
-                        res.status(401).json({ msg: "Unknown error occured!", success: false });
-                    }
+                    err_1 = _a.sent();
+                    err_1 instanceof Error
+                        ? res.status(409).json({ message: err_1.message, success: false })
+                        : res.status(409).json({ message: "Unknown Error occured!", success: false });
                     return [3, 3];
                 case 3: return [2];
             }

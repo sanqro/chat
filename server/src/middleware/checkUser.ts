@@ -31,11 +31,9 @@ export default async function checkUser(req: any, res: any, next: any) {
     }
 
     next();
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(401).json({ msg: error.message, success: false });
-    } else {
-      res.status(401).json({ msg: "Unknown error occured!", success: false });
-    }
+  } catch (err) {
+    err instanceof Error
+      ? res.status(409).json({ message: err.message, success: false })
+      : res.status(409).json({ message: "Unknown Error occured!", success: false });
   }
 }
