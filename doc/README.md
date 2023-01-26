@@ -4,7 +4,6 @@
 
 - [Dokumentation - Private Chatting App](#dokumentation---private-chatting-app)
     - [Inhaltsverzeichnis](#inhaltsverzeichnis)
-  - [Einführung](#einführung)
   - [IPERKA](#iperka)
     - [Informieren](#informieren)
     - [Planen](#planen)
@@ -127,6 +126,22 @@ Auflistung der Tools und Plugins (inkl. Konfiguration)
 | 21       | M               | funk.             | Nutzernamen dürfen nicht Redundant in der Datenbank vorhanden sein.                                                                                                                                                |
 
 ## Arbeitspakete
+
+> 1x Arbeitspaket = 45 Minuten (eine Schullektion)
+> 1x Sitzung = 5x Arbeitspakete (ein Halbtag)
+>
+> 5x Sitzungen * 5x Arbeitspakete * 2x Gruppenmitglieder = **50 Arbeitspakete + Portfolioeintrag 8 (4 / Gruppenmitglied)**
+
+
+| Nr. | Frist    | Beschreibung                                                              | Zeit in Arbeitspaketen (geplant) |
+| --- | -------- | ------------------------------------------------------------------------- | :------------------------------- |
+| 1   | 16.12.22 | Informieren (von IPERKA)                                                  | 10                               |
+| 2   | 23.12.22 | Planen und Entscheiden (von IPERKA)                                       | 4                                |
+| 3   | 23.12.22 | Realisieren (von IPERKA) der Anforderungen Nr. 1 bis 6                    | 6                                |
+| 4   | 13.01.23 | Realisieren (von IPERKA) der Anforderungen Nr. 7 bis 15, aber ohne Nr. 13 | 10                               |
+| 5   | 20.01.23 | Realisieren (von IPERKA) der Anforderungen Nr. 13 und Nr. 16 bis 21       | 10                               |
+| 6   | 27.01.23 | Kontrollieren und Auswerten (von IPERKA)                                  | 10                               |
+| 7   | 03.02.23 | Portfolioeintrag fertigstellen                                            | 8                                |
 
 ## Ausführung
 
