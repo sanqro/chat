@@ -20,7 +20,7 @@ const users = deta.Base("users");
 router.post("/create", async (req, res) => {
   try {
     const participantArray: IParticipant[] = req.body.participants;
-    const msgArray: IEncryptedMessage[] = req.body.messages;
+    const msgArray: IEncryptedMessage[] | null = req.body.messages;
 
     // Bascially copied this function from here:
     //dev.to/slimpython/sort-array-of-json-object-by-key-value-easily-with-javascript-3hke
