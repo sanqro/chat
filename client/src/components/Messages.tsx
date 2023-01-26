@@ -16,8 +16,23 @@ const Messages = () => {
   const loggedInAs = sessionStorage.getItem("logged_in_as") as string;
 
   const fetchMessages = async () => {
-    if (currentChat) {
-      const response = await fetch("http://localhost:3001/chatroom/getMessages", {
+    {
+      const chatPartner = currentChat.replace(loggedInAs, "");
+      const publicKeyA = (await getPublicKey(loggedInAs)) as string;
+      const publicKeyB = (await getPublicKey(chatPartner)) as string;
+      const participantArray: IParticipant[] = [
+        {
+          username: loggedInAs,
+          publicKey: publicKeyA
+        },
+        {
+          username: chatPartner,
+          publicKey: publicKeyB
+        }
+      ];
+      await createChatroom(participantArray);
+
+      const response = await fetch("https://chatapp.deta.dev/chatroom/getMessages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,30 +46,9 @@ const Messages = () => {
 
       try {
         const responseJson = await response.json();
-        setMessages(responseJson.messages);
 
-        if (responseJson.error.includes("This chatroom does not exist")) {
-          const chatPartner = currentChat.replace(loggedInAs, "");
-
-          const publicKeyA = (await getPublicKey(loggedInAs)) as string;
-          const publicKeyB = (await getPublicKey(chatPartner)) as string;
-
-          const publicKeyArray: string[] = [publicKeyA, publicKeyB];
-
-          const usernameArray: string[] = [loggedInAs, chatPartner];
-
-          const participantArray: IParticipant[] = [
-            {
-              username: usernameArray[0],
-              publicKey: publicKeyArray[0]
-            },
-            {
-              username: usernameArray[1],
-              publicKey: publicKeyArray[1]
-            }
-          ];
-
-          createChatroom(participantArray);
+        if (responseJson.messages) {
+          setMessages(responseJson.messages);
         }
       } catch (error) {
         error instanceof Error
@@ -78,22 +72,29 @@ const Messages = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      fetchMessages();
-    }, 1000);
+      magic();
+    }, 3000);
 
     return () => clearInterval(intervalId);
   }, []);
 
+  // THIS IS EVIL
+  const magic = async () => {
+    if (currentChat) await fetchMessages();
+  };
+
   const getPublicKey = async (username: string) => {
+    const response: Response = await fetch("http://localhost:3001/keys/getPublic/" + username, {
+      method: "GET",
+      headers: {
+        Authorization: authToken,
+        "Content-Type": "application/json"
+      }
+    });
+
     try {
-      const response = await fetch("http://localhost:3001/keys/getPublic/" + username, {
-        method: "GET",
-        headers: {
-          Authorization: authToken,
-          "Content-Type": "application/json"
-        }
-      });
-      return (await response.json()) as string;
+      const responseJson = await response.json();
+      return responseJson.publicKey as string;
     } catch (error) {
       error instanceof Error
         ? console.error(error.message)
@@ -103,14 +104,24 @@ const Messages = () => {
 
   const createChatroom = async (participantArray: IParticipant[]) => {
     try {
-      await fetch("https://chatapp.deta.dev/chatroom/create", {
+      const welcomeMessage: IEncryptedMessage[] = [
+        {
+          msg: "Welcome to your brand new chatroom!",
+          author: "System",
+          dateTime: Date.now()
+        }
+      ];
+
+      await fetch("http://localhost:3001/chatroom/create", {
         method: "POST",
         headers: {
           Authorization: authToken,
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Accept: "application/json"
         },
         body: JSON.stringify({
-          participants: participantArray
+          participants: participantArray,
+          messages: welcomeMessage
         })
       });
     } catch (error) {

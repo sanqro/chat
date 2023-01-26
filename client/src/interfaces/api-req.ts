@@ -14,3 +14,8 @@ export interface IEncryptedMessage {
   author: string;
   dateTime: number;
 }
+
+export interface IParticipant {
+  username: string;
+  publicKey: string;
+}
