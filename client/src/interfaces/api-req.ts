@@ -12,5 +12,5 @@ export interface IRegistrationFormData {
 export interface IEncryptedMessage {
   msg: string;
   author: string;
-  dateTime: string;
+  dateTime: number;
 }

@@ -13,7 +13,7 @@ function SendMessageButton() {
     const msgObj: IEncryptedMessage = {
       msg: (document.getElementById("messageInput") as HTMLInputElement).value,
       author: msgAuthor as string,
-      dateTime: Date.now().toString()
+      dateTime: Date.now()
     };
 
     // check if there is a message to send
