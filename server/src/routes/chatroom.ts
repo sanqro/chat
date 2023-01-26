@@ -20,7 +20,7 @@ const users = deta.Base("users");
 router.post("/create", async (req, res) => {
   try {
     const participantArray: IParticipant[] = req.body.participants;
-    const msgArray: IEncryptedMessage[] = req.body.messages;
+    const msgArray: IEncryptedMessage[] | null = req.body.messages;
 
     // Bascially copied this function from here:
     //dev.to/slimpython/sort-array-of-json-object-by-key-value-easily-with-javascript-3hke
@@ -127,8 +127,9 @@ router.post("/getMessages", checkUser, async (req, res) => {
     const existing: ObjectType = await chatroom.get(key);
 
     if (existing === null) {
-      res.status(409).json({
-        error: "Failed to get the messages! This chatroom does not exist!"
+      res.status(404).json({
+        message: "Failed to get the messages! This chatroom does not exist!",
+        success: false
       });
       return false;
     }
@@ -140,7 +141,9 @@ router.post("/getMessages", checkUser, async (req, res) => {
       success: true
     });
   } catch (err) {
-    res.status(409).json({ error: err.message, success: false });
+    err instanceof Error
+      ? res.status(409).json({ message: err.message, success: false })
+      : res.status(409).json({ message: "Unknown Error occured!", success: false });
   }
 });
 

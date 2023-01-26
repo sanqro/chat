@@ -74,32 +74,33 @@ var projectKey = process.env.PROJECT_KEY;
 var deta = (0, deta_1.Deta)(projectKey);
 var users = deta.Base("users");
 router.get("/getPublic", checkAuth_1["default"], function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, existing, fetchUser, publicKey, err_1;
+    var user, existing, publicKey, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 5, , 6]);
+                _a.trys.push([0, 2, , 3]);
                 user = req.body;
                 return [4, users.get(user.username)];
             case 1:
                 existing = _a.sent();
-                if (!(existing === null)) return [3, 2];
-                res.status(409).json({
-                    error: "There is no such user!"
-                });
-                return [2, false];
-            case 2: return [4, users.get(user.username)];
-            case 3:
-                fetchUser = _a.sent();
-                publicKey = fetchUser.publicKey;
-                res.status(201).json(publicKey);
-                _a.label = 4;
-            case 4: return [3, 6];
-            case 5:
+                if (existing === null) {
+                    res.status(409).json({
+                        error: "There is no such user!"
+                    });
+                    return [2, false];
+                }
+                else {
+                    publicKey = existing.publicKey;
+                    res.status(201).json(publicKey);
+                }
+                return [3, 3];
+            case 2:
                 err_1 = _a.sent();
-                res.status(503).json({ error: "Error with the database!" });
-                return [3, 6];
-            case 6: return [2];
+                err_1 instanceof Error
+                    ? res.status(409).json({ message: err_1.message, success: false })
+                    : res.status(409).json({ message: "Unknown Error occured!", success: false });
+                return [3, 3];
+            case 3: return [2];
         }
     });
 }); });

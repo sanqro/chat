@@ -212,8 +212,9 @@ router.post("/getMessages", checkUser_1["default"], function (req, res) { return
             case 1:
                 existing = _a.sent();
                 if (existing === null) {
-                    res.status(409).json({
-                        error: "Failed to get the messages! This chatroom does not exist!"
+                    res.status(404).json({
+                        message: "Failed to get the messages! This chatroom does not exist!",
+                        success: false
                     });
                     return [2, false];
                 }
@@ -225,7 +226,9 @@ router.post("/getMessages", checkUser_1["default"], function (req, res) { return
                 return [3, 3];
             case 2:
                 err_4 = _a.sent();
-                res.status(409).json({ error: err_4.message, success: false });
+                err_4 instanceof Error
+                    ? res.status(409).json({ message: err_4.message, success: false })
+                    : res.status(409).json({ message: "Unknown Error occured!", success: false });
                 return [3, 3];
             case 3: return [2];
         }

@@ -27,12 +27,13 @@ router.get("/getPublic", checkAuth, async (req, res) => {
       });
       return false;
     } else {
-      const fetchUser = await users.get(user.username);
-      const publicKey = fetchUser.publicKey;
+      const publicKey = existing.publicKey;
       res.status(201).json(publicKey);
     }
   } catch (err) {
-    res.status(503).json({ error: "Error with the database!" });
+    err instanceof Error
+      ? res.status(409).json({ message: err.message, success: false })
+      : res.status(409).json({ message: "Unknown Error occured!", success: false });
   }
 });
 
