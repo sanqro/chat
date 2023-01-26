@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import UserListItem from "./UserListItem";
 
 function ChatroomsSearch() {
   const authToken = sessionStorage.getItem("chatapp_token") as string;
   const [usernames, setUsernames] = useState<string[]>([". . ."]);
+  const [fullArray, setFullArray] = useState<string[]>([]);
 
   const getUsers = async () => {
     const response: Response = await fetch("https://chatapp.deta.dev/users/getall", {
@@ -18,11 +19,37 @@ function ChatroomsSearch() {
 
     try {
       const responseJson: string[] = await response.json();
+      setFullArray(responseJson);
       setUsernames(responseJson);
     } catch (error) {
       error instanceof Error
         ? console.error(error.message)
         : console.error("Unknown error occurred");
+    }
+  };
+
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const content: string = (document.getElementById("searchbox") as HTMLInputElement).value;
+
+    if (content === "" || content === "*") {
+      getUsers();
+      return;
+    }
+
+    const resultArray: string[] = [];
+    fullArray.forEach((username) => {
+      if (username.toLowerCase().includes(content.toLowerCase())) {
+        resultArray.push(username);
+      }
+      return;
+    });
+
+    if (resultArray.length >= 1) {
+      setUsernames(resultArray);
+    } else {
+      setUsernames(["No such user found."]);
     }
   };
 
@@ -41,6 +68,7 @@ function ChatroomsSearch() {
   return (
     <div className="flex flex-col min-h-full w-1/6 items-center py-5 overflow-y-scroll max-h-screen">
       <input
+        onChange={changeHandler}
         type="text"
         name="searchbox"
         id="searchbox"

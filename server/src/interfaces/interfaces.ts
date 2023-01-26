@@ -19,7 +19,7 @@ export interface IUsername {
 export interface IEncryptedMessage extends ObjectType {
   msg: string;
   author: string;
-  dateTime: string;
+  dateTime: number;
 }
 
 export interface IParticipant extends ObjectType {

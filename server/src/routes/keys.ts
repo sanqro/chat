@@ -6,7 +6,6 @@ const router = express.Router();
 // dotenv variable setup
 import * as dotenv from "dotenv";
 import path from "path";
-import { IUsername } from "../interfaces/interfaces";
 import { generateKeyPair } from "crypto";
 import checkAuth from "../middleware/checkAuth";
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
@@ -16,23 +15,24 @@ const projectKey: string = process.env.PROJECT_KEY;
 const deta = Deta(projectKey);
 const users = deta.Base("users");
 
-router.get("/getPublic", checkAuth, async (req, res) => {
+router.get("/getPublic/:username", checkAuth, async (req, res) => {
   try {
-    const user: IUsername = req.body as IUsername;
+    const username: string = req.params.username;
 
-    const existing = await users.get(user.username);
+    const existing = await users.get(username);
     if (existing === null) {
       res.status(409).json({
         error: "There is no such user!"
       });
       return false;
     } else {
-      const fetchUser = await users.get(user.username);
-      const publicKey = fetchUser.publicKey;
-      res.status(201).json(publicKey);
+      const publicKey = existing.publicKey;
+      res.status(201).json({ publicKey: publicKey });
     }
   } catch (err) {
-    res.status(503).json({ error: "Error with the database!" });
+    err instanceof Error
+      ? res.status(409).json({ message: err.message, success: false })
+      : res.status(409).json({ message: "Unknown Error occured!", success: false });
   }
 });
 
