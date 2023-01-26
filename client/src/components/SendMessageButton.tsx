@@ -2,19 +2,22 @@ import React, { MouseEvent } from "react";
 import { IEncryptedMessage } from "../interfaces/api-req";
 
 function SendMessageButton() {
-  const msgToSend = (document.getElementById("messageInput") as HTMLInputElement).value;
   const authToken = sessionStorage.getItem("chatapp_token");
-  const chatroomKey = sessionStorage.getItem("current_chat");
   const msgAuthor = sessionStorage.getItem("logged_in_as");
 
   const clickHandler = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
+    const chatroomKey = sessionStorage.getItem("current_chat");
+
     const msgObj: IEncryptedMessage = {
-      msg: msgToSend,
+      msg: (document.getElementById("messageInput") as HTMLInputElement).value,
       author: msgAuthor as string,
       dateTime: Date.now().toString()
     };
+
+    // check if there is a message to send
+    if (msgObj.msg.trim() == "") return;
 
     const response: Response = await fetch("https://chatapp.deta.dev/chatroom/send", {
       method: "POST",
@@ -33,7 +36,7 @@ function SendMessageButton() {
     try {
       const responseJson = await response.json();
       if (!responseJson.success) throw new Error(responseJson.message);
-      // msgToSend.value = "";
+      (document.getElementById("messageInput") as HTMLInputElement).value = "";
     } catch (error) {
       error instanceof Error
         ? console.error(error.message)
