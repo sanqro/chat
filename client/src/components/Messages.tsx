@@ -84,7 +84,7 @@ const Messages = () => {
   };
 
   const getPublicKey = async (username: string) => {
-    const response: Response = await fetch("http://localhost:3001/keys/getPublic/" + username, {
+    const response: Response = await fetch("https://chatapp.deta.dev/keys/getPublic/" + username, {
       method: "GET",
       headers: {
         Authorization: authToken,
@@ -112,7 +112,7 @@ const Messages = () => {
         }
       ];
 
-      await fetch("http://localhost:3001/chatroom/create", {
+      await fetch("https://chatapp.deta.dev/chatroom/create", {
         method: "POST",
         headers: {
           Authorization: authToken,
