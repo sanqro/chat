@@ -46,8 +46,6 @@ function ChatroomsSearch() {
       return;
     });
 
-    console.warn(resultArray);
-
     if (resultArray.length >= 1) {
       setUsernames(resultArray);
     } else {
