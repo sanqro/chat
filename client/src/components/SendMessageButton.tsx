@@ -1,6 +1,7 @@
 import React, { MouseEvent } from "react";
 import { IEncryptedMessage } from "../interfaces/api-req";
-import * as crypto from "crypto";
+import crypto, { createDiffieHellman } from "crypto";
+import { TextEncoder } from "text-encoding";
 
 function SendMessageButton() {
   const authToken = sessionStorage.getItem("chatapp_token");
@@ -53,18 +54,28 @@ function SendMessageButton() {
     const chatPartner = currentChat.replace(loggedInAs, "");
 
     // get the keys
-    const publicKeyString = (await getPublicKey(chatPartner)) as string;
+    const otherPublicKeyString = (await getPublicKey(chatPartner)) as string;
+    const publicKeyString = (await getPublicKey(loggedInAs)) as string;
     const privateKeyString = sessionStorage.getItem("private_key") as string;
 
-    // parse into KeyObject
-    const publicKey = crypto.createPublicKey(publicKeyString);
-    const privateKey = crypto.createPrivateKey(privateKeyString);
+    // define p, g and own key pair
+    console.warn(crypto);
+    const dh = createDiffieHellman(9041, 70);
+    dh.setPrivateKey(makeBufferLike(privateKeyString));
+    dh.setPublicKey(makeBufferLike(publicKeyString));
 
     // calculate shared key
-    const sharedKey = crypto.diffieHellman({ privateKey, publicKey });
+    const sharedKey = dh.computeSecret(makeBufferLike(otherPublicKeyString));
     console.warn(sharedKey);
 
     return message;
+  };
+
+  const makeBufferLike = (string: string) => {
+    const encoder = new TextEncoder();
+    const buffer = new Uint8Array(string.length);
+    encoder.encodeInto(string, buffer);
+    return buffer;
   };
 
   const getPublicKey = async (username: string) => {
