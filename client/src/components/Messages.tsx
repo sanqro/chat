@@ -12,11 +12,11 @@ const Messages = () => {
   ]);
 
   const authToken = sessionStorage.getItem("chatapp_token") as string;
-  const currentChat = sessionStorage.getItem("current_chat") as string;
   const loggedInAs = sessionStorage.getItem("logged_in_as") as string;
 
   const fetchMessages = async () => {
     {
+      const currentChat = sessionStorage.getItem("current_chat") as string;
       const chatPartner = currentChat.replace(loggedInAs, "");
       const publicKeyA = (await getPublicKey(loggedInAs)) as string;
       const publicKeyB = (await getPublicKey(chatPartner)) as string;
@@ -30,25 +30,26 @@ const Messages = () => {
           publicKey: publicKeyB
         }
       ];
-      await createChatroom(participantArray);
-
-      const response = await fetch("https://chatapp.deta.dev/chatroom/getMessages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: authToken
-        },
-        body: JSON.stringify({
-          key: currentChat
-        })
-      });
 
       try {
-        const responseJson = await response.json();
+        const response = await fetch("https://chatapp.deta.dev/chatroom/getMessages", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: authToken
+          },
+          body: JSON.stringify({
+            key: currentChat
+          })
+        });
 
-        if (responseJson.messages) {
-          setMessages(responseJson.messages);
+        if (response.status === 204) {
+          await createChatroom(participantArray);
+          return;
+        } else {
+          const responseJson = await response.json();
+          if (responseJson.success) setMessages(responseJson.messages);
         }
       } catch (error) {
         error instanceof Error
@@ -72,15 +73,15 @@ const Messages = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      magic();
-    }, 3000);
+      forbiddenWizardry();
+    }, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
 
-  // THIS IS EVIL
-  const magic = async () => {
-    if (currentChat) await fetchMessages();
+  // EVIL FUNCTION
+  const forbiddenWizardry = async () => {
+    await fetchMessages();
   };
 
   const getPublicKey = async (username: string) => {

@@ -22,7 +22,10 @@ export default async function checkUser(req: any, res: any, next: any) {
     const username: string = (jwtData as IJWTPayload).username;
 
     const chatroom: IChatroomData = await chatroomTable.get(req.body.key);
-    if (chatroom === null) throw new Error("This chatroom does not exist yet!");
+    if (chatroom === null) {
+      res.status(204).json({});
+      return false;
+    }
 
     if (
       chatroom.participantArray[0].username != username &&
@@ -34,7 +37,7 @@ export default async function checkUser(req: any, res: any, next: any) {
     next();
   } catch (err) {
     err instanceof Error
-      ? res.status(409).json({ message: err.message, success: false })
-      : res.status(409).json({ message: "Unknown Error occured!", success: false });
+      ? res.status(500).json({ message: err.message, success: false })
+      : res.status(500).json({ message: "Unknown Error occured!", success: false });
   }
 }

@@ -56,7 +56,7 @@ router.post("/create", async (req, res) => {
       success: true
     });
   } catch (err) {
-    res.status(409).json({ error: err.message, success: false });
+    res.status(500).json({ error: err.message, success: false });
   }
 });
 
@@ -66,18 +66,18 @@ router.post("/delete", checkUser, async (req, res) => {
     const existing = chatroom.get(key);
 
     if (existing === null) {
-      res.status(409).json({
+      res.status(404).json({
         error: "Failed to delete chatroom. This chatroom does not exist!"
       });
     } else {
       await chatroom.delete(key);
     }
-    res.status(201).json({
+    res.status(200).json({
       message: "Deleted chatroom",
       success: true
     });
   } catch (err) {
-    res.status(409).json({ error: err.message, success: false });
+    res.status(500).json({ error: err.message, success: false });
   }
 });
 
@@ -89,7 +89,7 @@ router.post("/send", checkUser, async (req, res) => {
     const existing: ObjectType = await chatroom.get(key);
 
     if (existing === null) {
-      res.status(409).json({
+      res.status(404).json({
         error: "Failed to send message! This chatroom does not exist!",
         success: false
       });
@@ -115,8 +115,8 @@ router.post("/send", checkUser, async (req, res) => {
     });
   } catch (err) {
     err instanceof Error
-      ? res.status(409).json({ message: err.message, success: false })
-      : res.status(409).json({ message: "Unknown Error occured!", success: false });
+      ? res.status(500).json({ message: err.message, success: false })
+      : res.status(500).json({ message: "Unknown Error occured!", success: false });
   }
 });
 
@@ -127,10 +127,7 @@ router.post("/getMessages", checkUser, async (req, res) => {
     const existing: ObjectType = await chatroom.get(key);
 
     if (existing === null) {
-      res.status(404).json({
-        message: "Failed to get the messages! This chatroom does not exist!",
-        success: false
-      });
+      res.status(204).json({});
       return false;
     }
 
@@ -142,8 +139,8 @@ router.post("/getMessages", checkUser, async (req, res) => {
     });
   } catch (err) {
     err instanceof Error
-      ? res.status(409).json({ message: err.message, success: false })
-      : res.status(409).json({ message: "Unknown Error occured!", success: false });
+      ? res.status(500).json({ message: err.message, success: false })
+      : res.status(500).json({ message: "Unknown Error occured!", success: false });
   }
 });
 
