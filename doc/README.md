@@ -3,7 +3,7 @@
 ### Inhaltsverzeichnis
 
 - [Dokumentation - Private Chatting App](#dokumentation---private-chatting-app)
-    - [Inhaltsverzeichnis](#inhaltsverzeichnis)
+  - [Inhaltsverzeichnis](#inhaltsverzeichnis)
   - [IPERKA](#iperka)
     - [Informieren](#informieren)
     - [Planen](#planen)
