@@ -212,7 +212,7 @@ router.post("/getMessages", checkUser_1["default"], function (req, res) { return
             case 1:
                 existing = _a.sent();
                 if (existing === null) {
-                    res.status(204).json({
+                    res.status(200).json({
                         message: "Failed to get the messages! This chatroom does not exist!",
                         success: false
                     });
