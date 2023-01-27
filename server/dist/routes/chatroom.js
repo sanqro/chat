@@ -121,7 +121,7 @@ router.post("/create", function (req, res) { return __awaiter(void 0, void 0, vo
                 return [3, 7];
             case 6:
                 err_1 = _a.sent();
-                res.status(409).json({ error: err_1.message, success: false });
+                res.status(500).json({ error: err_1.message, success: false });
                 return [3, 7];
             case 7: return [2];
         }
@@ -136,7 +136,7 @@ router.post("/delete", checkUser_1["default"], function (req, res) { return __aw
                 key = req.body.key;
                 existing = chatroom.get(key);
                 if (!(existing === null)) return [3, 1];
-                res.status(409).json({
+                res.status(404).json({
                     error: "Failed to delete chatroom. This chatroom does not exist!"
                 });
                 return [3, 3];
@@ -145,14 +145,14 @@ router.post("/delete", checkUser_1["default"], function (req, res) { return __aw
                 _a.sent();
                 _a.label = 3;
             case 3:
-                res.status(201).json({
+                res.status(200).json({
                     message: "Deleted chatroom",
                     success: true
                 });
                 return [3, 5];
             case 4:
                 err_2 = _a.sent();
-                res.status(409).json({ error: err_2.message, success: false });
+                res.status(500).json({ error: err_2.message, success: false });
                 return [3, 5];
             case 5: return [2];
         }
@@ -170,7 +170,7 @@ router.post("/send", checkUser_1["default"], function (req, res) { return __awai
             case 1:
                 existing = _a.sent();
                 if (existing === null) {
-                    res.status(409).json({
+                    res.status(404).json({
                         error: "Failed to send message! This chatroom does not exist!",
                         success: false
                     });
@@ -194,8 +194,8 @@ router.post("/send", checkUser_1["default"], function (req, res) { return __awai
             case 3:
                 err_3 = _a.sent();
                 err_3 instanceof Error
-                    ? res.status(409).json({ message: err_3.message, success: false })
-                    : res.status(409).json({ message: "Unknown Error occured!", success: false });
+                    ? res.status(500).json({ message: err_3.message, success: false })
+                    : res.status(500).json({ message: "Unknown Error occured!", success: false });
                 return [3, 4];
             case 4: return [2];
         }
@@ -227,8 +227,8 @@ router.post("/getMessages", checkUser_1["default"], function (req, res) { return
             case 2:
                 err_4 = _a.sent();
                 err_4 instanceof Error
-                    ? res.status(409).json({ message: err_4.message, success: false })
-                    : res.status(409).json({ message: "Unknown Error occured!", success: false });
+                    ? res.status(500).json({ message: err_4.message, success: false })
+                    : res.status(500).json({ message: "Unknown Error occured!", success: false });
                 return [3, 3];
             case 3: return [2];
         }
