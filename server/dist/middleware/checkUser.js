@@ -83,8 +83,10 @@ function checkUser(req, res, next) {
                     return [4, chatroomTable.get(req.body.key)];
                 case 1:
                     chatroom = _a.sent();
-                    if (chatroom === null)
-                        throw new Error("This chatroom does not exist yet!");
+                    if (chatroom === null) {
+                        res.status(404).json({ message: "This chatroom does not exist yet.", success: false });
+                        return [2];
+                    }
                     if (chatroom.participantArray[0].username != username &&
                         chatroom.participantArray[1].username != username) {
                         throw new Error("Username in token and username in requested data are not the same 🤨");
@@ -94,8 +96,8 @@ function checkUser(req, res, next) {
                 case 2:
                     err_1 = _a.sent();
                     err_1 instanceof Error
-                        ? res.status(409).json({ message: err_1.message, success: false })
-                        : res.status(409).json({ message: "Unknown Error occured!", success: false });
+                        ? res.status(500).json({ message: err_1.message, success: false })
+                        : res.status(500).json({ message: "Unknown Error occured!", success: false });
                     return [3, 3];
                 case 3: return [2];
             }
