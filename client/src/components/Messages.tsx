@@ -12,11 +12,11 @@ const Messages = () => {
   ]);
 
   const authToken = sessionStorage.getItem("chatapp_token") as string;
-  const currentChat = sessionStorage.getItem("current_chat") as string;
   const loggedInAs = sessionStorage.getItem("logged_in_as") as string;
 
   const fetchMessages = async () => {
     {
+      const currentChat = sessionStorage.getItem("current_chat") as string;
       const chatPartner = currentChat.replace(loggedInAs, "");
       const publicKeyA = (await getPublicKey(loggedInAs)) as string;
       const publicKeyB = (await getPublicKey(chatPartner)) as string;
@@ -30,6 +30,7 @@ const Messages = () => {
           publicKey: publicKeyB
         }
       ];
+
       await createChatroom(participantArray);
 
       const response = await fetch("https://chatapp.deta.dev/chatroom/getMessages", {
@@ -72,16 +73,11 @@ const Messages = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      magic();
-    }, 3000);
+      fetchMessages();
+    }, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
-
-  // THIS IS EVIL
-  const magic = async () => {
-    if (currentChat) await fetchMessages();
-  };
 
   const getPublicKey = async (username: string) => {
     const response: Response = await fetch("https://chatapp.deta.dev/keys/getPublic/" + username, {
