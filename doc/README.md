@@ -3,7 +3,7 @@
 ### Inhaltsverzeichnis
 
 - [Dokumentation - Private Chatting App](#dokumentation---private-chatting-app)
-    - [Inhaltsverzeichnis](#inhaltsverzeichnis)
+  - [Inhaltsverzeichnis](#inhaltsverzeichnis)
   - [IPERKA](#iperka)
     - [Informieren](#informieren)
     - [Planen](#planen)
@@ -22,7 +22,11 @@
   - [Login / Registration für Benutzer](#login--registration-für-benutzer)
   - [Anzeigen neuer Nachrichten](#anzeigen-neuer-nachrichten)
   - [Testen](#testen)
-    - [Testfälle](#testfälle)
+  - [Testumgebung](#testumgebung)
+    - [Selenium:](#selenium)
+    - [Jest:](#jest)
+    - [Postman:](#postman)
+  - [Testfälle](#testfälle)
     - [Testprotokoll](#testprotokoll)
     - [Testbericht](#testbericht)
   - [Frontend](#frontend)
@@ -100,7 +104,6 @@ Auflistung der Tools und Plugins (inkl. Konfiguration)
 
 ## Anforderungen
 
-
 | Anf.-Nr. | Muss/<br />Kann | funk./<br />qual. | Beschreibung                                                                                                                                                                                                       |
 | :------- | :-------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 1        | M               | funk.             | Eine Landingpage mit einem Login- und Registrationsknopf ist vorhanden.                                                                                                                                            |
@@ -130,8 +133,7 @@ Auflistung der Tools und Plugins (inkl. Konfiguration)
 > 1x Arbeitspaket = 45 Minuten (eine Schullektion)
 > 1x Sitzung = 5x Arbeitspakete (ein Halbtag)
 >
-> 5x Sitzungen * 5x Arbeitspakete * 2x Gruppenmitglieder = **50 Arbeitspakete + Portfolioeintrag 8 (4 / Gruppenmitglied)**
-
+> 5x Sitzungen _ 5x Arbeitspakete _ 2x Gruppenmitglieder = **50 Arbeitspakete + Portfolioeintrag 8 (4 / Gruppenmitglied)**
 
 | Nr. | Frist    | Beschreibung                                                              | Zeit in Arbeitspaketen (geplant) |
 | --- | -------- | ------------------------------------------------------------------------- | :------------------------------- |
@@ -165,8 +167,49 @@ Deshalb werden wir eine optionale und konstante Abfrage bei der API verwenden, u
 
 ## Testen
 
-### Testfälle
+Grundsätzlich verwenden für die verschiedenen Testfälle drei unterschiedliche Testumgebungen:
 
+### Testumgebung
+
+#### Selenium:
+
+Betriebssystem:
+
+Den Browser, in dem wir die Tests mit der Selenium-IDe ausführen, wird auf der neusten Microsoft Windows 10 Version (22H2) ausgeführt.
+
+Browser:
+
+Für den Browser verwenden wir die neuste Version von Mozilla Firefox (109.00).
+
+Selenium-IDE:
+
+Für die automatischen Tests mit Selenium verwenden wir die neuste Version der Selenium-IDE für Mozilla Firefox (3.17.4).
+
+### Jest:
+
+Betriebssystem:
+
+Node.js wird auf der neusten Microsoft Windows 10 Version (22H2) ausgeführt.
+
+Node.js:
+
+Die Node.js-Runtime verwendet Long-term-support-Version(18.13.0).
+
+Jest-Package:
+
+Das Jest-Package verwendet die Long-term-support-Version (5.16.5).
+
+### Postman:
+
+Betriebssystem:
+
+Die Postman-Applikation, in der wir die automatischen Tests der API-Endpoints ausführen, wird auf der neusten Microsoft Windows 10 Version (22H2) ausgeführt.
+
+Postman:
+
+Die Postman-Applikation verwendet die neuste Version (10.8.4).
+
+## Testfälle
 
 | Testf.-Nr. | Anf-Nr. | Vorbereitung                                                                                                                                                                                                                                                                   | Testumgebung | Eingabe                                                                                                          | Erw. Ausgabe                                                                                                                                                      |
 | :--------: | ------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
