@@ -212,7 +212,7 @@ router.post("/getMessages", checkUser_1["default"], function (req, res) { return
             case 1:
                 existing = _a.sent();
                 if (existing === null) {
-                    res.status(204);
+                    res.status(204).json({});
                     return [2, false];
                 }
                 delete existing.key && existing.participantArray;

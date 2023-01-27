@@ -23,7 +23,7 @@ export default async function checkUser(req: any, res: any, next: any) {
 
     const chatroom: IChatroomData = await chatroomTable.get(req.body.key);
     if (chatroom === null) {
-      res.status(204);
+      res.status(204).json({});
       return false;
     }
 

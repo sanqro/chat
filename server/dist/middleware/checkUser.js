@@ -84,7 +84,7 @@ function checkUser(req, res, next) {
                 case 1:
                     chatroom = _a.sent();
                     if (chatroom === null) {
-                        res.status(204);
+                        res.status(204).json({});
                         return [2, false];
                     }
                     if (chatroom.participantArray[0].username != username &&
