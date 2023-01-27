@@ -23,7 +23,7 @@ export default async function checkUser(req: any, res: any, next: any) {
 
     const chatroom: IChatroomData = await chatroomTable.get(req.body.key);
     if (chatroom === null) {
-      res.status(200).json({ message: "This chatroom does not exist yet.", success: false });
+      res.status(204);
       return false;
     }
 

@@ -31,25 +31,25 @@ const Messages = () => {
         }
       ];
 
-      await createChatroom(participantArray);
-
-      const response = await fetch("https://chatapp.deta.dev/chatroom/getMessages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: authToken
-        },
-        body: JSON.stringify({
-          key: currentChat
-        })
-      });
-
       try {
-        const responseJson = await response.json();
+        const response = await fetch("https://chatapp.deta.dev/chatroom/getMessages", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: authToken
+          },
+          body: JSON.stringify({
+            key: currentChat
+          })
+        });
 
-        if (responseJson.messages) {
-          setMessages(responseJson.messages);
+        if (response.status === 204) {
+          await createChatroom(participantArray);
+          return;
+        } else {
+          const responseJson = await response.json();
+          if (responseJson.success) setMessages(responseJson.messages);
         }
       } catch (error) {
         error instanceof Error
@@ -73,11 +73,16 @@ const Messages = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      fetchMessages();
+      forbiddenWizardry();
     }, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
+
+  // EVIL FUNCTION
+  const forbiddenWizardry = async () => {
+    await fetchMessages();
+  };
 
   const getPublicKey = async (username: string) => {
     const response: Response = await fetch("https://chatapp.deta.dev/keys/getPublic/" + username, {

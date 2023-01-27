@@ -212,10 +212,7 @@ router.post("/getMessages", checkUser_1["default"], function (req, res) { return
             case 1:
                 existing = _a.sent();
                 if (existing === null) {
-                    res.status(200).json({
-                        message: "This chatroom does not exist yet.",
-                        success: false
-                    });
+                    res.status(204);
                     return [2, false];
                 }
                 delete existing.key && existing.participantArray;

@@ -127,10 +127,7 @@ router.post("/getMessages", checkUser, async (req, res) => {
     const existing: ObjectType = await chatroom.get(key);
 
     if (existing === null) {
-      res.status(200).json({
-        message: "This chatroom does not exist yet.",
-        success: false
-      });
+      res.status(204);
       return false;
     }
 
