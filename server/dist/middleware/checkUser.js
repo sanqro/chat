@@ -85,7 +85,7 @@ function checkUser(req, res, next) {
                     chatroom = _a.sent();
                     if (chatroom === null) {
                         res.status(204).json({ message: "This chatroom does not exist yet.", success: false });
-                        return [2];
+                        return [2, false];
                     }
                     if (chatroom.participantArray[0].username != username &&
                         chatroom.participantArray[1].username != username) {
