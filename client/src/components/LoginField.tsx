@@ -32,6 +32,7 @@ function LoginField() {
     if (loginJson.success) {
       sessionStorage.setItem("chatapp_token", loginJson.token);
       sessionStorage.setItem("logged_in_as", username);
+      sessionStorage.setItem("private_key", privateKey);
       navigate("/chat");
     } else {
       alert("Login Failed: " + loginJson.error);

@@ -1,5 +1,6 @@
 import React, { MouseEvent } from "react";
 import { IEncryptedMessage } from "../interfaces/api-req";
+import * as crypto from "crypto";
 
 function SendMessageButton() {
   const authToken = sessionStorage.getItem("chatapp_token");
@@ -11,7 +12,9 @@ function SendMessageButton() {
     const chatroomKey = sessionStorage.getItem("current_chat");
 
     const msgObj: IEncryptedMessage = {
-      msg: (document.getElementById("messageInput") as HTMLInputElement).value,
+      msg: await encryptMessage(
+        (document.getElementById("messageInput") as HTMLInputElement).value as string
+      ),
       author: msgAuthor as string,
       dateTime: Date.now()
     };
@@ -41,6 +44,46 @@ function SendMessageButton() {
       error instanceof Error
         ? console.error(error.message)
         : console.error("Unknown error occured!");
+    }
+  };
+
+  const encryptMessage = async (message: string) => {
+    const currentChat = sessionStorage.getItem("current_chat") as string;
+    const loggedInAs = sessionStorage.getItem("logged_in_as") as string;
+    const chatPartner = currentChat.replace(loggedInAs, "");
+
+    // get the keys
+    const publicKeyString = (await getPublicKey(chatPartner)) as string;
+    const privateKeyString = sessionStorage.getItem("private_key") as string;
+
+    // parse into KeyObject
+    const publicKey = crypto.createPublicKey(publicKeyString);
+    const privateKey = crypto.createPrivateKey(privateKeyString);
+
+    // calculate shared key
+    const sharedKey = crypto.diffieHellman({ privateKey, publicKey });
+    console.warn(sharedKey);
+
+    return message;
+  };
+
+  const getPublicKey = async (username: string) => {
+    const authToken = sessionStorage.getItem("chatapp_token") as string;
+    const response: Response = await fetch("https://chatapp.deta.dev/keys/getPublic/" + username, {
+      method: "GET",
+      headers: {
+        Authorization: authToken,
+        "Content-Type": "application/json"
+      }
+    });
+
+    try {
+      const responseJson = await response.json();
+      return responseJson.publicKey as string;
+    } catch (error) {
+      error instanceof Error
+        ? console.error(error.message)
+        : console.error("Unknown error occurred");
     }
   };
 
