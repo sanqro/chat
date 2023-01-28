@@ -122,7 +122,7 @@ Dies kann man tun indem man dieses Repository einfach klont, jedoch kann man dan
 
 Deshalb sollte man das Repository forken und somit eine eigene Kopie davon erstellen, in der man dann seine Änderungen umsetzen kann.
 
-![](assets\20230128_192008_image.png)
+![](assets/fork.png)
 
 Wenn das Repository erfolgreich geforkt wurde, muss man das Repository klonen und in das Verzeichnis wechseln.
 
@@ -337,7 +337,7 @@ Die Postman-Applikation verwendet die neuste Version (10.8.4)
 
 ### Wireframe
 
-![Wireframe-Anzeige](./wireframe.png "Wireframe")
+![Wireframe-Anzeige](/assets/wireframe.png/ "Wireframe")
 
 Damit wir keine Konflikte in Sachen Struktur im Frontend haben, erstellten wir ein Wireframe. Dieses zeigt grob auf, wie die wichtigsten Seiten der Applikation im Frontend aussehen. Es dient als Orientierungshilfe beim Implementieren der Komponenten. Das Design halten wir grunsätzlich über die ganze Applikation hinweg eher simpel und minimalistisch.
 
