@@ -3,7 +3,7 @@
 ### Inhaltsverzeichnis
 
 - [Dokumentation - Private Chatting App](#dokumentation---private-chatting-app)
-  - [Inhaltsverzeichnis](#inhaltsverzeichnis)
+    - [Inhaltsverzeichnis](#inhaltsverzeichnis)
   - [IPERKA](#iperka)
     - [Informieren](#informieren)
     - [Planen](#planen)
@@ -15,6 +15,12 @@
   - [Technologien](#technologien)
   - [Quellen](#quellen)
   - [Lokale Entwicklungsumgebung](#lokale-entwicklungsumgebung)
+    - [Lokale Entwicklungsumgebung aufsetzen](#lokale-entwicklungsumgebung-aufsetzen)
+    - [Vorbereitung](#vorbereitung)
+    - [Dependencies mit NPM installieren](#dependencies-mit-npm-installieren)
+    - [Lokale Server starten](#lokale-server-starten)
+    - [Frontend starten](#frontend-starten)
+    - [Optional: Backend starten](#optional-backend-starten)
   - [Anforderungen](#anforderungen)
   - [Arbeitspakete](#arbeitspakete)
   - [Ausführung](#ausführung)
@@ -22,8 +28,8 @@
   - [Login / Registration für Benutzer](#login--registration-für-benutzer)
   - [Anzeigen neuer Nachrichten](#anzeigen-neuer-nachrichten)
   - [Testen](#testen)
-  - [Testumgebung](#testumgebung)
-    - [Selenium:](#selenium)
+    - [Testumgebung](#testumgebung)
+      - [Selenium:](#selenium)
     - [Jest:](#jest)
     - [Postman:](#postman)
   - [Testfälle](#testfälle)
@@ -35,6 +41,10 @@
   - [Backend](#backend)
     - [Host](#host)
     - [API Enpoints](#api-enpoints)
+      - [/](#)
+        - [/auth/register](#authregister)
+        - [/auth/login](#authlogin)
+        - [/chatroom/create](#chatroomcreate)
 
 ## IPERKA
 
@@ -95,12 +105,85 @@ Um unsere Chattingapplikation zu realisieren haben wir uns dazu entschieden die 
 - [Deta Dokumenation](https://docs.deta.sh/docs/home/)
 - [Express mit Typescript auf Deta](https://github.com/deta/docs/discussions/226)
 - [Type Guards in TS](https://blog.logrocket.com/how-to-use-type-guards-typescript/)
-- [Teilweise Logik und Codesnippets von usginfo.ch](https://github.com/mnaray/USG_Website)
+- [Teilweise Logik und Codesnippets von usginfo.ch (beispielsweise Teile der Middleware)](https://github.com/mnaray/USG_Website)
 - [JSON-Objekte nach spezifischem Wert sortieren](https://dev.to/slimpython/sort-array-of-json-object-by-key-value-easily-with-javascript-3hke)
 
 ## Lokale Entwicklungsumgebung
 
-Auflistung der Tools und Plugins (inkl. Konfiguration)
+Für die Umsetzung dieses Projekts haben wir hauptsächlich Visual Studio Code mit einigen Erweiterungen wie beispielsweise [ESLint](https://open-vsx.org/extension/dbaeumer/vscode-eslint), [Prettier](https://open-vsx.org/extension/esbenp/prettier-vscode), [REST Client](https://open-vsx.org/extension/humao/rest-client) und [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare) verwendet. Bei den beiden Erweiterungen REST Client und Live Share haben wir keine speziellen Einstellungen vorgenommen, wobei wir bei den Erweiterungen ESLint und Prettier spezielle Änderungen vorgenommen haben, um unseren eigenen Code-Style zu erzwingen. Diese Einstellungen werden automatisch übernommen, wenn man diese beiden Erweiterungen installiert und die lokale Entwicklungsumgebung richtig aufgesetzt hat.
+
+### Lokale Entwicklungsumgebung aufsetzen
+
+### Vorbereitung
+
+Um die lokale Entwicklungsumgebung aufzusetzen, muss man sich zuerst eine Kopie vom Repository holen.
+
+Dies kann man tun indem man dieses Repository einfach klont, jedoch kann man dann keine Änderungen zu GitHub pushen (hochladen), falls man kein eingetragener Contributor ist.
+
+Deshalb sollte man das Repository forken und somit eine eigene Kopie davon erstellen, in der man dann seine Änderungen umsetzen kann.
+
+![](assets\20230128_192008_image.png)
+
+Wenn das Repository erfolgreich geforkt wurde, muss man das Repository klonen und in das Verzeichnis wechseln.
+
+```bash
+git clone https://github.com/[durch deinen Benutzernamen ersetzen]/chat.git
+cd chat/
+```
+
+### Dependencies mit NPM installieren
+
+**\*Für diesen Schritt ist es notwendig node.js installiert zu haben. [Download von node.js\*\***](https://nodejs.org/de/)\*\*\*
+
+Sobald man das ganze Projekt geklont hat, sollte man alle Dependencies installieren. Dabei muss man in das entsprechende Verzeichnis wechseln und die Dependencies installieren.
+
+**Dependencies im Frontend installieren**
+
+```bash
+cd client/
+npm install
+cd ..
+```
+
+Die Dependencies sollten jetzt installiert worden sein. Dabei gibt es eine Warnung, dass es sechs Sicherheitslücken gibt und man sie beheben sollte. Diese sind jedoch momentan zu vernachlässigen **[Stand: Januar 2023]**.
+
+**Optional: Dependencies im Backend installieren**
+
+**_Dieser Schritt ist optional, da das Projekt im Frontend ein externes Backend verwendet._**
+
+```bash
+cd server/
+npm install
+cd ..
+```
+
+### Lokale Server starten
+
+### Frontend starten
+
+Um das Frontend lokal zu starten, muss der folgende Befehl in dem Verzeichnis, wo das Frontend liegt (client/) ausgeführt werden, dann wird das Frontend auf **localhost:3000** gestartet.
+
+```bash
+npm run start
+```
+
+### Optional: Backend starten
+
+**_Dieser Schritt ist optional, da das Projekt im Frontend ein externes Backend verwendet._**
+
+**_Damit das Backend richtig funktioniert, muss man noch im server Ordner eine Datei mit dem Namen .env anlegen._**
+
+**_In dieser Datei muss man zwei Umgebungsvariablen anlegen:_**
+
+**\*PROJECT_KEY:** (Key von Deta.sh. [Mehr Informationen](https://docs.deta.sh/docs/faqs/))\*
+
+**\*JWT_Secret:** Kann irgendeine Zeichenkette sein, jedoch sollte sie möglichst lang sein und aus zufällige Zeichen bestehen\*
+
+Um das Backend lokal zu starten, muss der folgende Befehl in dem Verzeichnis, wo das Backend liegt (server/) ausgeführt werden, dann wird das Backend auf **localhost:3001** gestartet.
+
+```
+npm run dev
+```
 
 ## Anforderungen
 
@@ -167,47 +250,47 @@ Deshalb werden wir eine optionale und konstante Abfrage bei der API verwenden, u
 
 ## Testen
 
-Grundsätzlich verwenden für die verschiedenen Testfälle drei unterschiedliche Testumgebungen:
-
 ### Testumgebung
+
+Grundsätzlich verwenden für die verschiedenen Testfälle drei unterschiedliche Testumgebungen:
 
 #### Selenium:
 
-Betriebssystem:
+**Betriebssystem:**
 
 Den Browser, in dem wir die Tests mit der Selenium-IDe ausführen, wird auf der neusten Microsoft Windows 10 Version (22H2) ausgeführt.
 
-Browser:
+**Browser:**
 
 Für den Browser verwenden wir die neuste Version von Mozilla Firefox (109.00).
 
-Selenium-IDE:
+**Selenium-IDE:**
 
 Für die automatischen Tests mit Selenium verwenden wir die neuste Version der Selenium-IDE für Mozilla Firefox (3.17.4).
 
 ### Jest:
 
-Betriebssystem:
+**Betriebssystem:**
 
 Node.js wird auf der neusten Microsoft Windows 10 Version (22H2) ausgeführt.
 
-Node.js:
+**Node.js:**
 
 Die Node.js-Runtime verwendet Long-term-support-Version(18.13.0).
 
-Jest-Package:
+**Jest-Package:**
 
 Das Jest-Package verwendet die Long-term-support-Version (5.16.5).
 
 ### Postman:
 
-Betriebssystem:
+**Betriebssystem:**
 
 Die Postman-Applikation, in der wir die automatischen Tests der API-Endpoints ausführen, wird auf der neusten Microsoft Windows 10 Version (22H2) ausgeführt.
 
-Postman:
+**Postman:**
 
-Die Postman-Applikation verwendet die neuste Version (10.8.4).
+Die Postman-Applikation verwendet die neuste Version (10.8.4)
 
 ## Testfälle
 
@@ -264,4 +347,169 @@ Damit wir keine Konflikte in Sachen Struktur im Frontend haben, erstellten wir e
 
 ### Host
 
+Wir hosten unsere API bei dem Cloudanbieter Deta, der es Entwicklern ermögtlich, kleine Microservices und No-SQL kostenlos für ihr Projekt zu verwenden.
+
 ### API Enpoints
+
+#### [/](../server/index.ts)
+
+##### [/auth/register](../server/routes/auth.ts)
+
+`POST` nimmt einen Request-Body in folgendem Format an:
+
+```json
+{
+    username: string,
+    publicKey: string,
+    privateKey: string
+}
+```
+
+Zuerst wird überprüft, ob der Benutzer bereits existiert. Wenn dies der Fall ist, wird der Statuscode 409 und eine Fehlermeldung "Username already taken!" zurückgegeben und der Prozess wird abgebrochen.
+
+Wenn jedoch ein gültiger Benutzername eingegeben wird, wird der privateKey mit [argon2](https://de.wikipedia.org/wiki/Argon2) gehasht. Danach wird alles in der Tabelle "users" in einer Deta (No-SQL) Datenbank gespeichert.
+
+Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 503 und eine Fehlermeldung "Error with the database" zurückgegeben.
+
+##### [/auth/login](../server/routes/auth.ts)
+
+`POST` nimmt einen Request-Body in folgendem Format an:
+
+```json
+{
+    username: string,
+    privateKey: string
+}
+```
+
+Zuerst wird überprüft, ob der Benutzer überhaupt existiert. Wenn dies nicht der Fall ist, wird der Statuscode 409 und eine Fehlermeldung "There is no sucher user!" zurückgegeben und der Prozess wird abgebrochen.
+
+Wenn jedoch ein gültiger Benutzername eingegeben wird, wird der eingegebene privateKey mit dem Hash in der Datenbank verglichen. Falls der privateKey mit dem Hash in der Datenbank übereinstimmt, wird ein JWT-Token für den Benutzer mit seinem Benutzernamen erstellt. Dieses ist dann für eine Stunde gültig. Wenn der privateKey jedoch nicht dem Hash in der Datenbank übereinstimmt, wird der Statuscode 409 und eine Fehlermeldung "Wrong Credentials!" und "success: false" zurückgegeben.
+
+Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 503 und eine Fehlermeldung mit der entsprechenden Fehlermeldung zurückgegeben. Falls der Fehler jedoch nicht zugeordnet werden konnte, wird der Statuscode 503 und einer Fehlermeldung "Unknown Error" zurückgegeben.
+
+##### [/chatroom/create](../server/routes/chatroom.ts)
+
+`POST` nimmt einen Request-Body in folgendem Format an:
+
+**_Für die Erstellung eines Chatrooms ist "messages" optional!_**
+
+```json
+{
+    participants: [
+        {
+        username: string,
+        publicKey: string
+        },
+        {
+        username: string,
+        publicKey: string
+        }
+    ],
+    messages: [
+        {
+          "msg": strimg,
+          "author": string,
+          "dateTime": number
+        }
+    ]
+}
+```
+
+Zuerst werden die beiden Teilnehmer des Chatrooms alphabetisch sortiert, damit der Key der beiden Benutzer einzigartig ist, und in einem Array gespeichert
+
+Danach wird für jeden Teilnehmer durch diesen Array iteriert. Bei jeder Iteration wird aus der Benutzername des Teilnehmers zu der Key Variabel hinzugefügt. Ausserdem wird überprüft, ob der Benutzer überhaupt existiert.
+
+Wenn der Benutzer nicht existiert, wird der Statuscode 409 und eine Fehlermeldung "Failed to create the chatroom. There is no such user!" zurückgegeben und der Prozess wird abgebrochen.
+
+Danach wird aus dem Key, den Teilnehmern des Chatrooms und deren Nachrichten ein JSON-Objekt erstellt.
+
+Falls während diesem Prozess kein Fehler auftritt, wird der Statuscode 201, die Teilnehmer des Chatrooms, ihre Nachrichten und success: true zurückgegeben.
+
+Wenn jedoch ein Fehler auftritt, wird der Statuscode 500, die entsprechende Fehlermeldung und sucess: false zurückgegeben.
+
+[/chatroom/delete](../server/routes/chatroom.ts)
+
+`POST` nimmt einen Request-Body in folgendem Format an:
+
+```json
+{
+  key: string
+}
+```
+
+Zuerst wird überprüft, ob unter dem Key von dem Request-Body überhaupt Daten in der Datenbank gespeichert sind. Falls nicht, wird der Statuscode 404 und eine Fehlermeldung "Failed to delete chatroom. This chatroom does not exist!" zurückgegeben.
+
+Ansonsten wird der Chatroom gelöscht und es wird der Statuscode 200, eine Nachricht "Deleted chatroom" und success: true zurückgegeben.
+
+Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 500 und die entsprechende Fehlermeldung zurückgegeben.
+
+[/chatroom/send](../server/routes/chatroom.ts)
+
+`POST` nimmt einen Request-Body in folgendem Format an:
+
+```json
+{
+    key: string,
+    message:
+     {
+        author: string,
+        dateTime: number,
+        msg: string
+    }
+}
+```
+
+Zuerst wird überprüft, ob unter dem Key von dem Request-Body überhaupt Daten in der Datenbank gespeichert sind. Falls nicht, wird der Statuscode 404 und eine Fehlermeldung "Failed to send message! This chatroom does not exist!" und success: false zurückgegeben und der Prozess wird abgebrochen.
+
+Ansonsten werden die aktuellen Nachrichten als Array von der Datenbank geholt und die neue Nachricht wird diesem Array angefügt.
+
+Danach wird mit diesem Array die Datenbank mit der Update-Methode von Deta auf den neusten Stand gebracht und es wird der Statuscode 201, eine Nachricht "Sent message!" und success: true zurückgegeben.
+
+Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 500 und die entsprechende Fehlermeldung und falls der Fehler nicht zugeordnet werden kann "Unknown Error occured!" und success: false zurückgegeben.
+
+[/chatroom/getMessages](../server/routes/chatroom.ts)
+
+`POST` nimmt einen Request-Body in folgendem Format an:
+
+```json
+{
+    key: string
+}
+```
+
+Zuerst wird überprüft, ob unter dem Key von dem Request-Body überhaupt Daten in der Datenbank gespeichert sind. Falls nicht, wird der Statuscode 204 zurückgegeben und der Prozess wird abgebrochen.
+
+Ansonsten werden die Nachrichten von der Datenbank geholt und mit dem Statuscode 201 und success: true zurückgegeben.
+
+Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 500 und die entsprechende Fehlermeldung und falls der Fehler nicht zugeordnet werden kann "Unknown Error occured!" und success: false zurückgegeben.
+
+[/keys/getPublic/:username](../server/routes/keys.ts)
+
+`GET` nimmt einen Benutzernamen als String in der Request-URL an.
+
+Zuerst wird überprüft, ob der Benutzer überhaupt in der Datenbank existiert. Falls dies nicht der Fall ist, wird der Statuscode 409 und eine Fehlermeldung "There is no such user!" zurückgegeben und der Prozess wird abgebrochen.
+
+Ansonsten wird der publicKey vom Benutzer aus der Datenbank geholt. Dieser und der Statuscode 201 wird dann zurückgegeben.
+
+Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 409 und die entsprechende Fehlermeldung und falls der Fehler nicht zugeordnet werden kann "Unknown Error occured!" und success: false zurückgegeben.
+
+[/keys/generateKeypair](../server/routes/keys.ts)
+
+`GET` nimmt keine Daten an.
+
+Zuerst wird mit der generateKeypair Methode von dem Crypto NPM-Package ein rsa Schlüsselpair mit einer Schlüssellänge von 4096 Bit, einer PEM-Formatierung und dem Type pkcs1 generiert.
+
+Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 500 und die entsprechende Fehlermeldung zurückgegeben.
+
+Ansonsten wird der public- sowie privateKey zu einer Linie konveriert und dann zurückgegeben.
+
+[/users/getall](../server/routes/users.ts)
+
+`GET` nimmt keine Daten an.
+
+Fetcht den gesamten Datensatz der Users-Tabelle mit der Fetch-Methode von Deta. Danach wird bei jedem Benutzer nur der Benutzername in einem Array gespeichert.
+
+Falls kein Fehler auftritt während diesem Prozess, wird dieser Array als JSON-Objekt zurückgegeben.
+
+Ansonsten wird der Statuscode 503 und die enstprechende Fehlermeldung zurückgegeben.
