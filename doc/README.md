@@ -3,7 +3,7 @@
 ### Inhaltsverzeichnis
 
 - [Dokumentation - Private Chatting App](#dokumentation---private-chatting-app)
-    - [Inhaltsverzeichnis](#inhaltsverzeichnis)
+  - [Inhaltsverzeichnis](#inhaltsverzeichnis)
   - [IPERKA](#iperka)
     - [Informieren](#informieren)
     - [Planen](#planen)
@@ -354,13 +354,9 @@ Wir hosten unsere API bei dem Cloudanbieter Deta, der es Entwicklern ermögtlich
 
 #### [/](../server/index.ts)
 
-#### [/auth/](../server/routes/auth.ts)
+##### [/auth/register](../server/routes/auth.ts)
 
-##### /auth/register
-
-`POST` nimmt im Body `username` und `password` an und fügt dann nach folgendem Prinzip einen Nutzer der Datenbank hinzu:
-
-`POST` nimmt einen Request-Body in folgendem Format an und fügt es in die entsprechende Datenbank ein.
+`POST` nimmt einen Request-Body in folgendem Format an:
 
 ```json
 {
@@ -368,15 +364,123 @@ Wir hosten unsere API bei dem Cloudanbieter Deta, der es Entwicklern ermögtlich
     publicKey: string,
     privateKey: string
 }
-Zuerst wird nachgeschaut, ob dieser Nutzername schon existiert. Wenn dies der Fall ist, wird der Statuscode 409 zurückgegeben. Sobald Man einen validen Nutzernamen eingibt, wird dieser als unique Key für den Datensatz des Nutzers verwendet. Danach wird das Passwort mit [argon2](https://www.npmjs.com/package/argon2) gehasht und als Hash gespeichert. Die Datenbank beinhaltet keine Passwörter in Klartext. Es wird zusätzlich ein "isApproved" Attribut zu "false" gesetzt, damit nicht jeder einfach ein Adminkonto erstellen kann. Dieser Wert muss zuerst von Hand in der Datenbank zu "true" geändert werden, bevor sich der neue Nutzer einloggen kann. Das kann momentan nur jemand machen, der direkten Zugriff auf die Datenbank hat.
-
-##### /auth/login
-
-`POST` nimmt auf dieser Route im Body `username` und `password` an und sucht zuerst in der Datenbank nach dem Nutzer mit dem angegebenen Nutzernamen.
-
-Wenn der Nutzer nicht gefunden wird, gibt der Server einen Statuscode von 401 zurück. Wenn der Nutzer existiert, wird als nächstes geschaut, ob er überhaupt schon approved wurde, indem das "isApproved" Attribut kontrolliert wird. Falls dies nicht der Fall ist wird ein Statuscode von 403 zurückgegeben.
-
-Wenn der Nutzer existiert und approved ist, kontrolliert der Server mit [argon2](https://www.npmjs.com/package/argon2), ob der Hashwert des Passworts mit dem in der Datenbank gespeicherten Hash überinstimmt. Wenn das wahr ist, erstellt der Server eine Session und schickt einen JSON Web Token an den Nutzer. Momenatan ist es noch nicht möglich mit HTTP-Only Cookies, da wir zwei verschiedene Hosts haben für das Frontend und das Backend (Cross-Origin).
-
-Damit bei jeder Request, welche Daten verändern würde, geprüft werden kann, ob sich der Nutzer schon eingeloggt hat, speichern wir bei einem erfolgreichen Login den Nutzernamen im Token. Bei solchen Requests überprüft die Middleware [checkAuth](../api-server/middleware/checkAuth.js), ob der Nutzer schon einen gültigen Token hat. Wenn das nicht der Fall ist, wird ein Statuscode von 401 zurückgeschickt und die Request abgebrochen. Wenn es aber der Fall ist, fahrt der Server ganz normal mit der Requestbearbeitung fort.
 ```
+
+Zuerst wird überprüft, ob der Benutzer bereits exisitiert. Wenn dies der Fall ist, wird der Statuscode 409 und eine Fehlermeldung "Username already taken!" zurückgegeben und der Prozess wird abgebrochen.
+
+Wenn jedoch ein gültiger Benutzername eingegeben wird, wird der privateKey mit [argon2](https://de.wikipedia.org/wiki/Argon2) gehasht. Danach wird alles in der Tabelle "users" in einer Deta (No-SQL) Datenbank gespeichert.
+
+Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 503 und eine Fehlermeldung "Error with the database" zurückgegeben.
+
+##### [/auth/login](../server/routes/auth.ts)
+
+`POST` nimmt einen Request-Body in folgendem Format an:
+
+```json
+{
+    username: string,
+    privateKey: string
+}
+```
+
+Zuerst wird überprüft, ob der Benutzer überhaupt exisitiert. Wenn dies nicht der Fall ist, wird der Statuscode 409 und eine Fehlermeldung "There is no sucher user!" zurückgegeben und der Prozess wird abgebrochen.
+
+Wenn jedoch ein gültiger Benutzername eingegeben wird, wird der eingegebene privateKey mit dem Hash in der Datenbank verglichen.Falls der privateKey mit dem Hash in der Datenbank übereinstimmt, wird ein JWT-Token für den Benutzer mit seinem Benutzernamen erstellt. Dieses ist dann für eine Stunde gültig. Wenn der privateKey jedoch nicht dem Hash in der Datenbank übereinstimmt, wird der Statuscode 409 und eine Fehlermeldung "Wrong Credentials!" und "success: false" zürückgegeben.
+
+Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 503 und eine Fehlermeldung mit der entsprechenden Fehlermeldung zurückgegeben. Falls der Fehler jedoch nicht zugeordnet werden konnte, wird der Statuscode 503 und einer Fehlermeldung "Unknown Error" züruckgegeben.
+
+##### [/chatroom/create](../server/routes/chatroom.ts)
+
+`POST` nimmt einen Request-Body in folgendem Format an:
+
+**_Für die Erstellung eines Chatrooms ist "messages" optional!_**
+
+```json
+{
+    participants: [
+        {
+        username: string,
+        publicKey: string
+        },
+        {
+        username: string,
+        publicKey: string
+        }
+    ],
+    messages: [
+        {
+          "msg": strimg,
+          "author": string,
+          "dateTime": number
+        }
+    ]
+}
+```
+
+Zuerst werden die beiden Teilnehmer des Chatrooms alphabetisch sortiert, damit der Key der beiden Benutzer einzigartig ist, und in einem Array gespeichert
+
+Danach wird für jeden Teilnehmer durch diesen Array iteriert. Bei jeder Iteration wird aus der Benutzername des Teilnehmers zu der Key Variabel hinzugefügt. Ausserdem wird überprüft, ob der Benutzer überhaupt exisitert.
+
+Wenn der Benutzer nicht existiert, wird der Statuscode 409 und eine Fehlermeldung "Failed to create the chatroom. There is no such user!" zurückgegeben und der Prozess wird abgebrochen.
+
+Danach wird aus dem Key, den Teilnehmern des Chatrooms und deren Nachrichten ein JSON-Objekt erstellt.
+
+Falls während diesem Prozess kein Fehler auftritt wird der Statuscode 201, die Teilnehmer des Chatrooms, ihre Nachrichten und success: true zurückgegeben.
+
+Wenn jedoch ein Fehler auftritt, wird der Statuscode 500, die entsprechende Fehlermeldung und sucess: false zurückgegeben.
+
+[/chatroom/delete](../server/routes/chatroom.ts)
+
+`POST` nimmt einen Request-Body in folgendem Format an:
+
+```json
+{
+  key: string
+}
+```
+
+Zuerst wird überprüft, ob unter dem Key von dem Request-Body überhaupt Daten in der Datenbank gespeichert sind. Falls nicht wird der Statuscode 404 und eine Fehlermeldung "Failed to delete chatroom. This chatroom does not exist!" zürückgegeben.
+
+Ansonsten wird der Chatroom gelöscht und es wird der Statuscode 200, eine Nachricht "Deleted chatroom" und success: true zurückgegeben.
+
+Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 500 und die entsprechende Fehlermeldung zurückgegeben.
+
+[/chatroom/send](../server/routes/chatroom.ts)
+
+`POST` nimmt einen Request-Body in folgendem Format an:
+
+```json
+{
+    key: string,
+    message:
+     {
+        author: string,
+        dateTime: number,
+        msg: string
+    }
+}
+```
+
+Zuerst wird überprüft, ob unter dem Key von dem Request-Body überhaupt Daten in der Datenbank gespeichert sind. Falls nicht wird der Statuscode 404 und eine Fehlermeldung "Failed to send message! This chatroom does not exist!" und success: false zürückgegeben und der Prozess wird abgebrochen.
+
+Ansonsten werden die aktuellen Nachrichten als Array von der Datenbank geholt und die neue Nachricht wird diesem Array angefügt.
+
+Danach wird mit diesem Array die Datenbank mit der Update-Methode von Deta auf den neusten Stand gebracht und es wird der Statuscode 201, eine Nachricht "Sent message!" und success: true zurückgegeben.
+
+Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 500 und die entsprechende Fehlermeldung und falls der Fehler nicht zugeordnet werden kann "Unknown Error occured!" und success: false zurückgegeben.
+
+[/chatroom/getMessages](../server/routes/chatroom.ts)
+
+`POST` nimmt einen Request-Body in folgendem Format an:
+
+```json
+{
+    key: string
+}
+```
+
+Zuerst wird überprüft, ob unter dem Key von dem Request-Body überhaupt Daten in der Datenbank gespeichert sind. Falls nicht wird der Statuscode 204 zürückgegeben und der Prozess wird abgebrochen.
+
+Ansonsten werden die Nachrichten von der Datenbank geholt und mit dem Statuscode 201 und success: true zurückgegeben.
+
+Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 500 und die entsprechende Fehlermeldung und falls der Fehler nicht zugeordnet werden kann "Unknown Error occured!" und success: false zurückgegeben.
