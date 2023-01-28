@@ -3,7 +3,7 @@
 ### Inhaltsverzeichnis
 
 - [Dokumentation - Private Chatting App](#dokumentation---private-chatting-app)
-  - [Inhaltsverzeichnis](#inhaltsverzeichnis)
+    - [Inhaltsverzeichnis](#inhaltsverzeichnis)
   - [IPERKA](#iperka)
     - [Informieren](#informieren)
     - [Planen](#planen)
@@ -42,8 +42,9 @@
     - [Host](#host)
     - [API Enpoints](#api-enpoints)
       - [/](#)
-      - [/auth/](#auth)
         - [/auth/register](#authregister)
+        - [/auth/login](#authlogin)
+        - [/chatroom/create](#chatroomcreate)
 
 ## IPERKA
 
@@ -366,7 +367,7 @@ Wir hosten unsere API bei dem Cloudanbieter Deta, der es Entwicklern ermögtlich
 }
 ```
 
-Zuerst wird überprüft, ob der Benutzer bereits exisitiert. Wenn dies der Fall ist, wird der Statuscode 409 und eine Fehlermeldung "Username already taken!" zurückgegeben und der Prozess wird abgebrochen.
+Zuerst wird überprüft, ob der Benutzer bereits existiert. Wenn dies der Fall ist, wird der Statuscode 409 und eine Fehlermeldung "Username already taken!" zurückgegeben und der Prozess wird abgebrochen.
 
 Wenn jedoch ein gültiger Benutzername eingegeben wird, wird der privateKey mit [argon2](https://de.wikipedia.org/wiki/Argon2) gehasht. Danach wird alles in der Tabelle "users" in einer Deta (No-SQL) Datenbank gespeichert.
 
@@ -383,11 +384,11 @@ Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 503 und e
 }
 ```
 
-Zuerst wird überprüft, ob der Benutzer überhaupt exisitiert. Wenn dies nicht der Fall ist, wird der Statuscode 409 und eine Fehlermeldung "There is no sucher user!" zurückgegeben und der Prozess wird abgebrochen.
+Zuerst wird überprüft, ob der Benutzer überhaupt existiert. Wenn dies nicht der Fall ist, wird der Statuscode 409 und eine Fehlermeldung "There is no sucher user!" zurückgegeben und der Prozess wird abgebrochen.
 
-Wenn jedoch ein gültiger Benutzername eingegeben wird, wird der eingegebene privateKey mit dem Hash in der Datenbank verglichen.Falls der privateKey mit dem Hash in der Datenbank übereinstimmt, wird ein JWT-Token für den Benutzer mit seinem Benutzernamen erstellt. Dieses ist dann für eine Stunde gültig. Wenn der privateKey jedoch nicht dem Hash in der Datenbank übereinstimmt, wird der Statuscode 409 und eine Fehlermeldung "Wrong Credentials!" und "success: false" zürückgegeben.
+Wenn jedoch ein gültiger Benutzername eingegeben wird, wird der eingegebene privateKey mit dem Hash in der Datenbank verglichen. Falls der privateKey mit dem Hash in der Datenbank übereinstimmt, wird ein JWT-Token für den Benutzer mit seinem Benutzernamen erstellt. Dieses ist dann für eine Stunde gültig. Wenn der privateKey jedoch nicht dem Hash in der Datenbank übereinstimmt, wird der Statuscode 409 und eine Fehlermeldung "Wrong Credentials!" und "success: false" zurückgegeben.
 
-Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 503 und eine Fehlermeldung mit der entsprechenden Fehlermeldung zurückgegeben. Falls der Fehler jedoch nicht zugeordnet werden konnte, wird der Statuscode 503 und einer Fehlermeldung "Unknown Error" züruckgegeben.
+Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 503 und eine Fehlermeldung mit der entsprechenden Fehlermeldung zurückgegeben. Falls der Fehler jedoch nicht zugeordnet werden konnte, wird der Statuscode 503 und einer Fehlermeldung "Unknown Error" zurückgegeben.
 
 ##### [/chatroom/create](../server/routes/chatroom.ts)
 
@@ -419,13 +420,13 @@ Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 503 und e
 
 Zuerst werden die beiden Teilnehmer des Chatrooms alphabetisch sortiert, damit der Key der beiden Benutzer einzigartig ist, und in einem Array gespeichert
 
-Danach wird für jeden Teilnehmer durch diesen Array iteriert. Bei jeder Iteration wird aus der Benutzername des Teilnehmers zu der Key Variabel hinzugefügt. Ausserdem wird überprüft, ob der Benutzer überhaupt exisitert.
+Danach wird für jeden Teilnehmer durch diesen Array iteriert. Bei jeder Iteration wird aus der Benutzername des Teilnehmers zu der Key Variabel hinzugefügt. Ausserdem wird überprüft, ob der Benutzer überhaupt existiert.
 
 Wenn der Benutzer nicht existiert, wird der Statuscode 409 und eine Fehlermeldung "Failed to create the chatroom. There is no such user!" zurückgegeben und der Prozess wird abgebrochen.
 
 Danach wird aus dem Key, den Teilnehmern des Chatrooms und deren Nachrichten ein JSON-Objekt erstellt.
 
-Falls während diesem Prozess kein Fehler auftritt wird der Statuscode 201, die Teilnehmer des Chatrooms, ihre Nachrichten und success: true zurückgegeben.
+Falls während diesem Prozess kein Fehler auftritt, wird der Statuscode 201, die Teilnehmer des Chatrooms, ihre Nachrichten und success: true zurückgegeben.
 
 Wenn jedoch ein Fehler auftritt, wird der Statuscode 500, die entsprechende Fehlermeldung und sucess: false zurückgegeben.
 
@@ -439,7 +440,7 @@ Wenn jedoch ein Fehler auftritt, wird der Statuscode 500, die entsprechende Fehl
 }
 ```
 
-Zuerst wird überprüft, ob unter dem Key von dem Request-Body überhaupt Daten in der Datenbank gespeichert sind. Falls nicht wird der Statuscode 404 und eine Fehlermeldung "Failed to delete chatroom. This chatroom does not exist!" zürückgegeben.
+Zuerst wird überprüft, ob unter dem Key von dem Request-Body überhaupt Daten in der Datenbank gespeichert sind. Falls nicht, wird der Statuscode 404 und eine Fehlermeldung "Failed to delete chatroom. This chatroom does not exist!" zurückgegeben.
 
 Ansonsten wird der Chatroom gelöscht und es wird der Statuscode 200, eine Nachricht "Deleted chatroom" und success: true zurückgegeben.
 
@@ -461,7 +462,7 @@ Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 50
 }
 ```
 
-Zuerst wird überprüft, ob unter dem Key von dem Request-Body überhaupt Daten in der Datenbank gespeichert sind. Falls nicht wird der Statuscode 404 und eine Fehlermeldung "Failed to send message! This chatroom does not exist!" und success: false zürückgegeben und der Prozess wird abgebrochen.
+Zuerst wird überprüft, ob unter dem Key von dem Request-Body überhaupt Daten in der Datenbank gespeichert sind. Falls nicht, wird der Statuscode 404 und eine Fehlermeldung "Failed to send message! This chatroom does not exist!" und success: false zurückgegeben und der Prozess wird abgebrochen.
 
 Ansonsten werden die aktuellen Nachrichten als Array von der Datenbank geholt und die neue Nachricht wird diesem Array angefügt.
 
@@ -479,7 +480,7 @@ Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 50
 }
 ```
 
-Zuerst wird überprüft, ob unter dem Key von dem Request-Body überhaupt Daten in der Datenbank gespeichert sind. Falls nicht wird der Statuscode 204 zürückgegeben und der Prozess wird abgebrochen.
+Zuerst wird überprüft, ob unter dem Key von dem Request-Body überhaupt Daten in der Datenbank gespeichert sind. Falls nicht, wird der Statuscode 204 zurückgegeben und der Prozess wird abgebrochen.
 
 Ansonsten werden die Nachrichten von der Datenbank geholt und mit dem Statuscode 201 und success: true zurückgegeben.
 
@@ -489,7 +490,7 @@ Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 50
 
 `GET` nimmt einen Benutzernamen als String in der Request-URL an.
 
-Zuerst wird überprüft, ob der Benutzer überhaupt in der Datenbank exisitiert. Falls dies nicht der Fall ist, wird der Statuscode 409 und eine Fehlermeldung "There is no such user!" zurückgegeben und der Prozess wird abgebrochen.
+Zuerst wird überprüft, ob der Benutzer überhaupt in der Datenbank existiert. Falls dies nicht der Fall ist, wird der Statuscode 409 und eine Fehlermeldung "There is no such user!" zurückgegeben und der Prozess wird abgebrochen.
 
 Ansonsten wird der publicKey vom Benutzer aus der Datenbank geholt. Dieser und der Statuscode 201 wird dann zurückgegeben.
 
@@ -513,4 +514,4 @@ Fetcht den gesamten Datensatz der Users-Tabelle mit der Fetch-Methode von Deta. 
 
 Falls kein Fehler auftritt während diesem Prozess, wird dieser Array als JSON-Objekt zurückgegeben.
 
-Ansonsten wir der Statuscode 503 und die enstprechende Fehlermeldung zurückgegeben.
+Ansonsten wird der Statuscode 503 und die enstprechende Fehlermeldung zurückgegeben.
