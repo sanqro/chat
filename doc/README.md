@@ -484,3 +484,33 @@ Zuerst wird überprüft, ob unter dem Key von dem Request-Body überhaupt Daten 
 Ansonsten werden die Nachrichten von der Datenbank geholt und mit dem Statuscode 201 und success: true zurückgegeben.
 
 Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 500 und die entsprechende Fehlermeldung und falls der Fehler nicht zugeordnet werden kann "Unknown Error occured!" und success: false zurückgegeben.
+
+[/keys/getPublic/:username](../server/routes/keys.ts)
+
+`GET` nimmt einen Benutzernamen als String in der Request-URL an.
+
+Zuerst wird überprüft, ob der Benutzer überhaupt in der Datenbank exisitiert. Falls dies nicht der Fall ist, wird der Statuscode 409 und eine Fehlermeldung "There is no such user!" zurückgegeben und der Prozess wird abgebrochen.
+
+Ansonsten wird der publicKey vom Benutzer aus der Datenbank geholt. Dieser und der Statuscode 201 wird dann zurückgegeben.
+
+Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 409 und die entsprechende Fehlermeldung und falls der Fehler nicht zugeordnet werden kann "Unknown Error occured!" und success: false zurückgegeben.
+
+[/keys/generateKeypair](../server/routes/keys.ts)
+
+`GET` nimmt keine Daten an.
+
+Zuerst wird mit der generateKeypair Methode von dem Crypto NPM-Package ein rsa Schlüsselpair mit einer Schlüssellänge von 4096 Bit, einer PEM-Formatierung und dem Type pkcs1 generiert.
+
+Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 500 und die entsprechende Fehlermeldung zurückgegeben.
+
+Ansonsten wird der public- sowie privateKey zu einer Linie konveriert und dann zurückgegeben.
+
+[/users/getall](../server/routes/users.ts)
+
+`GET` nimmt keine Daten an.
+
+Fetcht den gesamten Datensatz der Users-Tabelle mit der Fetch-Methode von Deta. Danach wird bei jedem Benutzer nur der Benutzername in einem Array gespeichert.
+
+Falls kein Fehler auftritt während diesem Prozess, wird dieser Array als JSON-Objekt zurückgegeben.
+
+Ansonsten wir der Statuscode 503 und die enstprechende Fehlermeldung zurückgegeben.
