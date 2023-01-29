@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
 import { IEncryptedMessage, IParticipant } from "../interfaces/api-req";
 import MessageBox from "./MessageBox";
@@ -20,7 +19,6 @@ const Messages = () => {
     {
       const currentChat = sessionStorage.getItem("current_chat") as string;
       const constantRequests = sessionStorage.getItem("constant_requests") as string;
-      console.log(sessionStorage.getItem("constant_requests"));
 
       // abort function if no chat is open
       if (!currentChat) return;
@@ -48,7 +46,6 @@ const Messages = () => {
       ];
 
       try {
-        console.log("fetching messages");
         const response = await fetch("https://chatapp.deta.dev/chatroom/getMessages", {
           method: "POST",
           headers: {
@@ -77,13 +74,10 @@ const Messages = () => {
   };
 
   const msgBoxList = messages.map((messageObj) => {
+    const date = new Date(messageObj.dateTime);
     return (
       <li className="bg-blue-500" key={messages.indexOf(messageObj)}>
-        <MessageBox
-          msg={messageObj.msg}
-          author={messageObj.author}
-          dateTime={messageObj.dateTime}
-        />
+        <MessageBox msg={messageObj.msg} author={messageObj.author} dateTime={date.toString()} />
       </li>
     );
   });
