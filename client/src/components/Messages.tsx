@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
 import { IEncryptedMessage, IParticipant } from "../interfaces/api-req";
 import MessageBox from "./MessageBox";
@@ -13,13 +14,19 @@ const Messages = () => {
 
   const authToken = sessionStorage.getItem("chatapp_token") as string;
   const loggedInAs = sessionStorage.getItem("logged_in_as") as string;
+  const firstFetch = sessionStorage.getItem("firstFetch") as string;
 
   const fetchMessages = async () => {
     {
       const currentChat = sessionStorage.getItem("current_chat") as string;
+      const constantRequests = sessionStorage.getItem("constantRequests") as string;
 
       // abort function if no chat is open
       if (!currentChat) return;
+
+      console.log(sessionStorage.getItem("constantRequests"));
+      if (constantRequests === "false" && firstFetch === "false") return;
+      sessionStorage.setItem("firstFetch", "false");
 
       const chatPartner = currentChat.replace(loggedInAs, "");
       const publicKeyA = (await getPublicKey(loggedInAs)) as string;

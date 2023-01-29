@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, MouseEvent } from "react";
 
 const ToggleButton: React.FC = () => {
-  const [isToggled, setIsToggled] = useState(sessionStorage.getItem("constantRequests") === "true");
+  const [isToggled, setIsToggled] = useState<boolean>(false);
 
-  useEffect(() => {
-    sessionStorage.setItem("constantRequests", isToggled ? "false" : "true");
-  }, [isToggled]);
-
-  const handleClick = () => {
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     setIsToggled(!isToggled);
   };
+
+  useEffect(() => {
+    sessionStorage.setItem("constantRequests", isToggled.toString());
+  }, []);
 
   return (
     <button
