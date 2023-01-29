@@ -17,6 +17,10 @@ const Messages = () => {
   const fetchMessages = async () => {
     {
       const currentChat = sessionStorage.getItem("current_chat") as string;
+
+      // abort function if no chat is open
+      if (!currentChat) return;
+
       const chatPartner = currentChat.replace(loggedInAs, "");
       const publicKeyA = (await getPublicKey(loggedInAs)) as string;
       const publicKeyB = (await getPublicKey(chatPartner)) as string;
