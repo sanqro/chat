@@ -12,7 +12,7 @@ export interface IRegistrationFormData {
 export interface IEncryptedMessage {
   msg: string;
   author: string;
-  dateTime: number;
+  dateTime: number | string;
 }
 
 export interface IParticipant {

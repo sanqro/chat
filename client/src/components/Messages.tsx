@@ -77,13 +77,10 @@ const Messages = () => {
   };
 
   const msgBoxList = messages.map((messageObj) => {
+    const date = new Date(messageObj.dateTime);
     return (
       <li className="bg-blue-500" key={messages.indexOf(messageObj)}>
-        <MessageBox
-          msg={messageObj.msg}
-          author={messageObj.author}
-          dateTime={messageObj.dateTime}
-        />
+        <MessageBox msg={messageObj.msg} author={messageObj.author} dateTime={date.toString()} />
       </li>
     );
   });
