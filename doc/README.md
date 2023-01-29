@@ -40,6 +40,9 @@
     - [Features](#features)
   - [Backend](#backend)
     - [Host](#host)
+    - [Middleware](#middleware)
+      - [checkAuth](#checkauth)
+      - [checkUser](#checkuser)
     - [API Enpoints](#api-enpoints)
       - [/](#)
         - [/auth/register](#authregister)
@@ -348,6 +351,21 @@ Damit wir keine Konflikte in Sachen Struktur im Frontend haben, erstellten wir e
 ### Host
 
 Wir hosten unsere API bei dem Cloudanbieter Deta, der es Entwicklern ermögtlich, kleine Microservices und No-SQL kostenlos für ihr Projekt zu verwenden.
+
+### Middleware
+
+#### [checkAuth](../server/src/middleware/checkAuth.ts)
+
+Mit dieser Middleware verifizieren wir den JWT, indem wir ihn entschlüsseln und die Claims überprüfen. Die Claims beinhalten nämlich einen Usernamen, den wir in der Datenbank suchen. Wenn die Datenbank die Existenz dieses Nutzer bestätigen kann, akzeptieren wir den Token und fahren mit der bearbeitung der Request fort.
+
+Falls der Username nicht in unserer Datenbank existiert, wird ein Statuscode von `401 Unauthorized` zurückgegeben. Es wird in einer Nachricht auch mitgeteilt, dass der Nutzer nicht gefunden wurde. Die Bearbeitung der Request wird sofort abgebrochen.
+
+#### [checkUser](../server/src/middleware/checkUser.ts)
+
+Mit dieser Funktion wird überprüft, ob der Username, welcher in den Claims des JWT gespeichert ist, einem der zwei Teilnehmer eines Chatrooms gehört. Wenn dieser Chatroom nicht existiert, wird ein Statuscode `204 No Content` zurückgegeben. Vom Frontend aus wird dann der [/chatroom/create Enpoint](#chatroomcreate) verwendet, um einen Chatroom zu erstellen.
+
+Falls der Chatroom existiert, aber den Usernamen aus dem JWT nicht im Teilnehmer-Array beinhaltet, wird die Request abgebrochen. In einer Nachricht mitgeteilt, dass der Username im Token und im gefragten Datensatz nicht übereinstimmen.
+
 
 ### API Enpoints
 
