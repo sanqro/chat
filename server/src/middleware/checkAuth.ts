@@ -21,12 +21,18 @@ export default async function checkAuth(req: any, res: any, next: any) {
     // check if user exists
     const username: string = (jwtData as IJWTPayload).username;
     const existing = await users.get(username);
-    if (existing === null) throw new Error("No such user found");
+    if (existing === null) {
+      res.status(401).json({
+        message: "The username in your token's claims does not exist.",
+        success: false
+      });
+      return false;
+    }
 
     next();
   } catch (err) {
     err instanceof Error
-      ? res.status(409).json({ message: err.message, success: false })
-      : res.status(409).json({ message: "Unknown Error occured!", success: false });
+      ? res.status(500).json({ message: err.message, success: false })
+      : res.status(500).json({ message: "Unknown Error occured!", success: false });
   }
 }

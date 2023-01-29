@@ -83,15 +83,20 @@ function checkAuth(req, res, next) {
                     return [4, users.get(username)];
                 case 1:
                     existing = _a.sent();
-                    if (existing === null)
-                        throw new Error("No such user found");
+                    if (existing === null) {
+                        res.status(401).json({
+                            message: "The username in your token's claims does not exist.",
+                            success: false
+                        });
+                        return [2, false];
+                    }
                     next();
                     return [3, 3];
                 case 2:
                     err_1 = _a.sent();
                     err_1 instanceof Error
-                        ? res.status(409).json({ message: err_1.message, success: false })
-                        : res.status(409).json({ message: "Unknown Error occured!", success: false });
+                        ? res.status(500).json({ message: err_1.message, success: false })
+                        : res.status(500).json({ message: "Unknown Error occured!", success: false });
                     return [3, 3];
                 case 3: return [2];
             }
