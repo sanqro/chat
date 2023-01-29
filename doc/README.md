@@ -93,7 +93,8 @@ Um unsere Chattingapplikation zu realisieren haben wir uns dazu entschieden die 
 - [Type Guards in TS](https://blog.logrocket.com/how-to-use-type-guards-typescript/)
 - [Teilweise Logik und Codesnippets von usginfo.ch](https://github.com/mnaray/USG_Website)
 - [JSON-Objekte nach spezifischem Wert sortieren](https://dev.to/slimpython/sort-array-of-json-object-by-key-value-easily-with-javascript-3hke)
-- [Implementation vom von der Crypto-Library im Browser](generateKeyPair)
+- [Implementation vom von der Crypto-Library im Browser](https://www.mongodb.com/community/forums/t/cant-resolve-crypto-in-node-modules-bson-dist-react/143227)
+- [Implementation von Buffer im Browser für die Crypto-Library](https://solana.stackexchange.com/questions/212/uncaught-referenceerror-buffer-is-not-defined-using-phantom-wallet-solana-and)
 
 ## Lokale Entwicklungsumgebung
 
