@@ -3,7 +3,7 @@
 ### Inhaltsverzeichnis
 
 - [Dokumentation - Private Chatting App](#dokumentation---private-chatting-app)
-    - [Inhaltsverzeichnis](#inhaltsverzeichnis)
+  - [Inhaltsverzeichnis](#inhaltsverzeichnis)
   - [IPERKA](#iperka)
     - [Informieren](#informieren)
     - [Planen](#planen)
@@ -110,6 +110,7 @@ Um unsere Chattingapplikation zu realisieren haben wir uns dazu entschieden die 
 - [Type Guards in TS](https://blog.logrocket.com/how-to-use-type-guards-typescript/)
 - [Teilweise Logik und Codesnippets von usginfo.ch (beispielsweise Teile der Middleware)](https://github.com/mnaray/USG_Website)
 - [JSON-Objekte nach spezifischem Wert sortieren](https://dev.to/slimpython/sort-array-of-json-object-by-key-value-easily-with-javascript-3hke)
+- [Unix-Timestamps zu einem "lesbaren" Datum konvertieren](https://stackoverflow.com/questions/30158574/how-to-convert-result-from-date-now-to-yyyy-mm-dd-hhmmss-ffff)
 
 ## Lokale Entwicklungsumgebung
 
@@ -136,7 +137,7 @@ cd chat/
 
 ### Dependencies mit NPM installieren
 
-***Für diesen Schritt ist es notwendig node.js installiert zu haben. [Download von node.js](https://nodejs.org/de/)***
+**_Für diesen Schritt ist es notwendig node.js installiert zu haben. [Download von node.js](https://nodejs.org/de/)_**
 
 Sobald man das ganze Projekt geklont hat, sollte man alle Dependencies installieren. Dabei muss man in das entsprechende Verzeichnis wechseln und die Dependencies installieren.
 
@@ -178,9 +179,9 @@ npm run start
 
 **_In dieser Datei muss man zwei Umgebungsvariablen anlegen:_**
 
-***PROJECT_KEY:** (Key von Deta.sh. [Mehr Informationen](https://docs.deta.sh/docs/faqs/))*
+**\*PROJECT_KEY:** (Key von Deta.sh. [Mehr Informationen](https://docs.deta.sh/docs/faqs/))\*
 
-***JWT_Secret:** Kann irgendeine Zeichenkette sein, jedoch sollte sie möglichst lang sein und aus zufällige Zeichen bestehen*
+**\*JWT_Secret:** Kann irgendeine Zeichenkette sein, jedoch sollte sie möglichst lang sein und aus zufällige Zeichen bestehen\*
 
 Um das Backend lokal zu starten, muss der folgende Befehl in dem Verzeichnis, wo das Backend liegt (server/) ausgeführt werden, dann wird das Backend auf **localhost:3001** gestartet.
 
@@ -219,7 +220,7 @@ npm run dev
 > 1x Arbeitspaket = 45 Minuten (eine Schullektion)
 > 1x Sitzung = 5x Arbeitspakete (ein Halbtag)
 >
-> 5x Sitzungen * 5x Arbeitspakete * 2x Gruppenmitglieder = **50 Arbeitspakete + Portfolioeintrag 8 (4 / Gruppenmitglied)**
+> 5x Sitzungen _ 5x Arbeitspakete _ 2x Gruppenmitglieder = **50 Arbeitspakete + Portfolioeintrag 8 (4 / Gruppenmitglied)**
 
 | Nr. | Frist    | Beschreibung                                                              | Zeit in Arbeitspaketen (geplant) |
 | --- | -------- | ------------------------------------------------------------------------- | :------------------------------- |
@@ -365,7 +366,6 @@ Falls der Username nicht in unserer Datenbank existiert, wird ein Statuscode von
 Mit dieser Funktion wird überprüft, ob der Username, welcher in den Claims des JWT gespeichert ist, einem der zwei Teilnehmer eines Chatrooms gehört. Wenn dieser Chatroom nicht existiert, wird ein Statuscode `204 No Content` zurückgegeben. Vom Frontend aus wird dann der [/chatroom/create Enpoint](#chatroomcreate) verwendet, um einen Chatroom zu erstellen.
 
 Falls der Chatroom existiert, aber den Usernamen aus dem JWT nicht im Teilnehmer-Array beinhaltet, wird die Request abgebrochen. In einer Nachricht mitgeteilt, dass der Username im Token und im gefragten Datensatz nicht übereinstimmen.
-
 
 ### API Enpoints
 
