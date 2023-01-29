@@ -99,7 +99,9 @@ router.post("/send", checkUser, async (req, res) => {
     const currentMsg = existing.msgArray;
     (currentMsg as IEncryptedMessage[]).push(newMsg);
 
-    existing.msgArray = currentMsg;
+    existing.msgArray = (currentMsg as IEncryptedMessage[]).sort((a, b) => {
+      if (a.dateTime < b.dateTime) return -1;
+    });
 
     delete existing.key;
 

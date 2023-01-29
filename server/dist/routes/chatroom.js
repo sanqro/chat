@@ -178,7 +178,10 @@ router.post("/send", checkUser_1["default"], function (req, res) { return __awai
                 }
                 currentMsg = existing.msgArray;
                 currentMsg.push(newMsg);
-                existing.msgArray = currentMsg;
+                existing.msgArray = currentMsg.sort(function (a, b) {
+                    if (a.dateTime < b.dateTime)
+                        return -1;
+                });
                 delete existing.key;
                 return [4, chatroom.update(existing, key)];
             case 2:
