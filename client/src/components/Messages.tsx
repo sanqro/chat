@@ -73,16 +73,11 @@ const Messages = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      forbiddenWizardry();
+      fetchMessages();
     }, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
-
-  // EVIL FUNCTION
-  const forbiddenWizardry = async () => {
-    await fetchMessages();
-  };
 
   const getPublicKey = async (username: string) => {
     const response: Response = await fetch("https://chatapp.deta.dev/keys/getPublic/" + username, {
