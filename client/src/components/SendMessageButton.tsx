@@ -10,13 +10,16 @@ function SendMessageButton() {
 
     const chatroomKey = sessionStorage.getItem("current_chat");
 
+    // abort function if no chat is open
+    if (!chatroomKey) return;
+
     const msgObj: IEncryptedMessage = {
       msg: (document.getElementById("messageInput") as HTMLInputElement).value,
       author: msgAuthor as string,
       dateTime: Date.now()
     };
 
-    // check if there is a message to send
+    // abort function if no message written
     if (msgObj.msg.trim() == "") return;
 
     const response: Response = await fetch("https://chatapp.deta.dev/chatroom/send", {

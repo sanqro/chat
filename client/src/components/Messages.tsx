@@ -17,6 +17,10 @@ const Messages = () => {
   const fetchMessages = async () => {
     {
       const currentChat = sessionStorage.getItem("current_chat") as string;
+
+      // abort function if no chat is open
+      if (!currentChat) return;
+
       const chatPartner = currentChat.replace(loggedInAs, "");
       const publicKeyA = (await getPublicKey(loggedInAs)) as string;
       const publicKeyB = (await getPublicKey(chatPartner)) as string;
@@ -73,16 +77,11 @@ const Messages = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      forbiddenWizardry();
+      fetchMessages();
     }, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
-
-  // EVIL FUNCTION
-  const forbiddenWizardry = async () => {
-    await fetchMessages();
-  };
 
   const getPublicKey = async (username: string) => {
     const response: Response = await fetch("https://chatapp.deta.dev/keys/getPublic/" + username, {
