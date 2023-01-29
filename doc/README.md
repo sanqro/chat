@@ -133,7 +133,7 @@ cd chat/
 
 ### Dependencies mit NPM installieren
 
-**\*Für diesen Schritt ist es notwendig node.js installiert zu haben. [Download von node.js\*\***](https://nodejs.org/de/)\*\*\*
+***Für diesen Schritt ist es notwendig node.js installiert zu haben. [Download von node.js](https://nodejs.org/de/)***
 
 Sobald man das ganze Projekt geklont hat, sollte man alle Dependencies installieren. Dabei muss man in das entsprechende Verzeichnis wechseln und die Dependencies installieren.
 
@@ -175,9 +175,9 @@ npm run start
 
 **_In dieser Datei muss man zwei Umgebungsvariablen anlegen:_**
 
-**\*PROJECT_KEY:** (Key von Deta.sh. [Mehr Informationen](https://docs.deta.sh/docs/faqs/))\*
+***PROJECT_KEY:** (Key von Deta.sh. [Mehr Informationen](https://docs.deta.sh/docs/faqs/))*
 
-**\*JWT_Secret:** Kann irgendeine Zeichenkette sein, jedoch sollte sie möglichst lang sein und aus zufällige Zeichen bestehen\*
+***JWT_Secret:** Kann irgendeine Zeichenkette sein, jedoch sollte sie möglichst lang sein und aus zufällige Zeichen bestehen*
 
 Um das Backend lokal zu starten, muss der folgende Befehl in dem Verzeichnis, wo das Backend liegt (server/) ausgeführt werden, dann wird das Backend auf **localhost:3001** gestartet.
 
@@ -216,7 +216,7 @@ npm run dev
 > 1x Arbeitspaket = 45 Minuten (eine Schullektion)
 > 1x Sitzung = 5x Arbeitspakete (ein Halbtag)
 >
-> 5x Sitzungen _ 5x Arbeitspakete _ 2x Gruppenmitglieder = **50 Arbeitspakete + Portfolioeintrag 8 (4 / Gruppenmitglied)**
+> 5x Sitzungen * 5x Arbeitspakete * 2x Gruppenmitglieder = **50 Arbeitspakete + Portfolioeintrag 8 (4 / Gruppenmitglied)**
 
 | Nr. | Frist    | Beschreibung                                                              | Zeit in Arbeitspaketen (geplant) |
 | --- | -------- | ------------------------------------------------------------------------- | :------------------------------- |
@@ -337,7 +337,7 @@ Die Postman-Applikation verwendet die neuste Version (10.8.4)
 
 ### Wireframe
 
-![Wireframe-Anzeige](/assets/wireframe.png/ "Wireframe")
+![Wireframe-Anzeige](assets/wireframe.png/ "Wireframe")
 
 Damit wir keine Konflikte in Sachen Struktur im Frontend haben, erstellten wir ein Wireframe. Dieses zeigt grob auf, wie die wichtigsten Seiten der Applikation im Frontend aussehen. Es dient als Orientierungshilfe beim Implementieren der Komponenten. Das Design halten wir grunsätzlich über die ganze Applikation hinweg eher simpel und minimalistisch.
 
@@ -408,7 +408,7 @@ Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 503 und e
     ],
     messages: [
         {
-          "msg": strimg,
+          "msg": string,
           "author": string,
           "dateTime": number
         }
