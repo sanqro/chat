@@ -351,9 +351,9 @@ Wir hosten unsere API bei dem Cloudanbieter Deta, der es Entwicklern ermögtlich
 
 ### API Enpoints
 
-#### [/](../server/index.ts)
+#### [/](../server/src/index.ts)
 
-##### [/auth/register](../server/routes/auth.ts)
+##### [/auth/register](../server/src/routes/auth.ts)
 
 `POST` nimmt einen Request-Body in folgendem Format an:
 
@@ -371,7 +371,7 @@ Wenn jedoch ein gültiger Benutzername eingegeben wird, wird der privateKey mit 
 
 Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 503 und eine Fehlermeldung "Error with the database" zurückgegeben.
 
-##### [/auth/login](../server/routes/auth.ts)
+##### [/auth/login](../server/src/routes/auth.ts)
 
 `POST` nimmt einen Request-Body in folgendem Format an:
 
@@ -388,7 +388,7 @@ Wenn jedoch ein gültiger Benutzername eingegeben wird, wird der eingegebene pri
 
 Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 503 und eine Fehlermeldung mit der entsprechenden Fehlermeldung zurückgegeben. Falls der Fehler jedoch nicht zugeordnet werden konnte, wird der Statuscode 503 und einer Fehlermeldung "Unknown Error" zurückgegeben.
 
-##### [/chatroom/create](../server/routes/chatroom.ts)
+##### [/chatroom/create](../server/src/routes/chatroom.ts)
 
 `POST` nimmt einen Request-Body in folgendem Format an:
 
@@ -428,7 +428,7 @@ Falls während diesem Prozess kein Fehler auftritt, wird der Statuscode 201, die
 
 Wenn jedoch ein Fehler auftritt, wird der Statuscode 500, die entsprechende Fehlermeldung und sucess: false zurückgegeben.
 
-[/chatroom/delete](../server/routes/chatroom.ts)
+[/chatroom/delete](../server/src/routes/chatroom.ts)
 
 `POST` nimmt einen Request-Body in folgendem Format an:
 
@@ -444,7 +444,7 @@ Ansonsten wird der Chatroom gelöscht und es wird der Statuscode 200, eine Nachr
 
 Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 500 und die entsprechende Fehlermeldung zurückgegeben.
 
-[/chatroom/send](../server/routes/chatroom.ts)
+[/chatroom/send](../server/src/routes/chatroom.ts)
 
 `POST` nimmt einen Request-Body in folgendem Format an:
 
@@ -468,7 +468,7 @@ Danach wird mit diesem Array die Datenbank mit der Update-Methode von Deta auf d
 
 Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 500 und die entsprechende Fehlermeldung und falls der Fehler nicht zugeordnet werden kann "Unknown Error occured!" und success: false zurückgegeben.
 
-[/chatroom/getMessages](../server/routes/chatroom.ts)
+[/chatroom/getMessages](../server/src/routes/chatroom.ts)
 
 `POST` nimmt einen Request-Body in folgendem Format an:
 
@@ -484,7 +484,7 @@ Ansonsten werden die Nachrichten von der Datenbank geholt und mit dem Statuscode
 
 Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 500 und die entsprechende Fehlermeldung und falls der Fehler nicht zugeordnet werden kann "Unknown Error occured!" und success: false zurückgegeben.
 
-[/keys/getPublic/:username](../server/routes/keys.ts)
+[/keys/getPublic/:username](../server/src/routes/keys.ts)
 
 `GET` nimmt einen Benutzernamen als String in der Request-URL an.
 
@@ -494,7 +494,7 @@ Ansonsten wird der publicKey vom Benutzer aus der Datenbank geholt. Dieser und d
 
 Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 409 und die entsprechende Fehlermeldung und falls der Fehler nicht zugeordnet werden kann "Unknown Error occured!" und success: false zurückgegeben.
 
-[/keys/generateKeypair](../server/routes/keys.ts)
+[/keys/generateKeypair](../server/src/routes/keys.ts)
 
 `GET` nimmt keine Daten an.
 
@@ -504,7 +504,7 @@ Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 500 und d
 
 Ansonsten wird der public- sowie privateKey zu einer Linie konveriert und dann zurückgegeben.
 
-[/users/getall](../server/routes/users.ts)
+[/users/getall](../server/src/routes/users.ts)
 
 `GET` nimmt keine Daten an.
 
