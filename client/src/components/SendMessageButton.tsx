@@ -2,6 +2,8 @@ import React, { MouseEvent } from "react";
 import { IEncryptedMessage } from "../interfaces/api-req";
 import crypto, { createDiffieHellman } from "crypto";
 import { TextEncoder } from "text-encoding";
+import * as buffer from "buffer";
+window.Buffer = buffer.Buffer;
 
 function SendMessageButton() {
   const authToken = sessionStorage.getItem("chatapp_token");
