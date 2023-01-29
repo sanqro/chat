@@ -35,7 +35,7 @@ function DeleteChatroomButton() {
   return (
     <button
       onClick={clickHandler}
-      className="h-fit px-4 py-2 bg-blue-600 text-xl rounded-md text-white"
+      className="h-fit w-fit items-end ml-auto mr-5 mt-5 px-4 py-2 bg-blue-600 text-xl rounded-md text-white"
     >
       Delete Chatroom
     </button>
