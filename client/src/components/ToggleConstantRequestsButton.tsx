@@ -1,7 +1,7 @@
 import React, { useState, useEffect, MouseEvent } from "react";
 
 const ToggleButton: React.FC = () => {
-  const [isToggled, setIsToggled] = useState<boolean>(false);
+  const [isToggled, setIsToggled] = useState<boolean>(true);
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -9,8 +9,8 @@ const ToggleButton: React.FC = () => {
   };
 
   useEffect(() => {
-    sessionStorage.setItem("constantRequests", isToggled.toString());
-  }, []);
+    sessionStorage.setItem("constant_requests", isToggled.toString());
+  }, [isToggled]);
 
   return (
     <button
