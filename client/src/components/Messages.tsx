@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from "react";
 import { IEncryptedMessage, IParticipant } from "../interfaces/api-req";
 import MessageBox from "./MessageBox";
@@ -13,13 +14,24 @@ const Messages = () => {
 
   const authToken = sessionStorage.getItem("chatapp_token") as string;
   const loggedInAs = sessionStorage.getItem("logged_in_as") as string;
+  const firstFetch = sessionStorage.getItem("first_fetch") as string;
 
   const fetchMessages = async () => {
     {
       const currentChat = sessionStorage.getItem("current_chat") as string;
+      const constantRequests = sessionStorage.getItem("constant_requests") as string;
+      console.log(sessionStorage.getItem("constant_requests"));
 
       // abort function if no chat is open
       if (!currentChat) return;
+
+      // abort function if constant fetching is off and not the first fetch
+      if (constantRequests === "false" && firstFetch === "false") return;
+
+      // only set first fetch to false if chatroom was opened
+      if (currentChat) {
+        sessionStorage.setItem("first_fetch", "false");
+      }
 
       const chatPartner = currentChat.replace(loggedInAs, "");
       const publicKeyA = (await getPublicKey(loggedInAs)) as string;
@@ -36,6 +48,7 @@ const Messages = () => {
       ];
 
       try {
+        console.log("fetching messages");
         const response = await fetch("https://chatapp.deta.dev/chatroom/getMessages", {
           method: "POST",
           headers: {

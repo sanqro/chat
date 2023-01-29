@@ -10,6 +10,7 @@ function OpenChatroomButton(props: ISearchResult) {
     e.preventDefault();
 
     sessionStorage.setItem("current_chat", chatroomKey());
+    sessionStorage.setItem("first_fetch", "true");
   };
 
   const chatroomKey = () => {
