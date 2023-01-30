@@ -1,4 +1,4 @@
-# Dokumentation - Private Chatting App
+# Dokumentation - [Private Chatting App](https://chatapp1303.netlify.app)
 
 ### Inhaltsverzeichnis
 
@@ -87,10 +87,9 @@
 
 ## Einleitung
 
-Die Seite ist unter den folgenden Adressen erreichbar:
+Die Seite ist unter folgender Adresse erreichbar:
 
-- [https://chatapp1303.netlify.app](https://chatapp1303.netlify.app)
-- [https://chat-47k.pages.dev](https://chat-47k.pages.dev)
+[https://chatapp1303.netlify.app](https://chatapp1303.netlify.app)
 
 Für dieses Projekt haben wir uns dafür entschieden, dass wir eine Chattingapplikation realisieren, bei der die Privatsphäre der Nutzer im Zentrum steht. Die Nachrichten dessen sollen deshalb mit einer "Ende zu Ende" (E2E) Verschlüsselungsmethode verschlüsselt werden.
 
