@@ -18,7 +18,7 @@ function LoginField() {
   };
 
   const login = async () => {
-    const loginResponse = await fetch("https:///chatapp.deta.dev/auth/login", {
+    const loginResponse = await fetch("https://chatapp.deta.dev/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
