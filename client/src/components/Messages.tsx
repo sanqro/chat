@@ -13,10 +13,10 @@ const Messages = () => {
 
   const authToken = sessionStorage.getItem("chatapp_token") as string;
   const loggedInAs = sessionStorage.getItem("logged_in_as") as string;
-  const firstFetch = sessionStorage.getItem("first_fetch") as string;
 
   const fetchMessages = async () => {
     {
+      const firstFetch = sessionStorage.getItem("first_fetch") as string;
       const currentChat = sessionStorage.getItem("current_chat") as string;
       const constantRequests = sessionStorage.getItem("constant_requests") as string;
 
