@@ -6,8 +6,8 @@ import SubmitButton from "./SubmitButton";
 
 function RegistrationField() {
   let username: string;
-  const [privateKey, setPrivateKey] = useState<string>("");
-  const [publicKey, setPublicKey] = useState<string>("");
+  let [privateKey, setPrivateKey] = useState("");
+  let [publicKey, setPublicKey] = useState("");
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,12 +19,12 @@ function RegistrationField() {
 
   const getKeys = async () => {
     const convertToOneLine = (text: string) => text.replace(/(\r\n|\n|\r)/gm, "");
-    const response = await fetch("https://chatapp.deta.dev/keys/generateKeypair", {
+    const response = await fetch("http://chatapp.deta.dev/keys/generateKeypair", {
       method: "GET"
     });
     const responseJson = await response.json();
-    setPrivateKey(convertToOneLine(responseJson.privateKey));
-    setPublicKey(responseJson.publicKey);
+    setPrivateKey((privateKey = convertToOneLine(responseJson.privateKey)));
+    setPublicKey((publicKey = responseJson.publicKey));
   };
 
   const register = async () => {
