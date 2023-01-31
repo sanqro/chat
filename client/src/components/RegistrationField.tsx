@@ -19,7 +19,7 @@ function RegistrationField() {
 
   const getKeys = async () => {
     const convertToOneLine = (text: string) => text.replace(/(\r\n|\n|\r)/gm, "");
-    const response = await fetch("http://chatapp.deta.dev/keys/generateKeypair", {
+    const response = await fetch("https://chatapp.deta.dev/keys/generateKeypair", {
       method: "GET"
     });
     const responseJson = await response.json();
