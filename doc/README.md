@@ -37,7 +37,7 @@
     - [Testbericht](#testbericht)
   - [Frontend](#frontend)
     - [Wireframe](#wireframe)
-    - [Features](#features)
+    - [Host \& Sonstiges](#host--sonstiges)
   - [Backend](#backend)
     - [Host](#host)
     - [Middleware](#middleware)
@@ -361,13 +361,17 @@ Die Postman-Applikation verwendet die neuste Version (10.8.4)
 
 Damit wir keine Konflikte in Sachen Struktur im Frontend haben, erstellten wir ein Wireframe. Dieses zeigt grob auf, wie die wichtigsten Seiten der Applikation im Frontend aussehen. Es dient als Orientierungshilfe beim Implementieren der Komponenten. Das Design halten wir grunsätzlich über die ganze Applikation hinweg eher simpel und minimalistisch.
 
-### Features
+### Host & Sonstiges
+
+Unser Frontend hosten wir bei [Netlify](https://www.netlify.com/). Das ist ein (für unseren Usecase) kostenloser Host, der einfache automatische Deployments mit Continuous Deployment (CD) von einem angegebenen Branch auf dem Git-Remote-Host anbietet.
+
+Wir haben versucht unser Frontend minimalistisch zu halten. Das Layout vom Wireframe setzen wir mit [Tailwind](https://tailwindcss.com/) um, damit wir keine Wertvolle Zeit mit CSS schreiben verschwenden. Es soll nur das Nötigste für die Anforderungen in Sachen Nutzeroberfläche implementiert werden.
 
 ## Backend
 
 ### Host
 
-Wir hosten unsere API bei dem Cloudanbieter Deta, der es Entwicklern ermögtlich, kleine Microservices und No-SQL kostenlos für ihr Projekt zu verwenden.
+Wir hosten unsere Express-API bei dem Cloudanbieter [Deta](https://deta.sh), der es Entwicklern ermögtlich, kleine Microservices (FaaS mit max. 10s pro Funktion) und No-SQL Datenbanken kostenlos für ihr Projekt zu hosten.
 
 ### Middleware
 
@@ -532,7 +536,7 @@ Falls während diesem Prozess jedoch ein Fehler auftritt, wird der Statuscode 40
 
 `GET` nimmt keine Daten an.
 
-Zuerst wird mit der generateKeypair Methode von dem Crypto NPM-Package ein rsa Schlüsselpair mit einer Schlüssellänge von 4096 Bit, einer PEM-Formatierung und dem Type pkcs1 generiert.
+Zuerst wird mit der generateKeypair Methode von dem Crypto NPM-Package ein RSA Schlüsselpair mit einer Schlüssellänge von 4096 Bit, einer PEM-Formatierung und dem Type pkcs1 generiert.
 
 Falls während diesem Prozess ein Fehler auftritt, wird der Statuscode 500 und die entsprechende Fehlermeldung zurückgegeben.
 
