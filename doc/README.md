@@ -28,10 +28,10 @@
   - [Login / Registration für Benutzer](#login--registration-für-benutzer)
   - [Anzeigen neuer Nachrichten](#anzeigen-neuer-nachrichten)
   - [Testen](#testen)
-    - [Testumgebung](#testumgebung)
+    - [Testumgebungen](#testumgebungen)
       - [Selenium:](#selenium)
-    - [Jest:](#jest)
-    - [Postman:](#postman)
+      - [Jest:](#jest)
+      - [Postman:](#postman)
   - [Testfälle](#testfälle)
     - [Testprotokoll](#testprotokoll)
     - [Testbericht](#testbericht)
@@ -255,7 +255,7 @@ Deshalb werden wir eine optionale und konstante Abfrage bei der API verwenden, u
 
 ## Testen
 
-### Testumgebung
+### Testumgebungen
 
 Grundsätzlich verwenden für die verschiedenen Testfälle drei unterschiedliche Testumgebungen:
 
@@ -273,7 +273,7 @@ Für den Browser verwenden wir die neuste Version von Mozilla Firefox (109.00).
 
 Für die automatischen Tests mit Selenium verwenden wir die neuste Version der Selenium-IDE für Mozilla Firefox (3.17.4).
 
-### Jest:
+#### Jest:
 
 **Betriebssystem:**
 
@@ -287,7 +287,7 @@ Die Node.js-Runtime verwendet Long-term-support-Version(18.13.0).
 
 Das Jest-Package verwendet die Long-term-support-Version (5.16.5).
 
-### Postman:
+#### Postman:
 
 **Betriebssystem:**
 
