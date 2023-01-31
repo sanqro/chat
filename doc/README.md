@@ -48,6 +48,7 @@
         - [/auth/register](#authregister)
         - [/auth/login](#authlogin)
         - [/chatroom/create](#chatroomcreate)
+  - [Projektauswertung](#projektauswertung)
 
 ## IPERKA
 
@@ -81,10 +82,11 @@
 
 - [Testfälle](#testfälle)
 - [Tesprotokoll](#testprotokoll)
+- [Testbericht](#testbericht)
 
 ### Auswerten
 
-- [Testbericht](#testbericht)
+- [Projektauswertung](#projektauswertung)
 
 ## Einleitung
 
@@ -235,6 +237,17 @@ npm run dev
 | 7   | 03.02.23 | Portfolioeintrag fertigstellen                                            | 8                                |
 
 ## Ausführung
+
+
+| Nr. | Frist    | Bemerkung                                                                                                                                                                             | Zeit (geplant) | Zeit (effektiv) |
+| --- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | --------------- |
+| 1   | 16.12.22 | Gut informiert über Technologien, jedoch zu wenig über mögliche Vorgehensweisen                                                                                                       | 10             | 10              |
+| 2   | 23.12.22 | Wir haben alles geplant und entschieden, jedoch nicht wirklich im Detail. Dies wurde uns dann später im Projekt zum Verhängnis.                                                       | 4              | 4               |
+| 3   | 23.12.22 | Dieses Arbeitspaket konnten wir gut umsetzten.                                                                                                                                        | 6              | 6               |
+| 4   | 13.01.23 | Dieses Arbeitspaket konnten wir gut umsetzten. Es brauchte aber ein paar Überstunden in der Freizeit, um Bugs zu beheben.                                                             | 10             | 16              |
+| 5   | 20.01.23 | Anforderung Nr. 13 mussten wir leider überspringen, da wir Probleme damit hatten ([Projektauswertung](#projektauswertung)). Wir haben wieder Überstunden in unserer Freizeit gemacht. | 10             | 18              |
+| 6   | 27.01.23 | Wurde erst sehr spät durchgesetzt, da wir beim Realisieren Probleme hatten. Teilweise auch ausserhalb der Lektionen.                                                                  | 10             | 10              |
+| 7   | 03.02.23 | Schneller gemacht als geplant.                                                                                                                                                        | 8              | 6               |
 
 ## Verschlüsselung der Benutzerdaten
 
@@ -534,3 +547,7 @@ Fetcht den gesamten Datensatz der Users-Tabelle mit der Fetch-Methode von Deta. 
 Falls kein Fehler auftritt während diesem Prozess, wird dieser Array als JSON-Objekt zurückgegeben.
 
 Ansonsten wird der Statuscode 503 und die enstprechende Fehlermeldung zurückgegeben.
+
+## Projektauswertung
+
+Hier kommt noch eine Auswertung des ganzen Projekts hin!
