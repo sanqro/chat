@@ -554,4 +554,10 @@ Ansonsten wird der Statuscode 503 und die entsprechende Fehlermeldung zurückgeg
 
 ## Projektauswertung
 
-Hier kommt noch eine Auswertung des ganzen Projekts hin!
+Das Projekt ist grundsätzlich gut verlaufen. Das einzige wirkliche Problem war, dass wir uns nicht so stark an IPERKA gehalten haben. Dies kam uns später zum Verhängnis, da wir uns zu wenig informiert haben und dann Probleme beim Realisieren hatten.
+
+Wir haben die Applikation mit Fehlern geplant. Es wäre nicht mehr möglich gewesen seine eigenen Nachrichten nach dem Absenden zu entschlüsseln, da man dann den privaten Schlüssel der Gegenpartei bräuchte. Wir beide kannten den Diffie-Hellman-Schlüsselaustausch und haben kurzfristig während dem Realisieren umgeplant. Diese Art von Schlüsselaustausch würde es beiden Teilnehmern am Chat ermöglichen, einen gemeinsamen Schlüssel aus dem eigenen privaten Schlüssel und dem öffentlichen Schlüssel des anderen zu berechnen, was unser Problem gelöst hätte. Wir waren mit dem theoretischen Konzept dieser Prozedur vertraut, jedoch wussten wir nicht, wie wir zwei RSA-Schlüssel zu einem gemeinsamen berechnen können. Wir haben auch diverse NPM-Packages, welche dafür gemacht sind, versucht zu verwenden, jedoch waren die meisten entweder veraltet und in einem modernen Browser nicht mehr funktional oder sie waren für Node-Laufzeiten gemacht und beinhalteten Code, der im Browser nicht laufen kann. Der momentane Stand der versuchten Fixes mit diversen [Polyfills](https://de.wikipedia.org/wiki/Polyfill#:~:text=Ein%20Polyfill%20(auch%20Polyfiller)%20ist,in%20%C3%A4lteren%20Browsern%20nicht%20verf%C3%BCgbar.) ist auf [diesem Branch](https://github.com/sanqro/chat/tree/diffie-hellman) zu sehen.
+
+Wenn wir uns richtig informiert und unsere Anwendung wirklich durchdacht geplant hätten, wäre dieses Problem nicht aufgetreten. Es brachte uns um mehrere Stunden aus dem Zeitplan, was uns dazu gezwungen hat die Verschlüsselung der Nachrichten vollständig auszulassen.
+
+Abgesehen von dem Problem mit der Verschlüsselung der Nachrichten ist unser Projekt gut verlaufen. Wir hatten gute Kommunikation im Team und beide haben regelmässig am Projekt gearbeitet. Pair-Programming war auch öfters praktisch, falls wir auf einen Bug gestossen sind, es brachte uns im Normalfall weiter.
