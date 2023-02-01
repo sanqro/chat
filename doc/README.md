@@ -3,7 +3,7 @@
 ### Inhaltsverzeichnis
 
 - [Dokumentation - Private Chatting App](#dokumentation---private-chatting-app)
-    - [Inhaltsverzeichnis](#inhaltsverzeichnis)
+  - [Inhaltsverzeichnis](#inhaltsverzeichnis)
   - [IPERKA](#iperka)
     - [Informieren](#informieren)
     - [Planen](#planen)
@@ -193,7 +193,6 @@ npm run dev
 
 ## Anforderungen
 
-
 | Anf.-Nr. | Muss/<br />Kann | funk./<br />qual. | Beschreibung                                                                                                                                                                                                       |
 | :------- | :-------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 1        | M               | funk.             | Eine Landingpage mit einem Login- und Registrationsknopf ist vorhanden.                                                                                                                                            |
@@ -225,7 +224,6 @@ npm run dev
 >
 > 5x Sitzungen _ 5x Arbeitspakete _ 2x Gruppenmitglieder = **50 Arbeitspakete + Portfolioeintrag 8 (4 / Gruppenmitglied)**
 
-
 | Nr. | Frist    | Beschreibung                                                              | Zeit in Arbeitspaketen (geplant) |
 | --- | -------- | ------------------------------------------------------------------------- | :------------------------------- |
 | 1   | 16.12.22 | Informieren (von IPERKA)                                                  | 10                               |
@@ -237,7 +235,6 @@ npm run dev
 | 7   | 03.02.23 | Portfolioeintrag fertigstellen                                            | 8                                |
 
 ## Ausführung
-
 
 | Nr. | Frist    | Bemerkung                                                                                                                                                                             | Zeit (geplant) | Zeit (effektiv) |
 | --- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | --------------- |
@@ -313,7 +310,6 @@ Die Postman-Applikation verwendet die neuste Version (10.8.4)
 
 ## Testfälle
 
-
 | Testf.-Nr. | Anf-Nr. | Vorbereitung                                                                                                                                                                                                                                                                  | Testumgebung | Eingabe                                                                                                          | Erw. Ausgabe                                                                                                                                                      |
 | :--------: | ------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |    1.1     | 1       | Fertige Seite wurde deployed                                                                                                                                                                                                                                                  | Selenium     | URL in den Browser eingeben.                                                                                     | Landingpage mit einem Titel und zwei Knöpfen (Login und Registration) soll erscheinen.                                                                            |
@@ -325,16 +321,16 @@ Die Postman-Applikation verwendet die neuste Version (10.8.4)
 |    5.1     | 5       | Fertige Seite wurde deployed und die Loginseite geöffnet, zusätzlich muss der User "FischersFritz" schon erstellt sein                                                                                                                                                        | Selenium     | In das obere Inputfeld klicken und "FischersFritz" eingeben.                                                     | Das Geschriebene wird in diesem Feld angezeigt.                                                                                                                   |
 |    5.2     | 5       | Fertige Seite wurde deployed und die Loginseite geöffnet, zusätzlich muss der User "FischersFritz" schon erstellt sein                                                                                                                                                        | Selenium     | In das untere Inputfeld klicken und den privaten Schlüssel, der bei der Registration ausgegeben wurde, eingeben. | Das Geschriebene wird in diesem Feld als kleine Pünktchen angezeigt.                                                                                              |
 |    6.1     | 6       | Fertige Seite wurde deployed und die Registrationsseite geöffnet. Es soll "HansPeter" als Nutzername schon eingegeben sein. Es soll auch die API schon deployed sein.                                                                                                         | Selenium     | Auf den "Generate Keypair"-Knopf klicken.                                                                        | Ein Schlüsselpaar wird generiert. Der private soll im Ausgabefeld angezeigt werden und der öffentliche mit dem erstellten Nutzer in der Datenbank vorhanden sein. |
-|    7.1     | 7       | Fertige Seite wurde deployed und die Loginseite geöffnet, zusätzlich muss der User "FischresFritz" schon erstellt sein. Dessen privater Schlüssel soll schon im entsprechenden Feld eingegeben sein. Es soll auch die API schon deployed sein.                                | Selenium     | Auf den "Login"-Knopf klicken.                                                                                   | Man wird auf die "/chat"-Route weitergeleitet. Das signierte JWT ist nun im Sessionstorage gespeichert.                                                           |
-|    7.2     | 7       | Fertige Seite wurde deployed und die Loginseite geöffnet, zusätzlich muss der User "FischresFritz" schon erstellt sein. Irgendein Charaktersatz (über 50 Charakter) soll in das Feld für den privaten Schlüssel eingetragen werden. Es soll auch die API schon deployed sein. | Selenium     | Auf den "Login"-Knopf klicken.                                                                                   | Folgende Meldung erscheint: "Wrong user credentials!"                                                                                                             |
-|    8.1     | 8       | Fertige Seite wurde deployed. Der User soll nicht eingeloggt sein.                                                                                                                                                                                                            | Jest         | In der URL die Route auf "/chat" ändern.                                                                         | Man wird auf die Loginseite weitergeleitet.                                                                                                                       |
-|    8.2     | 8       | Fertige Seite wurde deployed. Der User soll sich schon ein Mal in dieser Session eingeloggt haben.                                                                                                                                                                            | Jest         | In der URL die Route auf "/chat" ändern.                                                                         | Man wird auf die Chatseite weitergeleitet.                                                                                                                        |
+|    7.1     | 7       | Fertige Seite wurde deployed und die Loginseite geöffnet, zusätzlich muss der User "FischersFritz" schon erstellt sein. Dessen privater Schlüssel soll schon im entsprechenden Feld eingegeben sein. Es soll auch die API schon deployed sein.                                | Selenium     | Auf den "Login"-Knopf klicken.                                                                                   | Man wird auf die "/chat"-Route weitergeleitet. Das signierte JWT ist nun im Sessionstorage gespeichert.                                                           |
+|    7.2     | 7       | Fertige Seite wurde deployed und die Loginseite geöffnet, zusätzlich muss der User "FischersFritz" schon erstellt sein. Irgendein Charaktersatz (über 50 Charakter) soll in das Feld für den privaten Schlüssel eingetragen werden. Es soll auch die API schon deployed sein. | Selenium     | Auf den "Login"-Knopf klicken.                                                                                   | Folgende Meldung erscheint: "Wrong user credentials!"                                                                                                             |
+|    8.1     | 8       | Fertige Seite wurde deployed. Der User soll nicht eingeloggt sein.                                                                                                                                                                                                            | Selenium     | In der URL die Route auf "/chat" ändern.                                                                         | Man wird auf die Loginseite weitergeleitet.                                                                                                                       |
+|    8.2     | 8       | Fertige Seite wurde deployed. Der User soll sich schon ein Mal in dieser Session eingeloggt haben.                                                                                                                                                                            | Selenium     | In der URL die Route auf "/chat" ändern.                                                                         | Man wird auf die Chatseite weitergeleitet.                                                                                                                        |
 |    9.1     | 9       | Die API wurde deployed.                                                                                                                                                                                                                                                       | Postman      | GET /users/getall ohne Token                                                                                     | Response soll folgende Nachricht beinhalten: "jwt must be provided"                                                                                               |
 |    9.2     | 9       | Die API wurde deployed.                                                                                                                                                                                                                                                       | Postman      | GET /users/getall mit gültigem Token                                                                             | Response soll eine Array an allen Usernamen beinhalten.                                                                                                           |
 |    9.3     | 9       | Die API wurde deployed.                                                                                                                                                                                                                                                       | Postman      | GET /users/getall mit abgelaufenem Token                                                                         | Response soll folgende Nachricht beinhalten: "jwt expired"                                                                                                        |
 |    9.4     | 9       | Die API wurde deployed.                                                                                                                                                                                                                                                       | Postman      | GET /users/getall mit fehlerhaftem Token                                                                         | Response soll folgende Nachricht beinhalten: "invalid token"                                                                                                      |
-|    10.1    | 10      | Die API wurde deployed.                                                                                                                                                                                                                                                       | Postman      | POST /users/getall mit gültigen Logindaten                                                                       | Response soll einen JSON-Web-Token beinhalten. ([hier](https://jwt.io/) verifizierbar)                                                                            |
-|    11.1    | 11      | Die API wurde deployed und Chaträume wurden schon erstellt.                                                                                                                                                                                                                   | Postman      | Zufällig einen Chatraum von der DB fetchen.                                                                      | Datensatz beinhaltet ein Teilnehmer-Array mit nur zwei Usernamen.                                                                                                 |
+|    10.1    | 10      | Die API wurde deployed.                                                                                                                                                                                                                                                       | Postman      | POST /users/getall mit gültigem JWT                                                                              | Response soll eine Array an allen Usernamen beinhalten                                                                                                            |
+|    11.1    | 11      | Die API wurde deployed und Chaträume wurden schon von dem Benutzer erstellt.                                                                                                                                                                                                  | Postman      | Zufällig einen Chatraum von der DB fetchen mit gültigem JWT                                                      | Datensatz beinhaltet ein Teilnehmer-Array mit nur zwei Usernamen.                                                                                                 |
 |    12.1    | 12      | Die API und die fertige Webseite wurden beide deployed. Ein Chatraum wurde geöffnet.                                                                                                                                                                                          | Selenium     | "Hallo Welt!" in die Textbox eingeben und absenden.                                                              | Die Textbox leert sich, die Eingabe erscheint als Nachricht vom Absender und dem Empfänger wird die Nachricht angezeigt.                                          |
 |    13.1    | 13      | Die API wurde deployed und ein Chatraum mit Nachrichten ist vorhanden.                                                                                                                                                                                                        | Postman      | Datensatz eines Chatraums fetchen.                                                                               | Das Array mit den Nachrichten beinhaltet zwar JSON-Objekte, welche jedoch im Feld mit der eigentlichen Nachricht keinen lesbaren Text beinhalten.                 |
 |    14.1    | 14      | Die API und die fertige Webseite wurden beide deployed. Es darf noch kein Chat mit "FischersFritz" vorhanden sein.                                                                                                                                                            | Selenium     | Auf den "OPEN"-Knopf neben "FischersFritz" klicken.                                                              | Im Fenster daneben öffnet sich ein neuer Chat. Er beinhaltet noch keine Nachrichten.                                                                              |
@@ -351,7 +347,44 @@ Die Postman-Applikation verwendet die neuste Version (10.8.4)
 
 ### Testprotokoll
 
+| Test-Nr | Bericht                                                 | Tester           |
+| :------ | :------------------------------------------------------ | ---------------- |
+| 1.1     | OK                                                      | @sanqro, @mnaray |
+| 2.1     | OK                                                      | @sanqro, @mnaray |
+| 3.1     | OK                                                      | @sanqro, @mnaray |
+| 4.1     | OK                                                      | @sanqro, @mnaray |
+| 4.2     | OK                                                      | @sanqro, @mnaray |
+| 4.3     | OK                                                      | @sanqro, @mnaray |
+| 5.1     | OK                                                      | @sanqro, @mnaray |
+| 5.2     | OK                                                      | @sanqro, @mnaray |
+| 6.1     | OK                                                      | @sanqro, @mnaray |
+| 7.1     | OK                                                      | @sanqro, @mnaray |
+| 7.2     | OK                                                      | @sanqro, @mnaray |
+| 8.1     | OK                                                      | @sanqro, @mnaray |
+| 8.2     | OK                                                      | @sanqro, @mnaray |
+| 9.1     | OK                                                      | @sanqro, @mnaray |
+| 9.2     | OK                                                      | @sanqro, @mnaray |
+| 9.3     | OK                                                      | @sanqro, @mnaray |
+| 9.4     | OK                                                      | @sanqro, @mnaray |
+| 10.1    | OK                                                      | @sanqro, @mnaray |
+| 11.1    | OK                                                      | @sanqro, @mnaray |
+| 12.1    | OK                                                      | @sanqro, @mnaray |
+| 13.1    | NOK, Verschlüsselung konnte nicht implementiert werden  | @sanqro, @mnaray |
+| 14.1    | OK                                                      | @sanqro, @mnaray |
+| 14.2    | NOK, Verschlüsselung konnte nicht impplementiert werden | @sanqro, @mnaray |
+| 15.1    | OK                                                      | @sanqro, @mnaray |
+| 15.2    | OK                                                      | @sanqro, @mnaray |
+| 16.1    | NOK, Verschlüsselung konnte nicht implementiert werden  | @sanqro, @mnaray |
+| 17.1    | OK                                                      | @sanqro, @mnaray |
+| 18.1    | OK                                                      | @sanqro, @mnaray |
+| 18.2    | OK                                                      | @sanqro, @mnaray |
+| 19.1    | OK                                                      | @sanqro, @mnaray |
+| 20.1    | NOK, Verschlüsselung konnte nicht implementiert werden  | @sanqro, @mnaray |
+| 21.1    | OK                                                      | @sanqro, @mnaray |
+
 ### Testbericht
+
+Alle Testfälle ausser 13.1, 14.2, 16.1 und 20.1 wurden erfolgreich getestet. Die fehlgeschlagenen Testfälle müssen noch implementiert werden, bevor die Applikation abgegeben werden kann.
 
 ## Frontend
 
@@ -554,4 +587,10 @@ Ansonsten wird der Statuscode 503 und die entsprechende Fehlermeldung zurückgeg
 
 ## Projektauswertung
 
-Hier kommt noch eine Auswertung des ganzen Projekts hin!
+Das Projekt ist grundsätzlich gut verlaufen. Das einzige wirkliche Problem war, dass wir uns nicht so stark an IPERKA gehalten haben. Dies kam uns später zum Verhängnis, da wir uns zu wenig informiert haben und dann Probleme beim Realisieren hatten.
+
+Wir haben die Applikation mit Fehlern geplant. Es wäre nicht mehr möglich gewesen, seine eigenen Nachrichten nach dem Absenden zu entschlüsseln, da man dann den privaten Schlüssel der Gegenpartei bräuchte. Wir beide kannten den Diffie-Hellman-Schlüsselaustausch und haben kurzfristig während des Realisierens umgeplant. Diese Art von Schlüsselaustausch würde es beiden Teilnehmern am Chat ermöglichen, einen gemeinsamen Schlüssel aus dem eigenen privaten Schlüssel und dem öffentlichen Schlüssel des anderen zu berechnen, was unser Problem gelöst hätte. Wir waren mit dem theoretischen Konzept dieser Prozedur vertraut, jedoch wussten wir nicht, wie wir zwei RSA-Schlüssel zu einem gemeinsamen berechnen können. Wir haben auch diverse NPM-Packages, welche dafür gemacht sind, versucht zu verwenden, jedoch waren die meisten entweder veraltet und in einem modernen Browser nicht mehr funktional oder sie waren für Node-Laufzeiten gemacht und beinhalteten Code, der im Browser nicht laufen kann. Der momentane Stand der versuchten Fixes mit diversen [Polyfills](<https://de.wikipedia.org/wiki/Polyfill#:~:text=Ein%20Polyfill%20(auch%20Polyfiller)%20ist,in%20%C3%A4lteren%20Browsern%20nicht%20verf%C3%BCgbar.>) ist auf [diesem Branch](https://github.com/sanqro/chat/tree/diffie-hellman) zu sehen.
+
+Wenn wir uns richtig informiert und unsere Anwendung wirklich durchdacht geplant hätten, wäre dieses Problem nicht aufgetreten. Es brachte uns um mehrere Stunden aus dem Zeitplan, was uns dazu gezwungen, hat die Verschlüsselung der Nachrichten vollständig auszulassen.
+
+Abgesehen von dem Problem mit der Verschlüsselung der Nachrichten ist unser Projekt gut verlaufen. Wir hatten gute Kommunikation im Team und beide haben regelmässig am Projekt gearbeitet. Pair-Programming war auch öfters praktisch, falls wir auf einen Bug gestossen sind, es brachte uns im Normalfall weiter.
