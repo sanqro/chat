@@ -323,8 +323,8 @@ Die Postman-Applikation verwendet die neuste Version (10.8.4)
 |    6.1     | 6       | Fertige Seite wurde deployed und die Registrationsseite geöffnet. Es soll "HansPeter" als Nutzername schon eingegeben sein. Es soll auch die API schon deployed sein.                                                                                                         | Selenium     | Auf den "Generate Keypair"-Knopf klicken.                                                                        | Ein Schlüsselpaar wird generiert. Der private soll im Ausgabefeld angezeigt werden und der öffentliche mit dem erstellten Nutzer in der Datenbank vorhanden sein. |
 |    7.1     | 7       | Fertige Seite wurde deployed und die Loginseite geöffnet, zusätzlich muss der User "FischersFritz" schon erstellt sein. Dessen privater Schlüssel soll schon im entsprechenden Feld eingegeben sein. Es soll auch die API schon deployed sein.                                | Selenium     | Auf den "Login"-Knopf klicken.                                                                                   | Man wird auf die "/chat"-Route weitergeleitet. Das signierte JWT ist nun im Sessionstorage gespeichert.                                                           |
 |    7.2     | 7       | Fertige Seite wurde deployed und die Loginseite geöffnet, zusätzlich muss der User "FischersFritz" schon erstellt sein. Irgendein Charaktersatz (über 50 Charakter) soll in das Feld für den privaten Schlüssel eingetragen werden. Es soll auch die API schon deployed sein. | Selenium     | Auf den "Login"-Knopf klicken.                                                                                   | Folgende Meldung erscheint: "Wrong user credentials!"                                                                                                             |
-|    8.1     | 8       | Fertige Seite wurde deployed. Der User soll nicht eingeloggt sein.                                                                                                                                                                                                            | Jest         | In der URL die Route auf "/chat" ändern.                                                                         | Man wird auf die Loginseite weitergeleitet.                                                                                                                       |
-|    8.2     | 8       | Fertige Seite wurde deployed. Der User soll sich schon ein Mal in dieser Session eingeloggt haben.                                                                                                                                                                            | Jest         | In der URL die Route auf "/chat" ändern.                                                                         | Man wird auf die Chatseite weitergeleitet.                                                                                                                        |
+|    8.1     | 8       | Fertige Seite wurde deployed. Der User soll nicht eingeloggt sein.                                                                                                                                                                                                            | Selenium     | In der URL die Route auf "/chat" ändern.                                                                         | Man wird auf die Loginseite weitergeleitet.                                                                                                                       |
+|    8.2     | 8       | Fertige Seite wurde deployed. Der User soll sich schon ein Mal in dieser Session eingeloggt haben.                                                                                                                                                                            | Selenium     | In der URL die Route auf "/chat" ändern.                                                                         | Man wird auf die Chatseite weitergeleitet.                                                                                                                        |
 |    9.1     | 9       | Die API wurde deployed.                                                                                                                                                                                                                                                       | Postman      | GET /users/getall ohne Token                                                                                     | Response soll folgende Nachricht beinhalten: "jwt must be provided"                                                                                               |
 |    9.2     | 9       | Die API wurde deployed.                                                                                                                                                                                                                                                       | Postman      | GET /users/getall mit gültigem Token                                                                             | Response soll eine Array an allen Usernamen beinhalten.                                                                                                           |
 |    9.3     | 9       | Die API wurde deployed.                                                                                                                                                                                                                                                       | Postman      | GET /users/getall mit abgelaufenem Token                                                                         | Response soll folgende Nachricht beinhalten: "jwt expired"                                                                                                        |
@@ -347,7 +347,44 @@ Die Postman-Applikation verwendet die neuste Version (10.8.4)
 
 ### Testprotokoll
 
+| Test-Nr | Bericht                                                 | Tester           |
+| :------ | :------------------------------------------------------ | ---------------- |
+| 1.1     | OK                                                      | @sanqro, @mnaray |
+| 2.1     | OK                                                      | @sanqro, @mnaray |
+| 3.1     | OK                                                      | @sanqro, @mnaray |
+| 4.1     | OK                                                      | @sanqro, @mnaray |
+| 4.2     | OK                                                      | @sanqro, @mnaray |
+| 4.3     | OK                                                      | @sanqro, @mnaray |
+| 5.1     | OK                                                      | @sanqro, @mnaray |
+| 5.2     | OK                                                      | @sanqro, @mnaray |
+| 6.1     | OK                                                      | @sanqro, @mnaray |
+| 7.1     | OK                                                      | @sanqro, @mnaray |
+| 7.2     | OK                                                      | @sanqro, @mnaray |
+| 8.1     | OK                                                      | @sanqro, @mnaray |
+| 8.2     | OK                                                      | @sanqro, @mnaray |
+| 9.1     | OK                                                      | @sanqro, @mnaray |
+| 9.2     | OK                                                      | @sanqro, @mnaray |
+| 9.3     | OK                                                      | @sanqro, @mnaray |
+| 9.4     | OK                                                      | @sanqro, @mnaray |
+| 10.1    | OK                                                      | @sanqro, @mnaray |
+| 11.1    | OK                                                      | @sanqro, @mnaray |
+| 12.1    | OK                                                      | @sanqro, @mnaray |
+| 13.1    | NOK, Verschlüsselung konnte nicht implementiert werden  | @sanqro, @mnaray |
+| 14.1    | OK                                                      | @sanqro, @mnaray |
+| 14.2    | NOK, Verschlüsselung konnte nicht impplementiert werden | @sanqro, @mnaray |
+| 15.1    | OK                                                      | @sanqro, @mnaray |
+| 15.2    | OK                                                      | @sanqro, @mnaray |
+| 16.1    | NOK, Verschlüsselung konnte nicht implementiert werden  | @sanqro, @mnaray |
+| 17.1    | OK                                                      | @sanqro, @mnaray |
+| 18.1    | OK                                                      | @sanqro, @mnaray |
+| 18.2    | OK                                                      | @sanqro, @mnaray |
+| 19.1    | OK                                                      | @sanqro, @mnaray |
+| 20.1    | NOK, Verschlüsselung konnte nicht implementiert werden  | @sanqro, @mnaray |
+| 21.1    | OK                                                      | @sanqro, @mnaray |
+
 ### Testbericht
+
+Alle Testfälle ausser 13.1, 14.2, 16.1 und 20.1 wurden erfolgreich getestet. Die fehlgeschlagenen Testfälle müssen noch implementiert werden, bevor die Applikation abgegeben werden kann.
 
 ## Frontend
 
