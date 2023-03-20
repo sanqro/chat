@@ -593,4 +593,4 @@ Wir haben die Applikation mit Fehlern geplant. Es wäre nicht mehr möglich gewe
 
 Wenn wir uns richtig informiert und unsere Anwendung wirklich durchdacht geplant hätten, wäre dieses Problem nicht aufgetreten. Es brachte uns um mehrere Stunden aus dem Zeitplan, was uns dazu gezwungen, hat die Verschlüsselung der Nachrichten vollständig auszulassen.
 
-Abgesehen von dem Problem mit der Verschlüsselung der Nachrichten ist unser Projekt gut verlaufen. Wir hatten gute Kommunikation im Team und beide haben regelmässig am Projekt gearbeitet. Pair-Programming war auch öfters praktisch, falls wir auf einen Bug gestossen sind, es brachte uns im Normalfall weiter.
+Abgesehen von dem Problem mit der Verschlüsselung der Nachrichten ist unser Projekt gut verlaufen. Wir hatten gute Kommunikation im Team und beide haben regelmässig am Projekt gearbeitet. Pair-Programming war auch öfters praktisch, falls wir auf einen Bug gestossen sind. Dies brachte uns im Normalfall weiter.
